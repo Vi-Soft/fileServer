@@ -1,0 +1,64 @@
+type SigninPayload {
+	token: String
+	user: User
+}
+
+type User {
+	id: ObjectId
+	createdAt: Instant!
+	notBefore: Instant!
+	expiration: Instant!
+	firstName: String!
+	middleName: String!
+	lastName: String!
+	authEmail: AuthData!
+	contactLs: [Contact]
+	role: Role!
+}
+
+type AuthData {
+	id: ObjectId
+	createdAt: Instant!
+	notBefore: Instant!
+	expiration: Instant!
+	email: EmailAddress!
+}
+
+scalar ObjectId
+
+type EmailAddress{
+	emailAddr: String!
+	label: String
+	verified: Boolean
+}
+
+input EmailAddressInput{
+	emailAddr: String!
+	label: String
+	verified: Boolean
+}
+
+type Contact {
+	id: ObjectId
+	email: EmailAddress
+	phone: PhoneNum
+	defaultContact: Boolean
+}
+
+type PhoneNum {
+	internationalFormat: String
+	nationalFormat: String
+	numberType: String
+	countryCode: String
+}
+
+input PhoneNumInput {
+	phoneNumberStr: String 
+	defaultCountry: String
+}
+
+enum Role {
+	GLOBAL_ADMIN
+	DOMAIN_ADMIN
+	PROJECT_OWNER
+}

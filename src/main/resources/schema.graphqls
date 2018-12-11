@@ -1,0 +1,78 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+    
+  # fetch all links from datasource
+  allLinks(filter: LinkFilter, skip: Int = 0, limit: Int = 0): [Link]
+  findLinkById(_id:ID!): Link
+    
+  # fetch all users from datasource
+  allUsers: [User]
+  getAllContactsByUserId(userId: ID): [Contact]
+  findUserById(_id:ID!): User
+  findUserByEmail(email:String!): User
+  findUserByAuthEmail(authEmail:String!): User
+  findAuthDataByEmail(email:String!): AuthData
+  
+  allAuthData:[AuthData]
+  
+  allDocFiles(filter: DocFileFilter, skip: Int = 0, limit: Int = 0): [DocFile]
+  findByDocFileId(docFileId: ID!): DocFile
+  
+  allDocTemplates: [DocTemplate]
+  findByDocTemplateId(docTemplateId: ID!): DocTemplate
+  
+  allReports(filter: DocFileFilter, skip: Int = 0, limit: Int = 0): [Report]
+  findByReportId(reportId: ID!): Report	
+}
+
+type Mutation {
+    
+  # create and persist a new link
+  createLink(url: String!, description: String!): Link
+  
+  # vote
+  createVote(linkId: ID, userId: ID): Vote
+  
+  # register a new user
+  # createUser(firstName: String!, middleName: String!, lastName: String!, authProvider: AuthData!): User
+  
+  createAuthData(email: EmailAddressInput!, passwd: String!): AuthData
+  authEmailVerify(emailId: String!) : Long
+  
+  createUser(authEmail: String!, firstName: String!, middleName: String!, lastName: String!, role: Role!): User
+  deleteUser(userId: String!): Long
+  recoveryUser(userId: String!): Long
+  
+  addContact(userId: String!, email: EmailAddressInput, phone: PhoneNumInput): Long
+  setDefaultContact(contactId: String!): Long
+  deleteContact(contactId: String!): Long
+  setContactEmail(contactId: String!, email: EmailAddressInput!): Long
+  setContactPhone(contactId: String!, phone: PhoneNumInput!): Long
+  
+  # signin 
+  # signinUser(authProvider: AuthData): SigninPayload
+  
+  saveDocFile(fileContentHash: String!,
+	fileName: String!,
+	projectId: String!,
+	taskId: String! ): DocFile 
+  
+  deleteDocFile(docFileId: ID!): Long
+  recoveryDocFile(docFileId: ID!): Long
+    
+  saveDocTemplate(fileContentHash: String!,
+	fileName: String!,
+	templateType: String!): DocTemplate
+
+  deleteDocTemplate(docTemplateId: ID!): Long
+  recoveryDocTemplate(docTemplateId: ID!): Long
+  
+}
+
+scalar Instant
+scalar DateTime
+
