@@ -20,8 +20,7 @@ public interface ErrorConst {
 
     String LOGIN_EXISTS = "Login exists";
 
-    String NO_TOKEN = "You not have token";
+    String NO_COOKIE = "You not have cookie";
 
-    String TOKEN_NOT_FOUND = "Token not found";
-
+    String TOKEN_NOT_FOUND = "Token not found or expired";
 }

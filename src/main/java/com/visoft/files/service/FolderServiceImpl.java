@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.visoft.files.entity.FolderConst.FOLDER;
 import static com.visoft.files.entity.GeneralConst._ID;
 import static com.visoft.files.repository.Repositories.FOLDER_REPOSITORY;
 

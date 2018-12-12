@@ -8,17 +8,15 @@ import io.undertow.server.handlers.Cookie;
 import io.undertow.server.handlers.CookieImpl;
 import io.undertow.server.handlers.resource.ResourceHandler;
 import io.undertow.server.handlers.resource.ResourceManager;
-import io.undertow.util.HeaderMap;
-import io.undertow.util.HeaderValues;
-import io.undertow.util.Headers;
 import org.bson.types.ObjectId;
 
+import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.visoft.files.service.DI.DependencyInjectionService.*;
-import static com.visoft.files.service.ErrorConst.NO_TOKEN;
+import static com.visoft.files.service.ErrorConst.NO_COOKIE;
 import static com.visoft.files.service.ErrorConst.TOKEN_NOT_FOUND;
 import static com.visoft.files.service.util.SenderService.sendMessage;
 
@@ -31,37 +29,50 @@ public class FileResourceHandler extends ResourceHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-//        HeaderMap headerMap = exchange.getRequestHeaders();
-//        String authorization = headerMap.getFirst(Headers.AUTHORIZATION);
-//        if (authorization == null) {
-//            sendMessage(exchange,NO_TOKEN);
-//           return;
-//        } else {
-//            authorization = authorization.substring(7);
-//        }
-        Token token = TOKEN_SERVICE.findByToken("eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1YzBmY2MzNzMwNjljMTBhNWM1MzJhM2QifQ.xIGWS8FlDEJpHQl_te72L_CY5AY8qt2zgG2zlmPmVw4Xtpba5NYIks4GJo-RjSRLuVxZFD3AyjpfwkT5Node4g");
-        if (token==null){
-            sendMessage(exchange,TOKEN_NOT_FOUND);
+        Cookie cookie = exchange.getRequestCookies().get("token");
+        if (cookie == null) {
+            //TODO redirect to login
+            sendMessage(exchange, NO_COOKIE);
             return;
         }
+        Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
+        if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
+            //TODO redirect to login
+            sendMessage(exchange, TOKEN_NOT_FOUND);
+            return;
+        }
+        ObjectId tokenId = token.getId();
         User user = USER_SERVICE.findById(token.getUserId());
         String requestURI = exchange.getRequestURI();
         if (user.getRole().toString().equals("USER")) {
             if (requestURI.equals("/")) {
-                Cookie cookie = new CookieImpl("token","123");
-                exchange.setResponseCookie(cookie);
-                PageService.getMainUserHtml(exchange, getFolders(user));
+                sendResponse(exchange, cookie, user, tokenId);
             }
             requestURI = reorganizeRequestURI(requestURI);
             if (!getFolders(user).contains(requestURI)) {
-                PageService.getMainUserHtml(exchange, getFolders(user));
+                sendResponse(exchange, cookie, user, tokenId);
+            } else {
+                sendResponse(exchange, cookie, requestURI, tokenId);
             }
-            else {
-                PageService.getFolderUserHtml(exchange, requestURI);
-            }
-        }else {
+        } else {
             super.handleRequest(exchange);
         }
+    }
+
+    private void sendResponse(HttpServerExchange exchange, Cookie cookie, User user, ObjectId tokenId) {
+        PageService.getMainUserHtml(exchange, getFolders(user));
+        sendResponse(exchange, cookie, tokenId);
+    }
+
+    private void sendResponse(HttpServerExchange exchange, Cookie cookie, String requestURI, ObjectId tokenId) throws IOException {
+        PageService.getFolderUserHtml(exchange, requestURI);
+        sendResponse(exchange, cookie, tokenId);
+    }
+
+    private void sendResponse(HttpServerExchange exchange, Cookie cookie, ObjectId tokenId) {
+        exchange.setResponseCookie(new CookieImpl(cookie.getName(), cookie.getValue()));
+        TOKEN_SERVICE.addExpiration(tokenId);
+
     }
 
     private String reorganizeRequestURI(String requestURI) {
@@ -72,12 +83,11 @@ public class FileResourceHandler extends ResourceHandler {
         return requestURI;
     }
 
-    private List<String> getFolders(User user){
+    private List<String> getFolders(User user) {
         List<String> folders = new ArrayList<>();
-            for (ObjectId folder : user.getFolders()) {
-                folders.add(FOLDER_SERVICE.findById(folder).getFolder());
-            }
-            return folders;
+        for (ObjectId folder : user.getFolders()) {
+            folders.add(FOLDER_SERVICE.findById(folder).getFolder());
+        }
+        return folders;
     }
-
 }
