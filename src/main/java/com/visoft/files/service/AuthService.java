@@ -36,7 +36,7 @@ public class AuthService {
             return;
         }
         TOKEN_SERVICE.setExpirationNow(token.getId());
-        PageService.redirect(exchange, "https://www.google.com.ua/webhp?hl=ru&sa=X&ved=0ahUKEwi89-a_qJzfAhWRlIsKHYVxDk8QPAgH");
+        PageService.redirectToLoginPage(exchange);
         return;
     }
 

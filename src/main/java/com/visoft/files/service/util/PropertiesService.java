@@ -8,15 +8,19 @@ import java.util.Properties;
 
 public class PropertiesService {
 
-    public static String getRootPath() {
-        return  getProperties().getProperty("rootPath");
+    public static String getLoginPage() {
+        return getProperties().getProperty("login");
     }
 
-    public static String getServerName(){
+    public static String getRootPath() {
+        return getProperties().getProperty("rootPath");
+    }
+
+    public static String getServerName() {
         return getProperties().getProperty("server");
     }
 
-    private static Properties getProperties(){
+    private static Properties getProperties() {
         Properties prop = new Properties();
         InputStream input = GraphqlHandlerProvider.class.getClassLoader().getResourceAsStream("file.properties");
         try {

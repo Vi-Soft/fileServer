@@ -13,17 +13,18 @@ public class PageService {
 
     private static String rootPath = PropertiesService.getRootPath();
 
-    public static void redirect(HttpServerExchange exchange, String redirectUrl) {
-        StringBuilder htmlString = new StringBuilder();
-        htmlString.append("<!DOCTYPE html>\n" +
+    private static String loginHtml = PropertiesService.getLoginPage();
+
+    private static String server = PropertiesService.getServerName();
+
+    public static void redirectToLoginPage(HttpServerExchange exchange) {
+        String htmlString = "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
-                "<meta http-equiv=\"refresh\" content=\"0; url=");
-        htmlString.append(redirectUrl);
-        htmlString.append(" />\n" +
+                "<meta http-equiv=\"refresh\" content=\"0; url=" + loginHtml + "\"/>\n" +
                 "</head>\n" +
-                "</html>");
-        exchange.getResponseSender().send(htmlString.toString());
+                "</html>";
+        exchange.getResponseSender().send(htmlString);
     }
 
     public static void getMainUserHtml(HttpServerExchange exchange, List<String> folders) {
@@ -33,9 +34,12 @@ public class PageService {
                         "<html>\n" +
                         " <head>\n" +
                         "  <meta charset=\"utf-8\">\n" +
-                        "  <title>Main</title>\n" +
+                        "  <title>Root</title>\n" +
                         " </head>\n" +
-                        " <body>\n"
+                        " <body>\n"+
+                        "<form action=\""+server+"/api/logout\" method=\"post\">\n" +
+                        "    <input type=\"submit\" value=\"Logout\" />\n" +
+                        "</form>"
         );
         for (String folder : folders) {
             htmlString.append("<p><a href=\"" + folder + "\">" + getFolderName(folder) + "</a></p>\n");
@@ -61,6 +65,15 @@ public class PageService {
             htmlString = sb.toString().replace("r.png",PropertiesService.getServerName()+"/api/r");
             htmlString = htmlString.replace("g.png",PropertiesService.getServerName()+"/api/g");
         }
+
+        String[] split = htmlString.split("<body>");
+        htmlString=split[0]+
+                "<body>\n"+
+                "<form action=\""+server+"/api/logout\" method=\"post\">\n" +
+                "    <input type=\"submit\" value=\"Logout\" />\n" +
+                "</form>"+
+                split[1];
+
 
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");
         exchange.getResponseSender().send(htmlString);
