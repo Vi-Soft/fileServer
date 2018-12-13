@@ -3,7 +3,7 @@
 singletons:
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:
-  - com.visoft.files.handler.GraphqlHandlerProvider
+  - com.visoft.file.service.handler.GraphqlHandlerProvider
 
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 # - com.networknt.server.StartupHookProvider:

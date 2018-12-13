@@ -1,9 +1,0 @@
-type Vote{
-	id: ID!
-	createdAt: DateTime!
-	user: User!
-	link: Link!
-}
-
-
-
