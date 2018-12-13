@@ -43,4 +43,13 @@ public class TokenServiceImpl extends AbstractServiceImpl<Token> implements Toke
                 Instant.now().plusSeconds(10800L)
         );
     }
+
+    @Override
+    public void setExpirationNow(ObjectId id){
+        update(
+                id,
+                EXPIRATION,
+                Instant.now()
+        );
+    }
 }

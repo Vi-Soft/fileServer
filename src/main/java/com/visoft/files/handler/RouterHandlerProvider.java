@@ -13,27 +13,29 @@ import io.undertow.server.handlers.form.MultiPartParserDefinition;
 import io.undertow.util.Methods;
 
 import static com.visoft.files.service.DI.DependencyInjectionService.USER_SERVICE;
+import static io.undertow.util.Methods.*;
 
 public class RouterHandlerProvider implements HandlerProvider {
-
-    UserService userService = USER_SERVICE;
 
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-                .add(Methods.PUT, "/createUser",
+                .add(POST, "/logout",
+                        getEagerFormParsingHandler()
+                                .setNext(logout))
+                .add(PUT, "/createUser",
                         getEagerFormParsingHandler()
                                 .setNext(createUser))
-                .add(Methods.POST, "/login",
+                .add(POST, "/login",
                         getEagerFormParsingHandler()
                                 .setNext(login))
-                .add(Methods.GET, "/r",
+                .add(GET, "/r",
                         getEagerFormParsingHandler()
                                 .setNext(getRedImage))
-                .add(Methods.GET, "/g",
+                .add(GET, "/g",
                         getEagerFormParsingHandler()
                                 .setNext(getGreyImage))
-                .add(Methods.POST, "/unzip",
+                .add(POST, "/unzip",
                         getEagerFormParsingHandler()
                                 .setNext(unzip));
     }
@@ -47,5 +49,6 @@ public class RouterHandlerProvider implements HandlerProvider {
     HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
     HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
     HttpHandler login = AuthService::getToken;
-    HttpHandler createUser = userService::create;
+    HttpHandler createUser = USER_SERVICE::create;
+    HttpHandler logout = AuthService::logout;
 }

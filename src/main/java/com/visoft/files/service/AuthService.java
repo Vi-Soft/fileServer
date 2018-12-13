@@ -5,7 +5,9 @@ import com.visoft.files.dto.LoginDto;
 import com.visoft.files.dto.TokenOutcomeDto;
 import com.visoft.files.entity.Token;
 import com.visoft.files.entity.User;
+import com.visoft.files.service.util.PageService;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.server.handlers.Cookie;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +22,23 @@ import static com.visoft.files.service.util.SenderService.sendMessage;
 public class AuthService {
 
     private static UserService userService = USER_SERVICE;
+
+    public static void logout(HttpServerExchange exchange) {
+        Cookie cookie = exchange.getRequestCookies().get("token");
+        if (cookie == null) {
+            sendMessage(exchange, NO_COOKIE);
+            return;
+
+        }
+        Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
+        if (token == null) {
+            sendMessage(exchange, TOKEN_NOT_FOUND);
+            return;
+        }
+        TOKEN_SERVICE.setExpirationNow(token.getId());
+        PageService.redirect(exchange, "https://www.google.com.ua/webhp?hl=ru&sa=X&ved=0ahUKEwi89-a_qJzfAhWRlIsKHYVxDk8QPAgH");
+        return;
+    }
 
 
     public static String getToken(HttpServerExchange exchange) {

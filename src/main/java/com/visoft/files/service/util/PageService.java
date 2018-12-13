@@ -13,6 +13,19 @@ public class PageService {
 
     private static String rootPath = PropertiesService.getRootPath();
 
+    public static void redirect(HttpServerExchange exchange, String redirectUrl) {
+        StringBuilder htmlString = new StringBuilder();
+        htmlString.append("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<meta http-equiv=\"refresh\" content=\"0; url=");
+        htmlString.append(redirectUrl);
+        htmlString.append(" />\n" +
+                "</head>\n" +
+                "</html>");
+        exchange.getResponseSender().send(htmlString.toString());
+    }
+
     public static void getMainUserHtml(HttpServerExchange exchange, List<String> folders) {
         StringBuilder htmlString = new StringBuilder();
         htmlString.append(

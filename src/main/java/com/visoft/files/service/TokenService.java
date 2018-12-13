@@ -13,4 +13,6 @@ public interface TokenService extends AbstractService<Token> {
     void addExpiration(ObjectId id);
 
     boolean isExistsById(ObjectId id);
+
+    void setExpirationNow(ObjectId id);
 }

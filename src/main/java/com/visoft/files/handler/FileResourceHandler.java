@@ -31,13 +31,11 @@ public class FileResourceHandler extends ResourceHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Cookie cookie = exchange.getRequestCookies().get("token");
         if (cookie == null) {
-            //TODO redirect to login
             sendMessage(exchange, NO_COOKIE);
             return;
         }
         Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
         if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-            //TODO redirect to login
             sendMessage(exchange, TOKEN_NOT_FOUND);
             return;
         }
