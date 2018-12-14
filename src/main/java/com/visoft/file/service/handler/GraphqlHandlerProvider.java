@@ -26,7 +26,6 @@ public class GraphqlHandlerProvider extends GraphqlRouter {
 
     @Override
     public HttpHandler getHandler() {
-
         ResourceHandler resourceHandler = new FileResourceHandler(
                 new PathResourceManager(Paths.get(path), 100));
 

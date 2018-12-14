@@ -1,0 +1,7 @@
+description: Cors Http Handler
+enabled: true
+allowedOrigins:
+  - http://fs30.chisw.us
+allowedMethods:
+  - GET
+  - POST

@@ -10,6 +10,7 @@ import com.visoft.file.service.service.util.JsonService;
 import com.visoft.file.service.service.util.PageService;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
+import io.undertow.util.HttpString;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +64,6 @@ public class AuthService {
                         );
                         sendMessage(exchange, JsonService.toJson(tokenOutcomeDto));
                     }
-
                 }
 
             }
