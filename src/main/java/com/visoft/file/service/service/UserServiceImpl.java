@@ -4,19 +4,21 @@ import com.networknt.config.Config;
 import com.visoft.file.service.dto.UserCreateDto;
 import com.visoft.file.service.entity.*;
 import com.visoft.file.service.repository.Repositories;
+import com.visoft.file.service.service.DI.DependencyInjectionService;
 import com.visoft.file.service.service.util.EncoderService;
 import com.visoft.file.service.service.util.JWTService;
 import com.visoft.file.service.service.util.SenderService;
-import com.visoft.file.service.entity.Role;
 import com.visoft.file.service.entity.Token;
 import com.visoft.file.service.entity.User;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.server.handlers.Cookie;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,9 +26,10 @@ import java.util.Scanner;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
-import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKEN_SERVICE;
+import static com.visoft.file.service.entity.Role.*;
+import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.util.SenderService.sendMessage;
 
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
 
@@ -44,30 +47,47 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public String create(HttpServerExchange exchange) {
-        UserCreateDto dto = getRequestBody(exchange);
-        if (dto == null) {
-            return SenderService.sendMessage(exchange, JSON_NOT_CORRECT);
+    public void create(HttpServerExchange exchange) {
+        Cookie cookie = exchange.getRequestCookies().get("token");
+        if (cookie == null) {
+            exchange.setStatusCode(UNAUTHORIZED);
+        }else {
+            Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
+            if (token == null||token.getExpiration().toEpochMilli()< Instant.now().toEpochMilli()) {
+                exchange.setStatusCode(UNAUTHORIZED);
+            }else {
+                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
+                if (user.getRole().equals(USER)){
+                    exchange.setStatusCode(FORBIDDEN);
+                }else {
+                    UserCreateDto dto = getCreateUserRequestBody(exchange);
+                    if (dto == null) {
+                        exchange.setStatusCode(BAD_REQUEST);
+                    }else {
+                        String validateResult = validate(dto);
+                        if (validateResult != null) {
+                            exchange.setStatusCode(BAD_REQUEST);
+                        }else {
+                            List<ObjectId> folders = new ArrayList<>();
+                            for (String folder : dto.getFolders()) {
+                                folders.add(new ObjectId(folder));
+                            }
+                            if (isExistsByLogin(dto.getLogin())) {
+                                 sendMessage(exchange, LOGIN_EXISTS);
+                            }
+                            User createdUser = new User(dto.getLogin(), EncoderService.getEncode(dto.getPassword()), USER, folders);
+                            create(createdUser);
+                            Token  createdUserToken = new Token(JWTService.generate(ObjectId.get()), user.getId());
+                            TOKEN_SERVICE.create(createdUserToken);
+                            exchange.setStatusCode(CREATE);
+                        }
+                    }
+                }
+            }
         }
-        String validateResult = validate(dto);
-        if (validateResult != null) {
-            return SenderService.sendMessage(exchange, validateResult);
-        }
-        List<ObjectId> folders = new ArrayList<>();
-        for (String folder : dto.getFolders()) {
-            folders.add(new ObjectId(folder));
-        }
-        if (isExistsByLogin(dto.getLogin())) {
-            return SenderService.sendMessage(exchange, LOGIN_EXISTS);
-        }
-        User user = new User(dto.getLogin(), EncoderService.getEncode(dto.getPassword()), Role.USER, folders);
-        create(user);
-        Token token = new Token(JWTService.genearete(ObjectId.get().toString()), user.getId());
-        TOKEN_SERVICE.create(token);
-        return "!!!!!";
     }
 
-    private static UserCreateDto getRequestBody(HttpServerExchange exchange) {
+    private static UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
         String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();

@@ -6,7 +6,7 @@ import io.undertow.server.HttpServerExchange;
 
 public interface UserService extends AbstractService<User> {
 
-    String create(HttpServerExchange exchange);
+    void create(HttpServerExchange exchange);
 
     User findByLoginAndPassword(String login, String password);
 }

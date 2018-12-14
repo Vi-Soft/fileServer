@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import static com.visoft.file.service.service.ErrorConst.BAD_REQUEST;
+import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
 
 public class AuthService {
@@ -24,41 +26,50 @@ public class AuthService {
     public static void logout(HttpServerExchange exchange) {
         Cookie cookie = exchange.getRequestCookies().get("token");
         if (cookie == null) {
-            sendMessage(exchange, ErrorConst.NO_COOKIE);
-            return;
+            exchange.setStatusCode(UNAUTHORIZED);
+        }else {
+            Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
+            if (token == null) {
+                exchange.setStatusCode(UNAUTHORIZED);
+            }else {
+                DependencyInjectionService.TOKEN_SERVICE.setExpirationNow(token.getId());
+                PageService.redirectToLoginPage(exchange);
+            }
+
         }
-        Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
-        if (token == null) {
-            sendMessage(exchange, ErrorConst.TOKEN_NOT_FOUND);
-            return;
-        }
-        DependencyInjectionService.TOKEN_SERVICE.setExpirationNow(token.getId());
-        PageService.redirectToLoginPage(exchange);
     }
 
     public static void login(HttpServerExchange exchange) {
         LoginDto loginDto = getRequestBody(exchange);
         if (loginDto == null) {
-            sendMessage(exchange, ErrorConst.JSON_NOT_CORRECT);
+            exchange.setStatusCode(BAD_REQUEST);
+        } else {
+            String validateResult = validate(loginDto);
+            if (validateResult != null) {
+                exchange.setStatusCode(BAD_REQUEST);
+            } else {
+                User user = userService.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
+                if (user == null) {
+                    exchange.setStatusCode(UNAUTHORIZED);
+                } else {
+                    Token token = DependencyInjectionService.TOKEN_SERVICE.findByUserId(user.getId());
+                    if (token == null) {
+                        exchange.setStatusCode(UNAUTHORIZED);
+                    } else {
+                        DependencyInjectionService.TOKEN_SERVICE.addExpiration(token.getId());
+                        TokenOutcomeDto tokenOutcomeDto = new TokenOutcomeDto(
+                                token.getToken(),
+                                user.getRole()
+                        );
+                        sendMessage(exchange, JsonService.toJson(tokenOutcomeDto));
+                    }
+
+                }
+
+            }
+
         }
-        String validateResult = validate(loginDto);
-        if (validateResult != null) {
-            sendMessage(exchange, validateResult);
-        }
-        User user = userService.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
-        if (user == null) {
-            sendMessage(exchange, ErrorConst.NOT_AUTHORIZATION);
-        }
-        Token token = DependencyInjectionService.TOKEN_SERVICE.findByUserId(user.getId());
-        if (token == null) {
-            sendMessage(exchange, ErrorConst.USER_TOKEN_NOT_FOUND);
-        }
-        DependencyInjectionService.TOKEN_SERVICE.addExpiration(token.getId());
-        TokenOutcomeDto tokenOutcomeDto = new TokenOutcomeDto(
-                token.getToken(),
-                user.getRole()
-        );
-        sendMessage(exchange, JsonService.toJson(tokenOutcomeDto));
+
     }
 
     private static LoginDto getRequestBody(HttpServerExchange exchange) {

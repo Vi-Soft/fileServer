@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.visoft.file.service.entity.Role.*;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKEN_SERVICE;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
@@ -39,13 +40,17 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
             if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
                 sendMessage(exchange, ErrorConst.TOKEN_NOT_FOUND);
             } else {
+                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
+                if (user==null||!user.getRole().equals(USER)){
+
+                }
                 String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
                 ObjectId folderId = new ObjectId(id);
                 List<User> users = USER_SERVICE.findAll();
-                for (User user : users) {
-                    List<ObjectId> folders = user.getFolders();
+                for (User currentUser : users) {
+                    List<ObjectId> folders = currentUser.getFolders();
                     folders.remove(folderId);
-                    USER_SERVICE.update(user.getId(), UserConst.FOLDERS, user.getFolders());
+                    USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
                     //TODO delete folder on filesystem
                 }
             }

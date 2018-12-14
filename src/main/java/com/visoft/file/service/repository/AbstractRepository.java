@@ -57,7 +57,7 @@ public class AbstractRepository<T> implements Repository<T> {
     @Override
     public List<T> getListObject(Bson bsonFilter) {
         return StreamSupport
-                .stream(mongoCollection.find(bsonFilter).spliterator(), true)
+                .stream(mongoCollection.find().spliterator(), true)
                 .collect(Collectors.toList());
     }
 

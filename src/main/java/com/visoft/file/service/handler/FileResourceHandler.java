@@ -3,7 +3,6 @@ package com.visoft.file.service.handler;
 import com.visoft.file.service.entity.Folder;
 import com.visoft.file.service.entity.Token;
 import com.visoft.file.service.entity.User;
-import com.visoft.file.service.service.util.SenderService;
 import com.visoft.file.service.service.util.PageService;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
@@ -17,9 +16,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.visoft.file.service.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
-import static com.visoft.file.service.service.ErrorConst.NO_COOKIE;
-import static com.visoft.file.service.service.ErrorConst.TOKEN_NOT_FOUND;
+import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 
 public class FileResourceHandler extends ResourceHandler {
 
@@ -27,39 +26,52 @@ public class FileResourceHandler extends ResourceHandler {
         super(resourceSupplier);
     }
 
+    private boolean priviousCookie;
+    private String previousUri;
+
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Cookie cookie = exchange.getRequestCookies().get("token");
         if (cookie == null) {
-            SenderService.sendMessage(exchange, NO_COOKIE);
-            return;
-        }
-        Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
-        if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-            SenderService.sendMessage(exchange, TOKEN_NOT_FOUND);
-            return;
-        }
-        ObjectId tokenId = token.getId();
-        User user = USER_SERVICE.findById(token.getUserId());
-        String requestURI = exchange.getRequestURI();
-        if (user.getRole().toString().equals("USER")) {
-            if (requestURI.equals("/")) {
-                sendResponse(exchange, cookie, user, tokenId);
-            }
-            requestURI = reorganizeRequestURI(requestURI);
-            if (!getFolders(user).contains(requestURI)) {
-                sendResponse(exchange, cookie, user, tokenId);
-            } else {
-                sendResponse(exchange, cookie, requestURI, tokenId);
-            }
+            exchange.setStatusCode(UNAUTHORIZED);
         } else {
-            super.handleRequest(exchange);
+            Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
+            if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
+                exchange.setStatusCode(UNAUTHORIZED);
+            } else {
+                ObjectId tokenId = token.getId();
+                User user = USER_SERVICE.findById(token.getUserId());
+                String requestURI = exchange.getRequestURI();
+                priviousCookie = true;
+                previousUri = requestURI;
+                if (requestURI.equals("/")) {
+                    sendResponse(exchange, cookie, user, tokenId);
+                } else {
+                    if (user.getRole().equals(USER)){
+                        requestURI = reorganizeRequestURI(requestURI);
+                        if (!getFolders(user).contains(requestURI)) {
+                            sendResponse(exchange, cookie, user, tokenId);
+                        } else {
+                            sendResponse(exchange, cookie, requestURI, tokenId);
+                        }
+                    }else {
+                        sendResponse(exchange, cookie, requestURI, tokenId);
+                    }
+                }
+            }
+
         }
+
     }
 
     private void sendResponse(HttpServerExchange exchange, Cookie cookie, User user, ObjectId tokenId) {
-        PageService.getMainUserHtml(exchange, getFolders(user));
+        if (user.getRole().equals(USER)) {
+            PageService.getMainUserHtml(exchange, getFolders(user));
+        } else {
+            PageService.getMainUserHtml(exchange, getFolders(user));
+        }
+
         sendResponse(exchange, cookie, tokenId);
     }
 
@@ -69,9 +81,14 @@ public class FileResourceHandler extends ResourceHandler {
     }
 
     private void sendResponse(HttpServerExchange exchange, Cookie cookie, ObjectId tokenId) {
-        exchange.setResponseCookie(new CookieImpl(cookie.getName(), cookie.getValue()));
+        addCookie(exchange, cookie);
         TOKEN_SERVICE.addExpiration(tokenId);
 
+    }
+
+    private void addCookie(HttpServerExchange exchange, Cookie cookie) {
+        CookieImpl cookie1 = new CookieImpl(cookie.getName(), cookie.getValue());
+        exchange.setResponseCookie(cookie1);
     }
 
     private String reorganizeRequestURI(String requestURI) {
@@ -84,12 +101,21 @@ public class FileResourceHandler extends ResourceHandler {
 
     private List<String> getFolders(User user) {
         List<String> folders = new ArrayList<>();
-        List<ObjectId> userFolders = user.getFolders();
-        if (userFolders!=null){
-            for (ObjectId folder : userFolders) {
-                Folder folderInDB = FOLDER_SERVICE.findByIdNotDeleted(folder);
-                if (folderInDB!=null){
-                    folders.add(folderInDB.getFolder());
+        if (user.getRole().equals(USER)) {
+            List<ObjectId> userFolders = user.getFolders();
+            if (userFolders != null) {
+                for (ObjectId id : userFolders) {
+                    Folder folderInDB = FOLDER_SERVICE.findById(id);
+                    if (folderInDB != null) {
+                        folders.add(folderInDB.getFolder());
+                    }
+                }
+            }
+        } else {
+            List<Folder> all = FOLDER_SERVICE.getListObject(null);
+            if (all != null) {
+                for (Folder folder : all) {
+                    folders.add(folder.getFolder());
                 }
             }
         }

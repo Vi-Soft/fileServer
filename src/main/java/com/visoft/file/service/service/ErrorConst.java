@@ -23,4 +23,14 @@ public interface ErrorConst {
     String NO_COOKIE = "You not have cookie";
 
     String TOKEN_NOT_FOUND = "Token not found or expired";
+
+    int UNAUTHORIZED = 401;
+
+    int FORBIDDEN = 403;
+
+    int BAD_REQUEST = 400;
+
+    int CREATE = 201;
+
+
 }
