@@ -11,14 +11,12 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.light-4j>1.5.13</version.light-4j>
-        <version.light-graphql-4j>1.5.13</version.light-graphql-4j>
         <version.jackson>2.9.5</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.23.Final</version.undertow>
-        <version.graphql>8.0</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
 
         <version.mongo>3.7.1</version.mongo>
@@ -33,44 +31,6 @@
     </parent>
 
     <dependencies>
-
-        <!-- https://mvnrepository.com/artifact/com.googlecode.libphonenumber/libphonenumber -->
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-            <version>8.9.9</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/com.googlecode.libphonenumber/libphonenumber -->
-        <!-- dependency> <groupId>com.googlecode.libphonenumber</groupId> <artifactId>libphonenumber</artifactId>
-            <version>8.9.10</version> </dependency -->
-
-
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>geocoder</artifactId>
-            <version>2.100-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>carrier</artifactId>
-            <version>1.90-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>prefixmapper</artifactId>
-            <version>2.100-SNAPSHOT</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-        </dependency>
-
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
@@ -176,117 +136,25 @@
             <artifactId>server</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>graphql-common</artifactId>
-            <version>${version.light-graphql-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>graphql-router</artifactId>
-            <version>${version.light-graphql-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>graphql-security</artifactId>
-            <version>${version.light-graphql-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>graphql-validator</artifactId>
-            <version>${version.light-graphql-4j}</version>
-        </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>common</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/fop -->
         <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>fop</artifactId>
-            <version>2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160212</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${version.jackson}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${version.jackson}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${version.jackson}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
+            <groupId>com.networknt</groupId>
+            <artifactId>cors</artifactId>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java</artifactId>
-            <version>${version.graphql}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-tools</artifactId>
-            <version>3.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.reactivex.rxjava2</groupId>
-            <artifactId>rxjava</artifactId>
-            <version>${version.rxjava}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
             <version>${version.mongo}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.ipfs</groupId>
-            <artifactId>java-ipfs-api</artifactId>
-            <version>v1.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.multiformats</groupId>
-            <artifactId>java-multihash</artifactId>
-            <version>v1.2.0</version>
-        </dependency>
-
-        <dependency>
-            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.11.3</version>
-        </dependency>
-
-        <!-- Test Dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -317,11 +185,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>cors</artifactId>
-            <version>${version.light-4j}</version>
         </dependency>
     </dependencies>
 

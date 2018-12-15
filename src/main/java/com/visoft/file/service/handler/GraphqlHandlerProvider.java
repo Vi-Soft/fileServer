@@ -1,6 +1,6 @@
 package com.visoft.file.service.handler;
 
-import com.networknt.graphql.router.GraphqlRouter;
+import com.networknt.server.HandlerProvider;
 import com.visoft.file.service.service.util.PropertiesService;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.PathHandler;
@@ -20,7 +20,7 @@ import static io.undertow.Handlers.path;
  *
  * @author vlad
  */
-public class GraphqlHandlerProvider extends GraphqlRouter {
+public class GraphqlHandlerProvider implements HandlerProvider {
 
     private String path = PropertiesService.getRootPath();
 
@@ -42,7 +42,5 @@ public class GraphqlHandlerProvider extends GraphqlRouter {
                 (new RouterHandlerProvider()).getHandler());
 
         return handler;
-
     }
-
 }
