@@ -11,16 +11,9 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.light-4j>1.5.13</version.light-4j>
-        <version.jackson>2.9.5</version.jackson>
-        <version.slf4j>1.7.25</version.slf4j>
-        <version.jose4j>0.6.3</version.jose4j>
-        <version.logback>1.2.3</version.logback>
-        <version.junit>4.12</version.junit>
+        <version.slf4j>1.7.5</version.slf4j>
         <version.undertow>1.4.23.Final</version.undertow>
-        <version.rxjava>2.1.5</version.rxjava>
-
         <version.mongo>3.7.1</version.mongo>
-
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -31,6 +24,11 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>handler</artifactId>
+            <version>1.5.20</version>
+        </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
@@ -88,11 +86,6 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>handler</artifactId>
-            <version>1.5.20</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>sanitizer</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
@@ -142,11 +135,6 @@
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>cors</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
@@ -179,12 +167,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
+            <version>${version.slf4j}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
+            <version>${version.slf4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>cors</artifactId>
+            <version>${version.light-4j}</version>
         </dependency>
     </dependencies>
 

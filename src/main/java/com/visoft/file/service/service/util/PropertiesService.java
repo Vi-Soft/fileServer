@@ -1,6 +1,6 @@
 package com.visoft.file.service.service.util;
 
-import com.visoft.file.service.handler.GraphqlHandlerProvider;
+import com.visoft.file.service.handler.GeneralHandlerProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +22,7 @@ public class PropertiesService {
         return getProperties().getProperty(DB);
     }
 
-    public static String getLoginPage() {
+    static String getLoginPage() {
         return getProperties().getProperty(LOGIN_HTML_URL);
     }
 
@@ -30,13 +30,13 @@ public class PropertiesService {
         return getProperties().getProperty(ROOT_PATH);
     }
 
-    public static String getServerName() {
+    static String getServerName() {
         return getProperties().getProperty(SERVER);
     }
 
     private static Properties getProperties() {
         Properties prop = new Properties();
-        InputStream input = GraphqlHandlerProvider.class.getClassLoader().getResourceAsStream(APPLICATION);
+        InputStream input = GeneralHandlerProvider.class.getClassLoader().getResourceAsStream(APPLICATION);
         try {
             prop.load(input);
         } catch (IOException e) {

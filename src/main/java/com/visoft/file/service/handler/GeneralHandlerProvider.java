@@ -12,15 +12,7 @@ import java.nio.file.Paths;
 
 import static io.undertow.Handlers.path;
 
-/**
- * Two end-points are defined in the application.
- * <p>
- * /graphql
- * /api
- *
- * @author vlad
- */
-public class GraphqlHandlerProvider implements HandlerProvider {
+public class GeneralHandlerProvider implements HandlerProvider {
 
     private String path = PropertiesService.getRootPath();
 
@@ -42,5 +34,7 @@ public class GraphqlHandlerProvider implements HandlerProvider {
                 (new RouterHandlerProvider()).getHandler());
 
         return handler;
+
     }
+
 }
