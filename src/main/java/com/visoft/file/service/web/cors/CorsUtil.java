@@ -1,4 +1,4 @@
-package com.visoft.file.service.cors;
+package com.visoft.file.service.web.cors;
 
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.ResponseCodeHandler;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
-import static com.visoft.file.service.cors.CorsHeaders.*;
+import static com.visoft.file.service.web.cors.CorsHeaders.*;
 
 public class CorsUtil {
     private static final Logger logger = LoggerFactory.getLogger(CorsUtil.class);

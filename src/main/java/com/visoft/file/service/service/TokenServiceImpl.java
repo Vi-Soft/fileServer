@@ -1,9 +1,9 @@
 package com.visoft.file.service.service;
 
-import com.visoft.file.service.entity.GeneralConst;
-import com.visoft.file.service.entity.Token;
-import com.visoft.file.service.entity.TokenConst;
-import com.visoft.file.service.repository.Repositories;
+import com.visoft.file.service.persistance.entity.GeneralConst;
+import com.visoft.file.service.persistance.entity.Token;
+import com.visoft.file.service.persistance.entity.TokenConst;
+import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;

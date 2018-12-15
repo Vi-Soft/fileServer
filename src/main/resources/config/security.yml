@@ -23,11 +23,11 @@ logJwtToken: true
 logClientUserScope: false
 
 # If OAuth2 provider support http2 protocol. If using light-oauth2, set this to true.
-oauthHttp2Support: true
+oauthHttp2Support: false
 
 # Enable JWT token cache to speed up verification. This will only verify expired time
 # and skip the signature verification as it takes more CPU power and long time.
-enableJwtCache: true
+enableJwtCache: false
 
 # If you are using light-oauth2, then you don't need to have oauth subfolder for public
 # key certificate to verify JWT token, the key will be retrieved from key endpoint once

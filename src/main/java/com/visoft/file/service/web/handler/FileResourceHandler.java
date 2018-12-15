@@ -1,8 +1,8 @@
-package com.visoft.file.service.handler;
+package com.visoft.file.service.web.handler;
 
-import com.visoft.file.service.entity.Folder;
-import com.visoft.file.service.entity.Token;
-import com.visoft.file.service.entity.User;
+import com.visoft.file.service.persistance.entity.Folder;
+import com.visoft.file.service.persistance.entity.Token;
+import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.service.util.PageService;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
@@ -16,7 +16,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.visoft.file.service.entity.Role.USER;
+import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 

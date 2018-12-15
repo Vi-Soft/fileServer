@@ -1,4 +1,4 @@
-package com.visoft.file.service.cors;
+package com.visoft.file.service.web.cors;
 
 import com.networknt.config.Config;
 import com.networknt.handler.Handler;
@@ -13,8 +13,8 @@ import io.undertow.util.Headers;
 
 import java.util.Collection;
 
-import static com.visoft.file.service.cors.CorsHeaders.*;
-import static com.visoft.file.service.cors.CorsUtil.isPreflightedRequest;
+import static com.visoft.file.service.web.cors.CorsHeaders.*;
+import static com.visoft.file.service.web.cors.CorsUtil.isPreflightedRequest;
 import static io.undertow.server.handlers.ResponseCodeHandler.HANDLE_200;
 
 public class CorsHttpHandler implements MiddlewareHandler {

@@ -3,7 +3,7 @@
 singletons:
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:
-    - com.visoft.file.service.handler.GeneralHandlerProvider
+    - com.visoft.file.service.web.handler.GeneralHandlerProvider
 - com.networknt.handler.MiddlewareHandler:
   # Exception Global exception handler that needs to be called first to wrap all middleware handlers and business handlers
   - com.networknt.exception.ExceptionHandler
@@ -17,4 +17,4 @@ singletons:
   - com.networknt.audit.AuditHandler
   #Cors handler to handler post/put pre-flight
 #  - com.networknt.cors.CorsHttpHandler:
-  - com.visoft.file.service.cors.CorsHttpHandler
+  - com.visoft.file.service.web.cors.CorsHttpHandler

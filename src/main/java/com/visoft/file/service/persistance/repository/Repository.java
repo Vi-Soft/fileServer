@@ -1,4 +1,4 @@
-package com.visoft.file.service.repository;
+package com.visoft.file.service.persistance.repository;
 
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;

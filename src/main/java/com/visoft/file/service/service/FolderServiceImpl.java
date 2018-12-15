@@ -1,8 +1,8 @@
 package com.visoft.file.service.service;
 
 import com.networknt.handler.util.Exchange;
-import com.visoft.file.service.entity.*;
-import com.visoft.file.service.repository.Repositories;
+import com.visoft.file.service.persistance.entity.*;
+import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.visoft.file.service.entity.Role.*;
+import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKEN_SERVICE;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
@@ -41,7 +41,7 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
                 sendMessage(exchange, ErrorConst.TOKEN_NOT_FOUND);
             } else {
                 User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
-                if (user==null||!user.getRole().equals(USER)){
+                if (user == null || !user.getRole().equals(USER)) {
 
                 }
                 String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");

@@ -1,4 +1,4 @@
-package com.visoft.file.service.handler;
+package com.visoft.file.service.web.handler;
 
 import com.networknt.server.HandlerProvider;
 import com.visoft.file.service.service.util.PropertiesService;

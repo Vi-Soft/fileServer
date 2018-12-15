@@ -1,14 +1,13 @@
-package com.visoft.file.service.entity;
+package com.visoft.file.service.persistance.entity;
 
 import lombok.Data;
 import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 import java.time.Instant;
 
-import static com.visoft.file.service.entity.TokenConst.*;
+import static com.visoft.file.service.persistance.entity.TokenConst.*;
 
 @Data
 public class Token {

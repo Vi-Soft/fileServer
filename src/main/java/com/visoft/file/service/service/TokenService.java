@@ -1,6 +1,6 @@
 package com.visoft.file.service.service;
 
-import com.visoft.file.service.entity.Token;
+import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.service.abstractService.AbstractService;
 import org.bson.types.ObjectId;
 

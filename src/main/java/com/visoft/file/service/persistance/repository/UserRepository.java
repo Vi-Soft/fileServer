@@ -1,10 +1,10 @@
-package com.visoft.file.service.repository;
+package com.visoft.file.service.persistance.repository;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
-import com.visoft.file.service.entity.User;
-import com.visoft.file.service.entity.UserConst;
+import com.visoft.file.service.persistance.entity.User;
+import com.visoft.file.service.persistance.entity.UserConst;
 import com.visoft.file.service.util.DBUtil;
 
 public class UserRepository extends AbstractRepository<User> {

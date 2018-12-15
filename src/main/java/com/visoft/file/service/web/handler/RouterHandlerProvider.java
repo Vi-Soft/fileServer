@@ -1,8 +1,8 @@
-package com.visoft.file.service.handler;
+package com.visoft.file.service.web.handler;
 
 import com.networknt.server.HandlerProvider;
-import com.visoft.file.service.service.ReportService;
 import com.visoft.file.service.service.AuthService;
+import com.visoft.file.service.service.ReportService;
 import com.visoft.file.service.service.util.ImageService;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
@@ -16,16 +16,37 @@ import static io.undertow.util.Methods.*;
 
 public class RouterHandlerProvider implements HandlerProvider {
 
+    private HttpHandler unzip = ReportService::unzip;
+    private HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
+    private HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
+    private HttpHandler login = AuthService::login;
+    private HttpHandler createUser = USER_SERVICE::create;
+    private HttpHandler logout = AuthService::logout;
+    private HttpHandler deleteFolder = FOLDER_SERVICE::deleteFolder;
+    private HttpHandler deleteUser = USER_SERVICE::delete;
+    private HttpHandler recoveryUser = USER_SERVICE::recovery;
+
+    private EagerFormParsingHandler getEagerFormParsingHandler() {
+        return new EagerFormParsingHandler(FormParserFactory.builder()
+                .addParsers(new MultiPartParserDefinition()).build());
+    }
+
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-                .add(DELETE, "/folders/delete/{id}",
+                .add(DELETE, "/users/{id}",
+                        getEagerFormParsingHandler()
+                                .setNext(deleteUser))
+                .add(POST, "/users/recovery/{id}",
+                        getEagerFormParsingHandler()
+                                .setNext(recoveryUser))
+                .add(DELETE, "/folders//{id}",
                         getEagerFormParsingHandler()
                                 .setNext(deleteFolder))
                 .add(POST, "/logout",
                         getEagerFormParsingHandler()
                                 .setNext(logout))
-                .add(PUT, "/createUser",
+                .add(PUT, "/users",
                         getEagerFormParsingHandler()
                                 .setNext(createUser))
                 .add(POST, "/login",
@@ -41,17 +62,4 @@ public class RouterHandlerProvider implements HandlerProvider {
                         getEagerFormParsingHandler()
                                 .setNext(unzip));
     }
-
-    private EagerFormParsingHandler getEagerFormParsingHandler() {
-        return new EagerFormParsingHandler(FormParserFactory.builder()
-                .addParsers(new MultiPartParserDefinition()).build());
-    }
-
-    HttpHandler unzip = ReportService::unzip;
-    HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
-    HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
-    HttpHandler login = AuthService::login;
-    HttpHandler createUser = USER_SERVICE::create;
-    HttpHandler logout = AuthService::logout;
-    HttpHandler deleteFolder = FOLDER_SERVICE::deleteFolder;
 }

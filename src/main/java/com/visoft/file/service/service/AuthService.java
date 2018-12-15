@@ -3,14 +3,13 @@ package com.visoft.file.service.service;
 import com.networknt.config.Config;
 import com.visoft.file.service.dto.LoginDto;
 import com.visoft.file.service.dto.TokenOutcomeDto;
-import com.visoft.file.service.entity.Token;
-import com.visoft.file.service.entity.User;
+import com.visoft.file.service.persistance.entity.Token;
+import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.service.DI.DependencyInjectionService;
 import com.visoft.file.service.service.util.JsonService;
 import com.visoft.file.service.service.util.PageService;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
-import io.undertow.util.HttpString;
 
 import java.io.IOException;
 import java.io.InputStream;

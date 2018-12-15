@@ -1,6 +1,6 @@
 package com.visoft.file.service.service.abstractService;
 
-import com.visoft.file.service.repository.AbstractRepository;
+import com.visoft.file.service.persistance.repository.AbstractRepository;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 

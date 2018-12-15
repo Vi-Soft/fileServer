@@ -1,11 +1,11 @@
-package com.visoft.file.service.repository;
+package com.visoft.file.service.persistance.repository;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
-import com.visoft.file.service.entity.FolderConst;
+import com.visoft.file.service.persistance.entity.Folder;
+import com.visoft.file.service.persistance.entity.FolderConst;
 import com.visoft.file.service.util.DBUtil;
-import com.visoft.file.service.entity.Folder;
 
 public class FolderRepository extends AbstractRepository<Folder> {
 

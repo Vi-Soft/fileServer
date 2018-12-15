@@ -1,8 +1,8 @@
-package com.visoft.file.service.repository;
+package com.visoft.file.service.persistance.repository;
 
-import com.visoft.file.service.entity.Token;
-import com.visoft.file.service.entity.User;
-import com.visoft.file.service.entity.Folder;
+import com.visoft.file.service.persistance.entity.Folder;
+import com.visoft.file.service.persistance.entity.Token;
+import com.visoft.file.service.persistance.entity.User;
 
 public interface Repositories {
 

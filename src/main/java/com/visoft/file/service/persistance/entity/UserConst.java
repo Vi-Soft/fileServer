@@ -1,4 +1,4 @@
-package com.visoft.file.service.entity;
+package com.visoft.file.service.persistance.entity;
 
 public interface UserConst extends GeneralConst {
 

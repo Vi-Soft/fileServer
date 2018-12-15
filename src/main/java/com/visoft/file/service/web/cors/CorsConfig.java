@@ -1,4 +1,4 @@
-package com.visoft.file.service.cors;
+package com.visoft.file.service.web.cors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

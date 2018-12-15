@@ -1,6 +1,6 @@
 package com.visoft.file.service.service.util;
 
-import com.visoft.file.service.handler.GeneralHandlerProvider;
+import com.visoft.file.service.web.handler.GeneralHandlerProvider;
 
 import java.io.IOException;
 import java.io.InputStream;

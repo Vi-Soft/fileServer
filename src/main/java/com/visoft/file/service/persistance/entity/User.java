@@ -1,4 +1,4 @@
-package com.visoft.file.service.entity;
+package com.visoft.file.service.persistance.entity;
 
 import lombok.Data;
 import org.bson.codecs.pojo.annotations.BsonCreator;
@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
-import static com.visoft.file.service.entity.UserConst.*;
+import static com.visoft.file.service.persistance.entity.UserConst.*;
 
 @Data
 public class User {

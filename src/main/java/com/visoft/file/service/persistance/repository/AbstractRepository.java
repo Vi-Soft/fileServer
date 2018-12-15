@@ -1,8 +1,7 @@
-package com.visoft.file.service.repository;
+package com.visoft.file.service.persistance.repository;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.UpdateResult;
-import com.visoft.file.service.entity.GeneralConst;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
@@ -13,9 +12,8 @@ import java.util.stream.StreamSupport;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
-import static com.visoft.file.service.entity.GeneralConst.*;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static com.visoft.file.service.persistance.entity.GeneralConst.DELETED;
+import static com.visoft.file.service.persistance.entity.GeneralConst._ID;
 
 public class AbstractRepository<T> implements Repository<T> {
 
