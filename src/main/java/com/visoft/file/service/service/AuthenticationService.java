@@ -54,9 +54,7 @@ public class AuthenticationService {
                         sendMessage(exchange, JsonService.toJson(tokenOutcomeDto));
                     }
                 }
-
             }
-
         }
 
     }

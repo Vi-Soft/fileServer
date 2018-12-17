@@ -8,4 +8,9 @@ public class SenderService {
         exchange.getResponseSender().send(message);
         return null;
     }
+
+    public static String sendStatusCode(HttpServerExchange exchange, int code) {
+        exchange.setStatusCode(code);
+        return null;
+    }
 }

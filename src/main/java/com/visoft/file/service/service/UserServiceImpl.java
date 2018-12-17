@@ -3,14 +3,12 @@ package com.visoft.file.service.service;
 import com.networknt.config.Config;
 import com.networknt.handler.util.Exchange;
 import com.visoft.file.service.dto.UserCreateDto;
+import com.visoft.file.service.dto.UserOutcomeDto;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
 import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
-import com.visoft.file.service.service.util.EncoderService;
-import com.visoft.file.service.service.util.JWTService;
-import com.visoft.file.service.service.util.JsonService;
 import io.undertow.server.HttpServerExchange;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -24,12 +22,16 @@ import java.util.Scanner;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.visoft.file.service.persistance.entity.GeneralConst.DELETED;
 import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
+import static com.visoft.file.service.persistance.entity.UserConst.*;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.util.EncoderService.getEncode;
+import static com.visoft.file.service.service.util.JWTService.generate;
+import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
+import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
 
@@ -38,12 +40,19 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public User findByLoginAndPassword(String login, String password) {
-        Bson filter = and(
-                eq(DELETED, false),
-                eq(UserConst.LOGIN, login),
-                eq(UserConst.PASSWORD, EncoderService.getEncode(password)));
-        return super.getObject(filter);
+    public void findByIdUser(HttpServerExchange exchange) {
+        String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
+        ObjectId userId = new ObjectId(id);
+        Bson filter = and(eq(_ID, userId), eq(ROLE, USER.toString()));
+        User user = getObject(filter);
+        if (user == null) {
+            sendStatusCode(exchange, NOT_FOUND);
+        } else {
+            sendMessage(exchange, toJson(new UserOutcomeDto(
+                    user.getId(),
+                    user.getLogin(),
+                    user.getFolders())));
+        }
     }
 
     @Override
@@ -63,9 +72,9 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 if (isExistsByLogin(dto.getLogin())) {
                     sendMessage(exchange, LOGIN_EXISTS);
                 }
-                User createdUser = new User(dto.getLogin(), EncoderService.getEncode(dto.getPassword()), USER, folders);
+                User createdUser = new User(dto.getLogin(), getEncode(dto.getPassword()), USER, folders);
                 create(createdUser);
-                Token createdUserToken = new Token(JWTService.generate(ObjectId.get()), createdUser.getId());
+                Token createdUserToken = new Token(generate(ObjectId.get()), createdUser.getId());
                 TOKEN_SERVICE.create(createdUserToken);
                 exchange.setStatusCode(CREATE);
             }
@@ -92,7 +101,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         if (currentUser == null || currentUser.getDeleted().equals(false) || currentUser.getRole().equals(ADMIN)) {
             exchange.setStatusCode(FORBIDDEN);
         } else {
-            USER_SERVICE.update(userId, DELETED, false);
+            update(userId, DELETED, false);
         }
     }
 
@@ -101,10 +110,19 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         Bson filter = eq(UserConst.ROLE, ADMIN);
         sendMessage(
                 exchange,
-                JsonService.toJson(
+                toJson(
                         getIds(getListObject(filter))
                 )
         );
+    }
+
+    @Override
+    public User findByLoginAndPassword(String login, String password) {
+        Bson filter = and(
+                eq(DELETED, false),
+                eq(UserConst.LOGIN, login),
+                eq(UserConst.PASSWORD, getEncode(password)));
+        return super.getObject(filter);
     }
 
     private static UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {

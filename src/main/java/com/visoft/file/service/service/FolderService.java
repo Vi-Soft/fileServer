@@ -5,6 +5,8 @@ import com.visoft.file.service.service.abstractService.AbstractService;
 import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 public interface FolderService extends AbstractService<Folder> {
 
     boolean existsFolder(ObjectId folder);
@@ -12,4 +14,6 @@ public interface FolderService extends AbstractService<Folder> {
     void deleteFolder(HttpServerExchange httpServerExchange);
 
     void findAllFolders(HttpServerExchange exchange);
+
+    List<String> getIdsFromStrings(List<ObjectId> folders);
 }

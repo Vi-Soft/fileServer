@@ -25,7 +25,6 @@ public class SecurityHandler implements MiddlewareHandler {
 
     public static AuthenticatedUser authenticatedUser;
     private volatile HttpHandler next;
-    private String USER_URI = "/api/user";
     private String ADMIN_URI = "/api/admin";
     private String cookieName = "token";
 

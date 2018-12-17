@@ -75,7 +75,7 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
                 if (user == null || !user.getRole().equals(USER)) {
                     exchange.setStatusCode(FORBIDDEN);
                 }
-                sendMessage(exchange, JsonService.toJson(getIds(findAll())));
+                sendMessage(exchange, JsonService.toJson(getIdsFromFolders(findAll())));
             }
         }
     }
@@ -101,7 +101,8 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
 //        }
 //    }
 
-    private List<String> getIds(List<Folder> folders) {
+
+    private List<String> getIdsFromFolders(List<Folder> folders) {
         if (folders == null || folders.isEmpty()) {
             return null;
         }
@@ -111,4 +112,18 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         }
         return folderIds;
     }
+
+    @Override
+    public List<String> getIdsFromStrings(List<ObjectId> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return null;
+        }
+        List<String> folderIds = new ArrayList<>();
+        for (ObjectId objectId : ids) {
+            folderIds.add(objectId.toString());
+        }
+        return folderIds;
+    }
+
+
 }
