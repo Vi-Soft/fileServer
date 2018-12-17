@@ -15,5 +15,7 @@ public interface FolderService extends AbstractService<Folder> {
 
     void findAllFolders(HttpServerExchange exchange);
 
-    List<String> getIdsFromStrings(List<ObjectId> folders);
+    List<String> getIdsFromObjectId(List<ObjectId> folders);
+
+    List<ObjectId> getIdsFromStrings(List<String> ids);
 }

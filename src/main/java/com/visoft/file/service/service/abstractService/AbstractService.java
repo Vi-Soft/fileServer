@@ -24,4 +24,6 @@ public interface AbstractService<T> {
     boolean isExists(Bson filter);
 
     boolean update(ObjectId id, String name, Object value);
+
+    long update(T t, ObjectId id);
 }

@@ -80,26 +80,29 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         }
     }
 
-//    @Override
-//    public void findById(HttpServerExchange exchange){
-//        Cookie cookie = exchange.getRequestCookies().get("token");
-//        if (cookie == null) {
-//            exchange.setStatusCode(UNAUTHORIZED);
-//        } else {
-//            Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
-//            if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-//                exchange.setStatusCode(UNAUTHORIZED);
-//            } else {
-//                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
-//                if (user == null || !user.getRole().equals(USER)) {
-//                    exchange.setStatusCode(FORBIDDEN);
-//                }
-//                String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-//                ObjectId folderId = new ObjectId(id);
-//                sendMessage(exchange, JsonService.toJson(getIds(findById(folderId))));
-//            }
-//        }
-//    }
+    @Override
+    public List<String> getIdsFromObjectId(List<ObjectId> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return null;
+        }
+        List<String> folderIds = new ArrayList<>();
+        for (ObjectId objectId : ids) {
+            folderIds.add(objectId.toString());
+        }
+        return folderIds;
+    }
+
+    @Override
+    public List<ObjectId> getIdsFromStrings(List<String> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return null;
+        }
+        List<ObjectId> folderIds = new ArrayList<>();
+        for (String objectId : ids) {
+            folderIds.add(new ObjectId(objectId));
+        }
+        return folderIds;
+    }
 
 
     private List<String> getIdsFromFolders(List<Folder> folders) {
@@ -112,18 +115,4 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         }
         return folderIds;
     }
-
-    @Override
-    public List<String> getIdsFromStrings(List<ObjectId> ids) {
-        if (ids == null || ids.isEmpty()) {
-            return null;
-        }
-        List<String> folderIds = new ArrayList<>();
-        for (ObjectId objectId : ids) {
-            folderIds.add(objectId.toString());
-        }
-        return folderIds;
-    }
-
-
 }

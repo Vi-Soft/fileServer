@@ -59,4 +59,9 @@ public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
     public boolean update(ObjectId id, String name, Object value) {
         return repository.update(id, name, value);
     }
+
+    @Override
+    public long update(final T t, ObjectId id) {
+        return repository.update(t, id);
+    }
 }

@@ -34,6 +34,7 @@ public class RouterHandlerProvider implements HandlerProvider {
     private HttpHandler recoveryUser = USER_SERVICE::recovery;
     private HttpHandler findAllUser = USER_SERVICE::findAllUser;
     private HttpHandler findByIdUser = USER_SERVICE::findByIdUser;
+    private HttpHandler updateUser = USER_SERVICE::updateUser;
 
     private EagerFormParsingHandler getEagerFormParsingHandler() {
         return new EagerFormParsingHandler(FormParserFactory.builder()
@@ -59,6 +60,9 @@ public class RouterHandlerProvider implements HandlerProvider {
                 .add(GET, ROLE_ADMIN + USER + "findById/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(findByIdUser))
+                .add(POST, ROLE_ADMIN + USER + "update",
+                        getEagerFormParsingHandler()
+                                .setNext(updateUser))
 
                 //admin folder
                 .add(GET, ROLE_ADMIN + FOLDERS,

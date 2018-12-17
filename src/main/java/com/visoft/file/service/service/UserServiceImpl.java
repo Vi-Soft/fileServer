@@ -4,6 +4,7 @@ import com.networknt.config.Config;
 import com.networknt.handler.util.Exchange;
 import com.visoft.file.service.dto.UserCreateDto;
 import com.visoft.file.service.dto.UserOutcomeDto;
+import com.visoft.file.service.dto.UserUpdateDto;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
@@ -40,11 +41,32 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
+    public void updateUser(HttpServerExchange exchange) {
+        UserUpdateDto dto = getUpdateUserRequestBody(exchange);
+        if (!validate(dto)) {
+            sendStatusCode(exchange, BAD_REQUEST);
+        } else {
+            User user = findUserNotAdmin(dto.getId());
+            if (user == null) {
+                sendStatusCode(exchange, BAD_REQUEST);
+            }
+            List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+            if (isExistsByLogin(dto.getLogin())) {
+                sendStatusCode(exchange, BAD_REQUEST);
+                sendMessage(exchange, LOGIN_EXISTS);
+            } else {
+                user.setLogin(dto.getLogin());
+                user.setPassword(getEncode(dto.getPassword()));
+                user.setFolders(folders);
+                update(user, user.getId());
+            }
+        }
+    }
+
+    @Override
     public void findByIdUser(HttpServerExchange exchange) {
         String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-        ObjectId userId = new ObjectId(id);
-        Bson filter = and(eq(_ID, userId), eq(ROLE, USER.toString()));
-        User user = getObject(filter);
+        User user = findUserNotAdmin(id);
         if (user == null) {
             sendStatusCode(exchange, NOT_FOUND);
         } else {
@@ -58,26 +80,24 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     @Override
     public void create(HttpServerExchange exchange) {
         UserCreateDto dto = getCreateUserRequestBody(exchange);
-        if (dto == null) {
-            exchange.setStatusCode(BAD_REQUEST);
+        if (!validate(dto)) {
+            sendStatusCode(exchange, BAD_REQUEST);
         } else {
-            String validateResult = validate(dto);
-            if (validateResult != null) {
-                exchange.setStatusCode(BAD_REQUEST);
-            } else {
-                List<ObjectId> folders = new ArrayList<>();
-                for (String folder : dto.getFolders()) {
-                    folders.add(new ObjectId(folder));
-                }
-                if (isExistsByLogin(dto.getLogin())) {
-                    sendMessage(exchange, LOGIN_EXISTS);
-                }
-                User createdUser = new User(dto.getLogin(), getEncode(dto.getPassword()), USER, folders);
-                create(createdUser);
-                Token createdUserToken = new Token(generate(ObjectId.get()), createdUser.getId());
-                TOKEN_SERVICE.create(createdUserToken);
-                exchange.setStatusCode(CREATE);
+            List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+            if (isExistsByLogin(dto.getLogin())) {
+                sendMessage(exchange, LOGIN_EXISTS);
+                sendStatusCode(exchange, BAD_REQUEST);
             }
+            User createdUser = new User(dto.getLogin(), getEncode(
+                    dto.getPassword()),
+                    USER, folders
+            );
+            create(createdUser);
+            Token createdUserToken = new Token(
+                    generate(ObjectId.get()),
+                    createdUser.getId());
+            TOKEN_SERVICE.create(createdUserToken);
+            sendStatusCode(exchange, CREATE);
         }
     }
 
@@ -87,7 +107,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         ObjectId userId = new ObjectId(id);
         User currentUser = findByIdNotDeleted(userId);
         if (currentUser == null || currentUser.getRole().equals(ADMIN)) {
-            exchange.setStatusCode(FORBIDDEN);
+            sendStatusCode(exchange, FORBIDDEN);
         } else {
             update(userId, DELETED, true);
         }
@@ -99,7 +119,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         ObjectId userId = new ObjectId(id);
         User currentUser = USER_SERVICE.findById(userId);
         if (currentUser == null || currentUser.getDeleted().equals(false) || currentUser.getRole().equals(ADMIN)) {
-            exchange.setStatusCode(FORBIDDEN);
+            sendStatusCode(exchange, FORBIDDEN);
         } else {
             update(userId, DELETED, false);
         }
@@ -125,12 +145,32 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         return super.getObject(filter);
     }
 
-    private static UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
+    private User findUserNotAdmin(String id) {
+        ObjectId userId = new ObjectId(id);
+        Bson filter = and(
+                eq(_ID, userId),
+                eq(ROLE, USER.toString())
+        );
+        return getObject(filter);
+    }
+
+    private UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
         String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
         try {
             return Config.getInstance().getMapper().readValue(s, UserCreateDto.class);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private UserUpdateDto getUpdateUserRequestBody(HttpServerExchange exchange) {
+        exchange.startBlocking();
+        InputStream is = exchange.getInputStream();
+        String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
+        try {
+            return Config.getInstance().getMapper().readValue(s, UserUpdateDto.class);
         } catch (IOException e) {
             return null;
         }
@@ -148,34 +188,46 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         return ids;
     }
 
-    private static String validate(UserCreateDto dto) {
-        String login = dto.getLogin();
-        String password = dto.getPassword();
-        List<String> folders = dto.getFolders();
+    private boolean validate(UserCreateDto dto) {
+        if (dto == null) {
+            return false;
+        }
+        return validate(dto.getLogin(), dto.getPassword(), dto.getFolders());
+    }
+
+    private boolean validate(UserUpdateDto dto) {
+        if (dto == null) {
+            return false;
+        }
+        if (dto.getId() == null || dto.getId().isEmpty()) {
+            return false;
+        }
+        return validate(dto.getLogin(), dto.getPassword(), dto.getFolders());
+    }
+
+    private boolean validate(String login, String password, List<String> folders) {
         if (login == null || login.isEmpty()) {
-            return LOGIN_NOT_CORRECT;
+            return false;
         }
         if (password == null || password.isEmpty()) {
-            return PASSWORD_NOT_CORRECT;
+            return false;
         }
         if (folders == null || folders.isEmpty()) {
-            return FOLDERS_NOT_CORRECT;
+            return false;
         }
         if (new HashSet<>(folders).size() != folders.size()) {
-            return FOLDERS_EQUALS;
+            return false;
         }
         for (String folder : folders) {
             if (!FOLDER_SERVICE.existsFolder(new ObjectId(folder))) {
-                return FOLDERS_NOT_EXISTS;
+                return false;
             }
         }
-        return null;
+        return true;
     }
 
     private boolean isExistsByLogin(String login) {
         Bson filter = eq(UserConst.LOGIN, login);
         return isExists(filter);
     }
-
-
 }

@@ -19,6 +19,6 @@ public class UserOutcomeDto {
     public UserOutcomeDto(ObjectId id, String login, List<ObjectId> folders) {
         this.id = id.toString();
         this.login = login;
-        this.folders = FOLDER_SERVICE.getIdsFromStrings(folders);
+        this.folders = FOLDER_SERVICE.getIdsFromObjectId(folders);
     }
 }

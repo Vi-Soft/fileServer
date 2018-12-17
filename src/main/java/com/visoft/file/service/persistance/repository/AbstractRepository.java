@@ -48,7 +48,7 @@ public class AbstractRepository<T> implements Repository<T> {
 
     @Override
     public T findByIdNotDeleted(ObjectId id) {
-        Bson bsonFilter = and(eq(_ID, id),eq(DELETED, false));
+        Bson bsonFilter = and(eq(_ID, id), eq(DELETED, false));
         return getObject(bsonFilter);
     }
 
@@ -74,6 +74,15 @@ public class AbstractRepository<T> implements Repository<T> {
         Bson bisonFilter = eq(_ID, id);
         UpdateResult updateResult = mongoCollection.updateOne(bisonFilter,
                 set(name, value));
-        return updateResult.getModifiedCount()>0;
+        return updateResult.getModifiedCount() > 0;
     }
+
+    @Override
+    public long update(final T t, ObjectId id) {
+        final Bson bsonFilter = eq(_ID, id);
+        UpdateResult updateResult =
+                mongoCollection.replaceOne(bsonFilter, t);
+        return updateResult.getModifiedCount();
+    }
+
 }

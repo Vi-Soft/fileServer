@@ -10,6 +10,8 @@ public interface UserService extends AbstractService<User> {
 
     void delete(HttpServerExchange exchange);
 
+    void updateUser(HttpServerExchange exchange);
+
     void findByIdUser(HttpServerExchange exchange);
 
     void create(HttpServerExchange exchange);
