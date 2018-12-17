@@ -1,7 +1,7 @@
 package com.visoft.file.service.web.handler;
 
 import com.networknt.server.HandlerProvider;
-import com.visoft.file.service.service.AuthService;
+import com.visoft.file.service.service.AuthenticationService;
 import com.visoft.file.service.service.ReportService;
 import com.visoft.file.service.service.util.ImageService;
 import io.undertow.Handlers;
@@ -19,13 +19,14 @@ public class RouterHandlerProvider implements HandlerProvider {
     private HttpHandler unzip = ReportService::unzip;
     private HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
     private HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
-    private HttpHandler login = AuthService::login;
+    private HttpHandler login = AuthenticationService::login;
     private HttpHandler createUser = USER_SERVICE::create;
-    private HttpHandler logout = AuthService::logout;
+    private HttpHandler logout = AuthenticationService::logout;
     private HttpHandler deleteFolder = FOLDER_SERVICE::deleteFolder;
     private HttpHandler allFolders = FOLDER_SERVICE::findAllFolders;
     private HttpHandler deleteUser = USER_SERVICE::delete;
     private HttpHandler recoveryUser = USER_SERVICE::recovery;
+    private HttpHandler findAllUser = USER_SERVICE::findAllUser;
 
     private EagerFormParsingHandler getEagerFormParsingHandler() {
         return new EagerFormParsingHandler(FormParserFactory.builder()
@@ -35,24 +36,30 @@ public class RouterHandlerProvider implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-                .add(DELETE, "/users/{id}",
+                //admin user
+                .add(DELETE, "admin/users/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(deleteUser))
-                .add(POST, "/users/recovery/{id}",
+                .add(POST, "admin/users/recovery/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(recoveryUser))
-                .add(GET, "/folders",
+                .add(PUT, "admin/users",
+                        getEagerFormParsingHandler()
+                                .setNext(createUser))
+                .add(GET, "admin/users/findAll",
+                        getEagerFormParsingHandler()
+                                .setNext(findAllUser))
+                //admin folder
+                .add(GET, "/admin/folders",
                         getEagerFormParsingHandler()
                                 .setNext(allFolders))
-                .add(DELETE, "/folders//{id}",
+                .add(DELETE, "/admin/folders//{id}",
                         getEagerFormParsingHandler()
                                 .setNext(deleteFolder))
+                //all
                 .add(POST, "/logout",
                         getEagerFormParsingHandler()
                                 .setNext(logout))
-                .add(PUT, "/users",
-                        getEagerFormParsingHandler()
-                                .setNext(createUser))
                 .add(POST, "/login",
                         getEagerFormParsingHandler()
                                 .setNext(login))

@@ -18,3 +18,4 @@ singletons:
   #Cors handler to handler post/put pre-flight
 #  - com.networknt.cors.CorsHttpHandler:
   - com.visoft.file.service.web.cors.CorsHttpHandler
+  - com.visoft.file.service.web.security.SecurityHandler

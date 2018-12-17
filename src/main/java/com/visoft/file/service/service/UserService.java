@@ -6,6 +6,8 @@ import io.undertow.server.HttpServerExchange;
 
 public interface UserService extends AbstractService<User> {
 
+    void findAllUser(HttpServerExchange exchange);
+
     void delete(HttpServerExchange exchange);
 
     void create(HttpServerExchange exchange);

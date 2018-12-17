@@ -80,6 +80,27 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         }
     }
 
+//    @Override
+//    public void findById(HttpServerExchange exchange){
+//        Cookie cookie = exchange.getRequestCookies().get("token");
+//        if (cookie == null) {
+//            exchange.setStatusCode(UNAUTHORIZED);
+//        } else {
+//            Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
+//            if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
+//                exchange.setStatusCode(UNAUTHORIZED);
+//            } else {
+//                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
+//                if (user == null || !user.getRole().equals(USER)) {
+//                    exchange.setStatusCode(FORBIDDEN);
+//                }
+//                String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
+//                ObjectId folderId = new ObjectId(id);
+//                sendMessage(exchange, JsonService.toJson(getIds(findById(folderId))));
+//            }
+//        }
+//    }
+
     private List<String> getIds(List<Folder> folders) {
         if (folders == null || folders.isEmpty()) {
             return null;

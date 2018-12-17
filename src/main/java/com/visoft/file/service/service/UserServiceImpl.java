@@ -7,18 +7,16 @@ import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
 import com.visoft.file.service.persistance.repository.Repositories;
-import com.visoft.file.service.service.DI.DependencyInjectionService;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import com.visoft.file.service.service.util.EncoderService;
 import com.visoft.file.service.service.util.JWTService;
+import com.visoft.file.service.service.util.JsonService;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.Cookie;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -50,97 +48,63 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void create(HttpServerExchange exchange) {
-        Cookie cookie = exchange.getRequestCookies().get("token");
-        if (cookie == null) {
-            exchange.setStatusCode(UNAUTHORIZED);
+        UserCreateDto dto = getCreateUserRequestBody(exchange);
+        if (dto == null) {
+            exchange.setStatusCode(BAD_REQUEST);
         } else {
-            Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
-            if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-                exchange.setStatusCode(UNAUTHORIZED);
+            String validateResult = validate(dto);
+            if (validateResult != null) {
+                exchange.setStatusCode(BAD_REQUEST);
             } else {
-                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
-                if (user.getRole().equals(USER)) {
-                    exchange.setStatusCode(FORBIDDEN);
-                } else {
-                    UserCreateDto dto = getCreateUserRequestBody(exchange);
-                    if (dto == null) {
-                        exchange.setStatusCode(BAD_REQUEST);
-                    } else {
-                        String validateResult = validate(dto);
-                        if (validateResult != null) {
-                            exchange.setStatusCode(BAD_REQUEST);
-                        } else {
-                            List<ObjectId> folders = new ArrayList<>();
-                            for (String folder : dto.getFolders()) {
-                                folders.add(new ObjectId(folder));
-                            }
-                            if (isExistsByLogin(dto.getLogin())) {
-                                sendMessage(exchange, LOGIN_EXISTS);
-                            }
-                            User createdUser = new User(dto.getLogin(), EncoderService.getEncode(dto.getPassword()), USER, folders);
-                            create(createdUser);
-                            Token createdUserToken = new Token(JWTService.generate(ObjectId.get()), user.getId());
-                            TOKEN_SERVICE.create(createdUserToken);
-                            exchange.setStatusCode(CREATE);
-                        }
-                    }
+                List<ObjectId> folders = new ArrayList<>();
+                for (String folder : dto.getFolders()) {
+                    folders.add(new ObjectId(folder));
                 }
+                if (isExistsByLogin(dto.getLogin())) {
+                    sendMessage(exchange, LOGIN_EXISTS);
+                }
+                User createdUser = new User(dto.getLogin(), EncoderService.getEncode(dto.getPassword()), USER, folders);
+                create(createdUser);
+                Token createdUserToken = new Token(JWTService.generate(ObjectId.get()), createdUser.getId());
+                TOKEN_SERVICE.create(createdUserToken);
+                exchange.setStatusCode(CREATE);
             }
         }
     }
 
     @Override
     public void delete(HttpServerExchange exchange) {
-        Cookie cookie = exchange.getRequestCookies().get("token");
-        if (cookie == null) {
-            exchange.setStatusCode(UNAUTHORIZED);
+        String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
+        ObjectId userId = new ObjectId(id);
+        User currentUser = findByIdNotDeleted(userId);
+        if (currentUser == null || currentUser.getRole().equals(ADMIN)) {
+            exchange.setStatusCode(FORBIDDEN);
         } else {
-            Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
-            if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-                exchange.setStatusCode(UNAUTHORIZED);
-            } else {
-                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
-                if (user.getRole().equals(USER)) {
-                    exchange.setStatusCode(FORBIDDEN);
-                } else {
-                    String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-                    ObjectId userId = new ObjectId(id);
-                    User currentUser = USER_SERVICE.findById(userId);
-                    if (currentUser == null || currentUser.getRole().equals(ADMIN)) {
-                        exchange.setStatusCode(FORBIDDEN);
-                    } else {
-                        USER_SERVICE.update(userId, DELETED, true);
-                    }
-                }
-            }
+            update(userId, DELETED, true);
         }
     }
 
     @Override
     public void recovery(HttpServerExchange exchange) {
-        Cookie cookie = exchange.getRequestCookies().get("token");
-        if (cookie == null) {
-            exchange.setStatusCode(UNAUTHORIZED);
+        String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
+        ObjectId userId = new ObjectId(id);
+        User currentUser = USER_SERVICE.findById(userId);
+        if (currentUser == null || currentUser.getDeleted().equals(false) || currentUser.getRole().equals(ADMIN)) {
+            exchange.setStatusCode(FORBIDDEN);
         } else {
-            Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
-            if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-                exchange.setStatusCode(UNAUTHORIZED);
-            } else {
-                User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
-                if (user.getRole().equals(USER)) {
-                    exchange.setStatusCode(FORBIDDEN);
-                } else {
-                    String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-                    ObjectId userId = new ObjectId(id);
-                    User currentUser = USER_SERVICE.findById(userId);
-                    if (currentUser == null || currentUser.getDeleted().equals(false)) {
-                        exchange.setStatusCode(FORBIDDEN);
-                    } else {
-                        USER_SERVICE.update(userId, DELETED, false);
-                    }
-                }
-            }
+            USER_SERVICE.update(userId, DELETED, false);
         }
+    }
+
+    @Override
+    public void findAllUser(HttpServerExchange exchange) {
+        Bson filter = eq(UserConst.ROLE, ADMIN);
+        sendMessage(
+                exchange,
+                JsonService.toJson(
+                        getIds(getListObject(filter))
+                )
+        );
     }
 
     private static UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
@@ -152,6 +116,18 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         } catch (IOException e) {
             return null;
         }
+    }
+
+    private List<String> getIds(List<User> users) {
+        List<String> ids = new ArrayList<>();
+        if (users == null) {
+            return null;
+        } else {
+            for (User user : users) {
+                ids.add(user.getId().toString());
+            }
+        }
+        return ids;
     }
 
     private static String validate(UserCreateDto dto) {

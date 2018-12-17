@@ -8,8 +8,8 @@ import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.service.DI.DependencyInjectionService;
 import com.visoft.file.service.service.util.JsonService;
 import com.visoft.file.service.service.util.PageService;
+import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.Cookie;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,24 +19,14 @@ import static com.visoft.file.service.service.ErrorConst.BAD_REQUEST;
 import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
 
-public class AuthService {
+public class AuthenticationService {
 
     private static UserService userService = DependencyInjectionService.USER_SERVICE;
 
     public static void logout(HttpServerExchange exchange) {
-        Cookie cookie = exchange.getRequestCookies().get("token");
-        if (cookie == null) {
-            exchange.setStatusCode(UNAUTHORIZED);
-        }else {
-            Token token = DependencyInjectionService.TOKEN_SERVICE.findByToken(cookie.getValue());
-            if (token == null) {
-                exchange.setStatusCode(UNAUTHORIZED);
-            }else {
-                DependencyInjectionService.TOKEN_SERVICE.setExpirationNow(token.getId());
-                PageService.redirectToLoginPage(exchange);
-            }
-
-        }
+        Token token = SecurityHandler.authenticatedUser.getToken();
+        DependencyInjectionService.TOKEN_SERVICE.setExpirationNow(token.getId());
+        PageService.redirectToLoginPage(exchange);
     }
 
     public static void login(HttpServerExchange exchange) {

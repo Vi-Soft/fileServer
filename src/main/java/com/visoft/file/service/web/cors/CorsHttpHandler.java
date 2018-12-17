@@ -20,7 +20,6 @@ import static io.undertow.server.handlers.ResponseCodeHandler.HANDLE_200;
 public class CorsHttpHandler implements MiddlewareHandler {
 
     public static final String CONFIG_NAME = "cors";
-
     public static CorsConfig config =
             (CorsConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, CorsConfig.class);
 
