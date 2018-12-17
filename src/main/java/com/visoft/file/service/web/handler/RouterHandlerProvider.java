@@ -16,6 +16,12 @@ import static io.undertow.util.Methods.*;
 
 public class RouterHandlerProvider implements HandlerProvider {
 
+    private String ROLE_ADMIN = "admin/";
+
+    private String USER = "users/";
+
+    private String FOLDERS = "folders/";
+
     private HttpHandler unzip = ReportService::unzip;
     private HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
     private HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
@@ -37,23 +43,23 @@ public class RouterHandlerProvider implements HandlerProvider {
     public HttpHandler getHandler() {
         return Handlers.routing()
                 //admin user
-                .add(DELETE, "admin/users/{id}",
+                .add(DELETE, ROLE_ADMIN + USER + "/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(deleteUser))
-                .add(POST, "admin/users/recovery/{id}",
+                .add(POST, ROLE_ADMIN + USER + "/recovery/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(recoveryUser))
-                .add(PUT, "admin/users",
+                .add(PUT, ROLE_ADMIN + USER,
                         getEagerFormParsingHandler()
                                 .setNext(createUser))
-                .add(GET, "admin/users/findAll",
+                .add(GET, ROLE_ADMIN + USER + "/findAll",
                         getEagerFormParsingHandler()
                                 .setNext(findAllUser))
                 //admin folder
-                .add(GET, "/admin/folders",
+                .add(GET, ROLE_ADMIN + FOLDERS,
                         getEagerFormParsingHandler()
                                 .setNext(allFolders))
-                .add(DELETE, "/admin/folders//{id}",
+                .add(DELETE, ROLE_ADMIN + FOLDERS + "/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(deleteFolder))
                 //all
