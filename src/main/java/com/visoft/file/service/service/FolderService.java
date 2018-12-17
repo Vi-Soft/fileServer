@@ -10,4 +10,6 @@ public interface FolderService extends AbstractService<Folder> {
     boolean existsFolder(ObjectId folder);
 
     void deleteFolder(HttpServerExchange httpServerExchange);
+
+    void findAllFolders(HttpServerExchange exchange);
 }

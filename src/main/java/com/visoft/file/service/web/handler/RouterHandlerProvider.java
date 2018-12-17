@@ -23,6 +23,7 @@ public class RouterHandlerProvider implements HandlerProvider {
     private HttpHandler createUser = USER_SERVICE::create;
     private HttpHandler logout = AuthService::logout;
     private HttpHandler deleteFolder = FOLDER_SERVICE::deleteFolder;
+    private HttpHandler allFolders = FOLDER_SERVICE::findAllFolders;
     private HttpHandler deleteUser = USER_SERVICE::delete;
     private HttpHandler recoveryUser = USER_SERVICE::recovery;
 
@@ -40,6 +41,9 @@ public class RouterHandlerProvider implements HandlerProvider {
                 .add(POST, "/users/recovery/{id}",
                         getEagerFormParsingHandler()
                                 .setNext(recoveryUser))
+                .add(GET, "/folders",
+                        getEagerFormParsingHandler()
+                                .setNext(allFolders))
                 .add(DELETE, "/folders//{id}",
                         getEagerFormParsingHandler()
                                 .setNext(deleteFolder))
