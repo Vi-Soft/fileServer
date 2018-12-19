@@ -1,4 +1,4 @@
-package com.visoft.file.service.web.handler;
+package com.visoft.file.service.web.controller;
 
 import com.networknt.server.HandlerProvider;
 import io.undertow.Handlers;

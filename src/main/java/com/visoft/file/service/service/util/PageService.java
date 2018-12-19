@@ -62,8 +62,8 @@ public class PageService {
                 sb.append(System.lineSeparator());
                 line = br.readLine();
             }
-            htmlString = sb.toString().replace("r.png",PropertiesService.getServerName()+"/api/r");
-            htmlString = htmlString.replace("g.png",PropertiesService.getServerName()+"/api/g");
+            htmlString = sb.toString().replace("r.png", PropertiesService.getServerName() + "/static/r");
+            htmlString = htmlString.replace("g.png", PropertiesService.getServerName() + "/static/g");
         }
 
         String[] split = htmlString.split("<body>");

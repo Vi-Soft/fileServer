@@ -2,6 +2,9 @@ package com.visoft.file.service.web.handler;
 
 import com.networknt.server.HandlerProvider;
 import com.visoft.file.service.service.util.PropertiesService;
+import com.visoft.file.service.web.controller.AdminFolderController;
+import com.visoft.file.service.web.controller.AdminUserController;
+import com.visoft.file.service.web.controller.StaticController;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.PathHandler;
 import io.undertow.server.handlers.resource.PathResourceManager;
@@ -30,8 +33,8 @@ public class GeneralHandlerProvider implements HandlerProvider {
                                 .build()
                         )
         );
-        handler.addPrefixPath("api",
-                (new RouterHandlerProvider()).getHandler())
+        handler.addPrefixPath("api", new RouterHandlerProvider().getHandler())
+                .addPrefixPath("static", new StaticController().getHandler())
                 .addPrefixPath("admin/users", new AdminUserController().getHandler())
                 .addPrefixPath("admin/folders", new AdminFolderController().getHandler());
 

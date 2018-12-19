@@ -35,7 +35,7 @@ public class SecurityHandler implements MiddlewareHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
 //        setCookie(exchange,new CookieImpl("token","eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1YzE3YjU1NDY4ODU1MjY3NjdiNmRjMTIifQ.rTBzXY_YNBgfeK2PlL6rqRLv0aEWPKe3AW67zEPxTBeOiJd3VERpQ2fPKhEcqYWlyCA9_UWIzIXoTzXmub5VDA"));
 //        Handler.next(exchange, next);
-        if (exchange.getRequestURI().startsWith("/api/login")) {
+        if (exchange.getRequestURI().startsWith("/api/login") || exchange.getRequestURI().startsWith("/static")) {
             Handler.next(exchange, next);
         } else {
             Cookie cookie = getCookie(exchange);
