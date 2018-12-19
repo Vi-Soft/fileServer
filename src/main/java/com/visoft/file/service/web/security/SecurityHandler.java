@@ -24,12 +24,17 @@ import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 public class SecurityHandler implements MiddlewareHandler {
 
     public static AuthenticatedUser authenticatedUser;
+
     private volatile HttpHandler next;
-    private String ADMIN_URI = "/api/admin";
+
+    private String ADMIN_URI = "/admin";
+
     private String cookieName = "token";
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
+//        setCookie(exchange,new CookieImpl("token","eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1YzE3YjU1NDY4ODU1MjY3NjdiNmRjMTIifQ.rTBzXY_YNBgfeK2PlL6rqRLv0aEWPKe3AW67zEPxTBeOiJd3VERpQ2fPKhEcqYWlyCA9_UWIzIXoTzXmub5VDA"));
+//        Handler.next(exchange, next);
         if (exchange.getRequestURI().startsWith("/api/login")) {
             Handler.next(exchange, next);
         } else {
@@ -58,7 +63,6 @@ public class SecurityHandler implements MiddlewareHandler {
                 }
             }
         }
-
     }
 
     @Override
@@ -83,9 +87,8 @@ public class SecurityHandler implements MiddlewareHandler {
         ModuleRegistry.registerModule(ExceptionHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache("security"), null);
     }
 
-
     private void setCookie(HttpServerExchange exchange, Cookie cookie) {
-        exchange.setResponseCookie(new CookieImpl(cookieName, cookie.getValue()));
+        exchange.setResponseCookie(new CookieImpl(cookieName, cookie.getValue()).setDomain(".fs30.chisw.su").setPath("/"));
     }
 
     private Cookie getCookie(HttpServerExchange exchange) {

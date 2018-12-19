@@ -72,6 +72,9 @@ public class PageService {
                 "<form action=\""+server+"/api/logout\" method=\"post\">\n" +
                 "    <input type=\"submit\" value=\"Logout\" />\n" +
                 "</form>"+
+                "<a href=\"" + PropertiesService.getServerName() + folder + "/" + getFolderName(folder) + ".zip\">\n" +
+                "\t\t<button>Download</button></p>\n" +
+                "\t</a>" +
                 split[1];
 
 

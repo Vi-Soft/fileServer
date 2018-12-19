@@ -14,8 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
+import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
+import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 
 public class FileResourceHandler extends ResourceHandler {
 
@@ -25,32 +28,41 @@ public class FileResourceHandler extends ResourceHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
+
         AuthenticatedUser authenticatedUser = SecurityHandler.authenticatedUser;
         User user = authenticatedUser.getUser();
         String requestURI = exchange.getRequestURI();
-        if (requestURI.equals("/")) {
-            sendResponse(exchange, user
-            );
+        if (requestURI.contains(".zip")) {
+            if (user.getRole().equals(ADMIN)) {
+                super.handleRequest(exchange);
+            } else {
+                if (getFolders(user).contains(requestURI.substring(0, getURLWithoutDownloadFile(requestURI)))) {
+                    super.handleRequest(exchange);
+                } else {
+                    sendStatusCode(exchange, FORBIDDEN);
+                }
+            }
+
         } else {
-            if (user.getRole().equals(USER)) {
-                requestURI = reorganizeRequestURI(requestURI);
+            if (requestURI.equals("/")) {
+                sendResponse(exchange, user
+                );
+            } else {
+                if (user.getRole().equals(USER)) {
+                    requestURI = reorganizeRequestURI(requestURI);
+                }
                 if (!getFolders(user).contains(requestURI)) {
                     sendResponse(exchange, user);
                 } else {
                     sendResponse(exchange, requestURI);
                 }
-            } else {
-                sendResponse(exchange, requestURI);
             }
         }
+
     }
 
     private void sendResponse(HttpServerExchange exchange, User user) {
-        if (user.getRole().equals(USER)) {
-            PageService.getMainUserHtml(exchange, getFolders(user));
-        } else {
-            PageService.getMainUserHtml(exchange, getFolders(user));
-        }
+        PageService.getMainUserHtml(exchange, getFolders(user));
     }
 
     private void sendResponse(HttpServerExchange exchange, String requestURI) throws IOException {
@@ -78,7 +90,7 @@ public class FileResourceHandler extends ResourceHandler {
                 }
             }
         } else {
-            List<Folder> all = FOLDER_SERVICE.getListObject(null);
+            List<Folder> all = FOLDER_SERVICE.findAll();
             if (all != null) {
                 for (Folder folder : all) {
                     folders.add(folder.getFolder());
@@ -86,5 +98,10 @@ public class FileResourceHandler extends ResourceHandler {
             }
         }
         return folders;
+    }
+
+    private int getURLWithoutDownloadFile(String requestURI) {
+        String[] split = requestURI.split("/");
+        return requestURI.length() - split[split.length - 1].length() - 1;
     }
 }

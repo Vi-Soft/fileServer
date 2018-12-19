@@ -1,4 +1,4 @@
-package com.visoft.file.service.util;
+package com.visoft.file.service.config;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -11,7 +11,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-public class DBUtil {
+public class DBConfig {
 
     private static String DB_NAME = PropertiesService.getDBName();
     public final static MongoClient mongoClient = MongoClients.create();

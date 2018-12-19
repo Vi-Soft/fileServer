@@ -3,13 +3,13 @@ package com.visoft.file.service.persistance.repository;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
+import com.visoft.file.service.config.DBConfig;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.TokenConst;
-import com.visoft.file.service.util.DBUtil;
 
 public class TokenRepository extends AbstractRepository<Token> {
 
-    private static final MongoCollection<Token> collection = DBUtil.DB
+    private static final MongoCollection<Token> collection = DBConfig.DB
             .getCollection(TokenConst.DB, Token.class);
 
     private static final IndexOptions indexOptions = new IndexOptions()

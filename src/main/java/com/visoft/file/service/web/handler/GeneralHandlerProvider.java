@@ -24,14 +24,16 @@ public class GeneralHandlerProvider implements HandlerProvider {
         PathHandler handler = path().addPrefixPath(
                 "/",
                 resourceHandler
-                        .setDirectoryListingEnabled(true)
+                        .setDirectoryListingEnabled(false)
                         .setMimeMappings(MimeMappings.builder(true)
                                 .addMapping("html", "text/html;charset=utf-8")
                                 .build()
                         )
         );
         handler.addPrefixPath("api",
-                (new RouterHandlerProvider()).getHandler());
+                (new RouterHandlerProvider()).getHandler())
+                .addPrefixPath("admin/users", new AdminUserController().getHandler())
+                .addPrefixPath("admin/folders", new AdminFolderController().getHandler());
 
         return handler;
 

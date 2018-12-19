@@ -41,7 +41,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public void updateUser(HttpServerExchange exchange) {
+    public void update(HttpServerExchange exchange) {
         UserUpdateDto dto = getUpdateUserRequestBody(exchange);
         if (!validate(dto)) {
             sendStatusCode(exchange, BAD_REQUEST);
@@ -64,7 +64,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public void findByIdUser(HttpServerExchange exchange) {
+    public void findById(HttpServerExchange exchange) {
         String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
         User user = findUserNotAdmin(id);
         if (user == null) {
@@ -126,8 +126,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public void findAllUser(HttpServerExchange exchange) {
-        Bson filter = eq(UserConst.ROLE, ADMIN);
+    public void findAll(HttpServerExchange exchange) {
+        Bson filter = eq(ROLE, USER.toString());
         sendMessage(
                 exchange,
                 toJson(
