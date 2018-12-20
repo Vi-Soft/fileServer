@@ -8,35 +8,32 @@ import java.util.Properties;
 
 public class PropertiesService {
 
-    private static String APPLICATION = "application.properties";
-
-    private static String DB = "db";
-
-    private static String LOGIN_HTML_URL = "login.html.url";
-
-    private static String ROOT_PATH = "root.path";
-
-    private static String SERVER = "server.domain";
-
-    public static String getDBName() {
-        return getProperties().getProperty(DB);
+    public static String getReportExtension() {
+        return getProperties().getProperty("report.extension");
     }
 
     static String getLoginPage() {
-        return getProperties().getProperty(LOGIN_HTML_URL);
+        return getProperties().getProperty("login.html.url");
     }
 
     public static String getRootPath() {
-        return getProperties().getProperty(ROOT_PATH);
+        return getProperties().getProperty("root.path");
     }
 
     static String getServerName() {
-        return getProperties().getProperty(SERVER);
+        return getProperties().getProperty("server.domain");
+    }
+
+    public static String getDBName() {
+        return getProperties().getProperty("db");
     }
 
     private static Properties getProperties() {
         Properties prop = new Properties();
-        InputStream input = GeneralHandlerProvider.class.getClassLoader().getResourceAsStream(APPLICATION);
+        InputStream input = GeneralHandlerProvider
+                .class
+                .getClassLoader()
+                .getResourceAsStream("application.properties");
         try {
             prop.load(input);
         } catch (IOException e) {

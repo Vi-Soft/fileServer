@@ -18,6 +18,7 @@ import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
+import static com.visoft.file.service.service.util.PropertiesService.getReportExtension;
 import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 
 public class FileResourceHandler extends ResourceHandler {
@@ -32,7 +33,7 @@ public class FileResourceHandler extends ResourceHandler {
         AuthenticatedUser authenticatedUser = SecurityHandler.authenticatedUser;
         User user = authenticatedUser.getUser();
         String requestURI = exchange.getRequestURI();
-        if (requestURI.contains(".zip")) {
+        if (requestURI.contains(getReportExtension())) {
             if (user.getRole().equals(ADMIN)) {
                 super.handleRequest(exchange);
             } else {
@@ -42,7 +43,6 @@ public class FileResourceHandler extends ResourceHandler {
                     sendStatusCode(exchange, FORBIDDEN);
                 }
             }
-
         } else {
             if (requestURI.equals("/")) {
                 sendResponse(exchange, user

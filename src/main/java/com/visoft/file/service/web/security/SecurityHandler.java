@@ -11,7 +11,6 @@ import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
-import io.undertow.server.handlers.CookieImpl;
 
 import java.time.Instant;
 
@@ -54,7 +53,6 @@ public class SecurityHandler implements MiddlewareHandler {
                             exchange.setStatusCode(FORBIDDEN);
                         } else {
                             TOKEN_SERVICE.addExpiration(authenticatedUser.getToken().getUserId());
-//                            setCookie(exchange, cookie);
                             Handler.next(exchange, next);
                         }
                     }
@@ -83,10 +81,6 @@ public class SecurityHandler implements MiddlewareHandler {
     @Override
     public void register() {
         ModuleRegistry.registerModule(ExceptionHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache("security"), null);
-    }
-
-    private void setCookie(HttpServerExchange exchange, Cookie cookie) {
-        exchange.setResponseCookie(new CookieImpl(cookieName, cookie.getValue()).setDomain(".fs30.chisw.su").setPath("/"));
     }
 
     private Cookie getCookie(HttpServerExchange exchange) {

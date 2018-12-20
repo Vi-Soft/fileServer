@@ -14,14 +14,12 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 public class DBConfig {
 
     private static String DB_NAME = PropertiesService.getDBName();
-    public final static MongoClient mongoClient = MongoClients.create();
+    private final static MongoClient mongoClient = MongoClients.create();
 
-    // create codec registry for POJOs
-    public final static CodecRegistry pojoCodecRegistry = fromRegistries(
+    private final static CodecRegistry pojoCodecRegistry = fromRegistries(
             MongoClientSettings.getDefaultCodecRegistry(),
             fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
-    // get handle to database
     public final static MongoDatabase DB = mongoClient.getDatabase(DB_NAME)
             .withCodecRegistry(pojoCodecRegistry);
 }
