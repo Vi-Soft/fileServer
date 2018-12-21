@@ -16,13 +16,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.BAD_REQUEST;
 import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
 
 public class AuthenticationService {
-
-    private static UserService userService = DependencyInjectionService.USER_SERVICE;
 
     public static void logout(HttpServerExchange exchange) {
         Token token = SecurityHandler.authenticatedUser.getToken();
@@ -39,7 +38,7 @@ public class AuthenticationService {
             if (validateResult != null) {
                 exchange.setStatusCode(BAD_REQUEST);
             } else {
-                User user = userService.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
+                User user = USER_SERVICE.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
                 if (user == null) {
                     exchange.setStatusCode(UNAUTHORIZED);
                 } else {

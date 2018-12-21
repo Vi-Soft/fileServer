@@ -236,37 +236,4 @@ public class PageService {
         String[] split = path.split("/");
         return split[split.length - 1];
     }
-
-//    private static String getHtmlTree(Task mainTask) {
-//        String htmlTree = "<ul class=\"nested\">\n";
-//        for (Task task : mainTask.getTasks()) {
-//            if (task.getTasks() != null) {
-//                htmlTree = htmlTree + "<li><span class=\"box\"";
-//                htmlTree = addColorId(htmlTree, task);
-//                htmlTree = htmlTree + ">" + task.getName() + "</span>";
-//            } else {
-//                htmlTree = htmlTree + "<li";
-//                htmlTree = addColorId(htmlTree, task);
-//                htmlTree = htmlTree + ">" + task.getName() + "</li>\n";
-//            }
-//            if (task.getTasks() != null) {
-//                htmlTree = htmlTree + getHtmlTree(task);
-//            }
-//
-//        }
-//        htmlTree = htmlTree + "</li></ul>\n";
-//        return htmlTree;
-//    }
-//
-//    private static String addColorId(String htmlTree, Task task) {
-//        switch (task.getIcon()) {
-//            case 1:
-//                htmlTree = htmlTree + " id= \"grey\"";
-//                break;
-//            case 2:
-//                htmlTree = htmlTree + " id= \"red\"";
-//                break;
-//        }
-//        return htmlTree;
-//    }
 }

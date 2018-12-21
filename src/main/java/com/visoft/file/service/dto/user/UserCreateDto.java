@@ -1,13 +1,11 @@
-package com.visoft.file.service.dto;
+package com.visoft.file.service.dto.user;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class UserUpdateDto {
-
-    private String id;
+public class UserCreateDto {
 
     private String login;
 

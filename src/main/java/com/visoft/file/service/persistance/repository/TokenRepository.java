@@ -7,7 +7,7 @@ import com.visoft.file.service.config.DBConfig;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.TokenConst;
 
-public class TokenRepository extends AbstractRepository<Token> {
+class TokenRepository extends AbstractRepository<Token> {
 
     private static final MongoCollection<Token> collection = DBConfig.DB
             .getCollection(TokenConst.DB, Token.class);
@@ -18,7 +18,7 @@ public class TokenRepository extends AbstractRepository<Token> {
     private static final String tokenIndex = collection
             .createIndex(Indexes.ascending(TokenConst.TOKEN), indexOptions);
 
-    public TokenRepository() {
+    TokenRepository() {
         super(collection);
     }
 }

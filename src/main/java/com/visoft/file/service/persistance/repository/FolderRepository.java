@@ -7,7 +7,7 @@ import com.visoft.file.service.config.DBConfig;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.FolderConst;
 
-public class FolderRepository extends AbstractRepository<Folder> {
+class FolderRepository extends AbstractRepository<Folder> {
 
     private static final MongoCollection<Folder> collection = DBConfig.DB
             .getCollection(FolderConst.DB, Folder.class);
@@ -18,7 +18,7 @@ public class FolderRepository extends AbstractRepository<Folder> {
     private static final String folderIndex = collection
             .createIndex(Indexes.ascending(FolderConst.FOLDER), indexOptions);
 
-    public FolderRepository() {
+    FolderRepository() {
         super(collection);
     }
 }

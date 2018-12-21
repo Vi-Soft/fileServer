@@ -15,5 +15,4 @@ public class AuthenticatedUser {
     private Cookie cookie;
 
     private Token token;
-
 }

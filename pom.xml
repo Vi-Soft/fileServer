@@ -17,12 +17,6 @@
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
-    <parent>
-        <groupId>com.networknt</groupId>
-        <artifactId>light-4j</artifactId>
-        <version>1.5.23</version>
-    </parent>
-
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>

@@ -13,8 +13,9 @@ import static io.undertow.util.Methods.GET;
 
 public class AdminFolderController implements HandlerProvider {
 
-    private HttpHandler deleteFolder = FOLDER_SERVICE::deleteFolder;
-    private HttpHandler allFolders = FOLDER_SERVICE::findAllFolders;
+    private HttpHandler delete = FOLDER_SERVICE::delete;
+    private HttpHandler findAll = FOLDER_SERVICE::findAll;
+    private HttpHandler findById = FOLDER_SERVICE::findById;
 
     private EagerFormParsingHandler getEagerFormParsingHandler() {
         return new EagerFormParsingHandler(FormParserFactory.builder()
@@ -26,9 +27,12 @@ public class AdminFolderController implements HandlerProvider {
         return Handlers.routing()
                 .add(GET, "findAll",
                         getEagerFormParsingHandler()
-                                .setNext(allFolders))
+                                .setNext(findAll))
                 .add(DELETE, "/{id}",
                         getEagerFormParsingHandler()
-                                .setNext(deleteFolder));
+                                .setNext(delete))
+                .add(GET, "/findById/{id}",
+                        getEagerFormParsingHandler()
+                                .setNext(findById));
     }
 }

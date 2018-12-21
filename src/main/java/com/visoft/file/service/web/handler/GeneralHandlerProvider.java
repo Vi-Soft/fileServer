@@ -38,7 +38,5 @@ public class GeneralHandlerProvider implements HandlerProvider {
                 .addPrefixPath("admin/users", new AdminUserController().getHandler())
                 .addPrefixPath("admin/folders", new AdminFolderController().getHandler());
         return handler;
-
     }
-
 }

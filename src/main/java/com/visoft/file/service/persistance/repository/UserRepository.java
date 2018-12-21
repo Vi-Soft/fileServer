@@ -7,7 +7,7 @@ import com.visoft.file.service.config.DBConfig;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
 
-public class UserRepository extends AbstractRepository<User> {
+class UserRepository extends AbstractRepository<User> {
 
     private static final MongoCollection<User> collection = DBConfig.DB
             .getCollection(UserConst.DB, User.class);
@@ -18,7 +18,7 @@ public class UserRepository extends AbstractRepository<User> {
     private static final String loginIndex = collection
             .createIndex(Indexes.ascending(UserConst.LOGIN), indexOptions);
 
-    public UserRepository() {
+    UserRepository() {
         super(collection);
     }
 }

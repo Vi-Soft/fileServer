@@ -13,6 +13,9 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.Cookie;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKEN_SERVICE;
@@ -30,9 +33,11 @@ public class SecurityHandler implements MiddlewareHandler {
 
     private String cookieName = "token";
 
+    private List<String> allAccess = new ArrayList<>(Arrays.asList("/api/login", "/api/unzip", "/static"));
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        if (exchange.getRequestURI().startsWith("/api/login") || exchange.getRequestURI().startsWith("/static")) {
+        if (isHasAccess(exchange.getRequestURI())) {
             Handler.next(exchange, next);
         } else {
             Cookie cookie = getCookie(exchange);
@@ -85,5 +90,14 @@ public class SecurityHandler implements MiddlewareHandler {
 
     private Cookie getCookie(HttpServerExchange exchange) {
         return exchange.getRequestCookies().get(cookieName);
+    }
+
+    private boolean isHasAccess(String requestURI) {
+        for (String access : allAccess) {
+            if (requestURI.startsWith(access)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

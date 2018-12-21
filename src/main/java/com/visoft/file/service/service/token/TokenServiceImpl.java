@@ -1,6 +1,5 @@
-package com.visoft.file.service.service;
+package com.visoft.file.service.service.token;
 
-import com.visoft.file.service.persistance.entity.GeneralConst;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.TokenConst;
 import com.visoft.file.service.persistance.repository.Repositories;
@@ -31,12 +30,6 @@ public class TokenServiceImpl extends AbstractServiceImpl<Token> implements Toke
     }
 
     @Override
-    public boolean isExistsById(ObjectId id) {
-        Bson filter = eq(GeneralConst._ID, id);
-        return isExists(filter);
-    }
-
-    @Override
     public void addExpiration(ObjectId id) {
         update(
                 id,
@@ -46,7 +39,7 @@ public class TokenServiceImpl extends AbstractServiceImpl<Token> implements Toke
     }
 
     @Override
-    public void setExpirationNow(ObjectId id){
+    public void setExpirationNow(ObjectId id) {
         update(
                 id,
                 TokenConst.EXPIRATION,

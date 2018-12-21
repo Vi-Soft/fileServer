@@ -1,4 +1,4 @@
-package com.visoft.file.service.service;
+package com.visoft.file.service.service.user;
 
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.service.abstractService.AbstractService;

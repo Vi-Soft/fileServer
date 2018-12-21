@@ -1,10 +1,9 @@
-package com.visoft.file.service.service;
+package com.visoft.file.service.service.user;
 
 import com.networknt.config.Config;
-import com.networknt.handler.util.Exchange;
-import com.visoft.file.service.dto.UserCreateDto;
-import com.visoft.file.service.dto.UserOutcomeDto;
-import com.visoft.file.service.dto.UserUpdateDto;
+import com.visoft.file.service.dto.user.UserCreateDto;
+import com.visoft.file.service.dto.user.UserOutcomeDto;
+import com.visoft.file.service.dto.user.UserUpdateDto;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
@@ -31,6 +30,7 @@ import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
+import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
 import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 
@@ -46,7 +46,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         if (!validate(dto)) {
             sendStatusCode(exchange, BAD_REQUEST);
         } else {
-            User user = findUserNotAdmin(dto.getId());
+            User user = findUserNotAdmin(new ObjectId(dto.getId()));
             if (user == null) {
                 sendStatusCode(exchange, BAD_REQUEST);
             }
@@ -65,15 +65,15 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void findById(HttpServerExchange exchange) {
-        String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-        User user = findUserNotAdmin(id);
+        User user = findUserNotAdmin(getIdFromRequest(exchange));
         if (user == null) {
             sendStatusCode(exchange, NOT_FOUND);
         } else {
-            sendMessage(exchange, toJson(new UserOutcomeDto(
-                    user.getId(),
-                    user.getLogin(),
-                    user.getFolders())));
+            sendMessage(
+                    exchange,
+                    toJson(new UserOutcomeDto(user)
+                    )
+            );
         }
     }
 
@@ -103,9 +103,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void delete(HttpServerExchange exchange) {
-        String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-        ObjectId userId = new ObjectId(id);
-        User currentUser = findByIdNotDeleted(userId);
+        ObjectId userId = getIdFromRequest(exchange);
+        User currentUser = findByIdNotDeleted(getIdFromRequest(exchange));
         if (currentUser == null || currentUser.getRole().equals(ADMIN)) {
             sendStatusCode(exchange, FORBIDDEN);
         } else {
@@ -115,13 +114,16 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void recovery(HttpServerExchange exchange) {
-        String id = Exchange.queryParams().queryParam(exchange, "id").orElse("");
-        ObjectId userId = new ObjectId(id);
+        ObjectId userId = getIdFromRequest(exchange);
         User currentUser = USER_SERVICE.findById(userId);
         if (currentUser == null || currentUser.getDeleted().equals(false) || currentUser.getRole().equals(ADMIN)) {
             sendStatusCode(exchange, FORBIDDEN);
         } else {
-            update(userId, DELETED, false);
+            update(
+                    userId,
+                    DELETED,
+                    false
+            );
         }
     }
 
@@ -145,10 +147,9 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         return super.getObject(filter);
     }
 
-    private User findUserNotAdmin(String id) {
-        ObjectId userId = new ObjectId(id);
+    private User findUserNotAdmin(ObjectId id) {
         Bson filter = and(
-                eq(_ID, userId),
+                eq(_ID, id),
                 eq(ROLE, USER.toString())
         );
         return getObject(filter);
@@ -227,7 +228,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     private boolean isExistsByLogin(String login) {
-        Bson filter = eq(UserConst.LOGIN, login);
-        return isExists(filter);
+        return isExists(eq(UserConst.LOGIN, login));
     }
 }

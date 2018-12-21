@@ -1,4 +1,4 @@
-package com.visoft.file.service.service;
+package com.visoft.file.service.service.token;
 
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.service.abstractService.AbstractService;
@@ -11,8 +11,6 @@ public interface TokenService extends AbstractService<Token> {
     Token findByUserId(ObjectId userId);
 
     void addExpiration(ObjectId id);
-
-    boolean isExistsById(ObjectId id);
 
     void setExpirationNow(ObjectId id);
 }

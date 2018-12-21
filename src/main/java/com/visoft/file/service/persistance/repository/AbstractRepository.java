@@ -19,7 +19,7 @@ public class AbstractRepository<T> implements Repository<T> {
 
     private final MongoCollection<T> mongoCollection;
 
-    public AbstractRepository(MongoCollection<T> companyMongoCollection) {
+    AbstractRepository(MongoCollection<T> companyMongoCollection) {
         this.mongoCollection = companyMongoCollection;
     }
 
@@ -31,32 +31,41 @@ public class AbstractRepository<T> implements Repository<T> {
     @Override
     public List<T> findAll() {
         return StreamSupport
-                .stream(mongoCollection.find().spliterator(), true)
+                .stream(
+                        mongoCollection
+                                .find()
+                                .spliterator(),
+                        true)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<T> findAllDeleted() {
-        Bson bsonFilter = eq(DELETED, true);
-        return getListObject(bsonFilter);
+        return getListObject(eq(DELETED, true));
     }
 
     @Override
     public T findById(ObjectId id) {
-        Bson bsonFilter = eq(_ID, id);
-        return getObject(bsonFilter);
+        return getObject(eq(_ID, id));
     }
 
     @Override
     public T findByIdNotDeleted(ObjectId id) {
-        Bson bsonFilter = and(eq(_ID, id), eq(DELETED, false));
+        Bson bsonFilter = and(
+                eq(_ID, id),
+                eq(DELETED, false)
+        );
         return getObject(bsonFilter);
     }
 
     @Override
     public List<T> getListObject(Bson bsonFilter) {
         return StreamSupport
-                .stream(mongoCollection.find(bsonFilter).spliterator(), true)
+                .stream(mongoCollection
+                                .find(bsonFilter)
+                                .spliterator(),
+                        true
+                )
                 .collect(Collectors.toList());
     }
 
@@ -72,18 +81,20 @@ public class AbstractRepository<T> implements Repository<T> {
 
     @Override
     public boolean update(ObjectId id, String name, Object value) {
-        Bson bisonFilter = eq(_ID, id);
-        UpdateResult updateResult = mongoCollection.updateOne(bisonFilter,
-                set(name, value));
+        UpdateResult updateResult = mongoCollection.updateOne(
+                eq(_ID, id),
+                set(name, value)
+        );
         return updateResult.getModifiedCount() > 0;
     }
 
     @Override
     public long update(final T t, ObjectId id) {
-        final Bson bsonFilter = eq(_ID, id);
         UpdateResult updateResult =
-                mongoCollection.replaceOne(bsonFilter, t);
+                mongoCollection.replaceOne(
+                        eq(_ID, id),
+                        t
+                );
         return updateResult.getModifiedCount();
     }
-
 }
