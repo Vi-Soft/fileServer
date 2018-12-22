@@ -8,6 +8,7 @@ import com.visoft.file.service.dto.TaskDto;
 import com.visoft.file.service.service.util.PageService;
 import com.visoft.file.service.service.util.PropertiesService;
 import io.undertow.server.HttpServerExchange;
+import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -52,15 +53,31 @@ public class ReportService {
             exchange.getResponseSender().send(validateReportDtoResult);
         } else {
             String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
+
             if (validateZipResult != null) {
                 exchange.getResponseSender().send(validateZipResult);
             } else {
-                unzip(rootPath + "/" + reportDto.getArchiveName() + ".zip",
-                        rootPath + "/" + reportDto.getCompanyName());
+                ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + ".zip"),
+                        new File(rootPath + "/" + reportDto.getCompanyName()));
                 Report tree = getTree(reportDto);
                 PageService.saveIndexHtml(tree);
+                ZipUtil.pack(
+                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
+                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
+                );
+                new File(rootPath + "/" + reportDto.getArchiveName() + ".zip").delete();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        Long start = System.currentTimeMillis();
+        ZipUtil.pack(
+                new File("/home/user/files/101/elina_27_11_2018_15-30-14"),
+                new File("/home/user/files/101/elina_27_11_2018_15-30-14" + ".zip")
+        );
+        Long end = System.currentTimeMillis();
+        System.out.println(end - start);
     }
 
     private static ReportDto getRequestBody(HttpServerExchange exchange) throws IOException {
@@ -94,23 +111,23 @@ public class ReportService {
             Long orderInGroup = task.getOrderInGroup();
             Integer icon = task.getIcon();
             if (name == null || name.equals("")) {
-                return TASK_NAME_NOT_CORRECT+" id:"+id+"name:"+name+" order:"+orderInGroup+" parentId:"+parentId;
+                return TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             if (id == null || id < 1) {
-                return TASK_ID_NOT_CORRECT+" id:"+id+"name:"+name+" order:"+orderInGroup+" parentId:"+parentId;
+                return TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             ids.add(id);
             if (parentId == null || parentId == 0 || parentId < -1) {
-                return PARENT_TASK_ID_NOT_CORRECT+" id:"+id+"name:"+name+" order:"+orderInGroup+" parentId:"+parentId;
+                return PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             if (task.getParentId() == -1) {
                 parentIdNullCount++;
             }
-            if (orderInGroup == null ) {
-                return ORDER_IN_GROUP_NOT_CORRECT+" id:"+id+"name:"+name+" order:"+orderInGroup+" parentId:"+parentId;
+            if (orderInGroup == null) {
+                return ORDER_IN_GROUP_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             if (orderInGroup.equals(previousOrderInGroup) && parentId.equals(previousParentId)) {
-                return MORE_ONE_EQUALS_ORDER_IN_GROUP + " id:"+id+"name:"+name+" order:"+orderInGroup+" parentId:"+parentId;
+                return MORE_ONE_EQUALS_ORDER_IN_GROUP + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             previousParentId = parentId;
             previousOrderInGroup = orderInGroup;

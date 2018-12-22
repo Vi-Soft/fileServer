@@ -27,7 +27,9 @@ public class CorsHttpHandler implements MiddlewareHandler {
     private static final Collection<String> allowedMethods = config.getAllowedMethods();
 
     private volatile HttpHandler next;
-    /** Default max age **/
+    /**
+     * Default max age
+     **/
     private static final long ONE_HOUR_IN_SECONDS = 60 * 60;
 
     public CorsHttpHandler() {
@@ -55,7 +57,7 @@ public class CorsHttpHandler implements MiddlewareHandler {
     private void setCorsResponseHeaders(HttpServerExchange exchange) throws Exception {
         HeaderMap headers = exchange.getRequestHeaders();
         if (headers.contains(Headers.ORIGIN)) {
-            if(CorsUtil.matchOrigin(exchange, allowedOrigins) != null) {
+            if (CorsUtil.matchOrigin(exchange, allowedOrigins) != null) {
                 exchange.getResponseHeaders().addAll(ACCESS_CONTROL_ALLOW_ORIGIN, headers.get(Headers.ORIGIN));
                 exchange.getResponseHeaders().add(Headers.VARY, Headers.ORIGIN_STRING);
             }
