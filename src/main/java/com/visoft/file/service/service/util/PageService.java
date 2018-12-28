@@ -101,6 +101,9 @@ public class PageService {
                         "#grey{\n" +
                         "  color: grey\n" +
                         "}" +
+                        "#gold{\n" +
+                        "  color: gold\n" +
+                        "}" +
                         "#myUL {\n" +
                         "  margin: 0;\n" +
                         "  padding: 0;\n" +
@@ -169,7 +172,7 @@ public class PageService {
     private static String getHtmlTree(Task mainTask) {
         String htmlTree = "<ul class=\"nested\">\n";
         for (Task task : mainTask.getTasks()) {
-            if (task.getTasks() != null) {
+            if (task.getTasks() != null && !task.getTasks().isEmpty()) {
                 htmlTree = htmlTree + "<li>";
                 htmlTree = htmlTree + addImage(task);
                 htmlTree = htmlTree + "<span class=\"box\"";
@@ -177,8 +180,12 @@ public class PageService {
                 htmlTree = htmlTree + ">" + task.getName() + "</span>";
             } else {
                 htmlTree = htmlTree + "<li";
-                htmlTree = addColorId(htmlTree, task);
-                htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
+                if (task.getIcon() == 3) {
+                    htmlTree = htmlTree + "><a href=\"" + task.getPath() + "\">" + task.getName() + "</a></li>\n";
+                } else {
+                    htmlTree = addColorId(htmlTree, task);
+                    htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
+                }
             }
             if (task.getTasks() != null) {
                 htmlTree = htmlTree + getHtmlTree(task);
@@ -197,6 +204,9 @@ public class PageService {
             case 2:
                 htmlTree = htmlTree + " id= \"red\"";
                 break;
+//            case 3:
+//                htmlTree = htmlTree + " id= \"gold\"";
+//                break;
         }
         return htmlTree;
     }

@@ -10,14 +10,14 @@ import com.visoft.file.service.service.util.PropertiesService;
 import io.undertow.server.HttpServerExchange;
 import org.zeroturnaround.zip.ZipUtil;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class ReportService {
 
@@ -59,8 +59,9 @@ public class ReportService {
             } else {
                 ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + ".zip"),
                         new File(rootPath + "/" + reportDto.getCompanyName()));
-                Report tree = getTree(reportDto);
-                PageService.saveIndexHtml(tree);
+                Report fullTree = getFullTree(reportDto);
+                getRealTask(fullTree.getTask(), reportDto.getTasks());
+                PageService.saveIndexHtml(fullTree);
                 ZipUtil.pack(
                         new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
                         new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
@@ -70,14 +71,50 @@ public class ReportService {
         }
     }
 
-    public static void main(String[] args) {
-        Long start = System.currentTimeMillis();
-        ZipUtil.pack(
-                new File("/home/user/files/101/elina_27_11_2018_15-30-14"),
-                new File("/home/user/files/101/elina_27_11_2018_15-30-14" + ".zip")
+    private static void getRealTask(Task task, List<TaskDto> tasks) {
+        if (task.getTasks() != null && !task.getTasks().isEmpty()) {
+            for (Task taskTask : task.getTasks()) {
+                for (TaskDto taskDto : tasks) {
+                    if (taskTask.getName().equals(taskDto.getId().toString())) {
+                        taskTask.setIcon(taskDto.getIcon());
+                        taskTask.setName(taskDto.getName());
+                        taskTask.setOrderInGroup(taskDto.getOrderInGroup());
+                    }
+                }
+
+                getRealTask(taskTask, tasks);
+            }
+            sortByParentIdAndOrderInGroup(task.getTasks());
+        }
+    }
+
+    private static Report getFullTree(ReportDto reportDto) {
+
+        Report report = Report.builder()
+                .projectName(reportDto.getProjectName())
+                .companyName(reportDto.getCompanyName())
+                .archiveName(reportDto.getArchiveName())
+                .build();
+        Task task = new Task(report.getProjectName(), null, new ArrayList<>(), -10000L, 0);
+        List<Task> tasks = new ArrayList<>();
+
+        String[] list = new File(rootPath + "/" + report.getCompanyName() + "/" + report.getArchiveName()).list();
+        if (list.length != 0) {
+            for (String s : list) {
+                Task currentTask = new Task(s, null, new ArrayList<>(), 100000L, 0);
+                tasks.add(new ReportService().getTreeByFileSystem(currentTask, "/" + currentTask.getName(), "/" + report.getCompanyName(), "/" + report.getArchiveName()));
+
+            }
+        }
+        task.setTasks(tasks);
+        report.setTask(task);
+        return report;
+    }
+
+    private static void sortByParentIdAndOrderInGroup(List<Task> tasks) {
+        tasks.sort(Comparator
+                .comparing(Task::getOrderInGroup)
         );
-        Long end = System.currentTimeMillis();
-        System.out.println(end - start);
     }
 
     private static ReportDto getRequestBody(HttpServerExchange exchange) throws IOException {
@@ -152,62 +189,26 @@ public class ReportService {
         );
     }
 
-    private static Report getTree(ReportDto reportDto) {
-        Report report = Report.builder()
-                .projectName(reportDto.getProjectName())
-                .companyName(reportDto.getCompanyName())
-                .archiveName(reportDto.getArchiveName())
-                .build();
-        Task mainTask = null;
-        for (TaskDto task : reportDto.getTasks()) {
-            if (task.getParentId() == -1) {
-                Task currentTask = Task.builder()
-                        .name(task.getName())
-                        .id(task.getId())
-                        .orderInGroup(task.getOrderInGroup())
-                        .icon(task.getIcon())
-                        .build();
-                mainTask = currentTask;
-            }
-        }
-        if (mainTask != null) {
-            Task childrenTasks = getChildrenTasks(reportDto.getTasks(), mainTask);
-            report.setTask(childrenTasks);
-        }
-        return report;
-    }
-
-    private static Task getChildrenTasks(List<TaskDto> taskDtos, Task mainTask) {
-        if (mainTask != null) {
-            for (TaskDto taskDto : taskDtos) {
-                if (taskDto.getParentId().equals(mainTask.getId())) {
-                    Task childrenTask = new Task(
-                            taskDto.getName(),
-                            taskDto.getId(),
-                            null,
-                            taskDto.getOrderInGroup(),
-                            taskDto.getIcon()
-                    );
-                    List<Task> tasks1 = mainTask.getTasks();
-                    if (tasks1 == null) {
-                        ArrayList<Task> currentTasks = new ArrayList<>();
-                        currentTasks.add(childrenTask);
-                        tasks1 = currentTasks;
-                    } else {
-                        tasks1.add(childrenTask);
+    private Task getTreeByFileSystem(Task task, String path, String companyName, String projectName) {
+        String fullPath = rootPath + companyName + projectName + path;
+        if (task != null) {
+            if (new File(fullPath).isDirectory()) {
+                String[] list = new File(fullPath).list();
+                List<Task> tasks = new ArrayList<>();
+                if (list != null) {
+                    for (String s : list) {
+                        Task currentTask = new Task(s, null, new ArrayList<>(), 10L, 0);
+                        Task ss = getTreeByFileSystem(currentTask, path + "/" + currentTask.getName(), companyName, projectName);
+                        tasks.add(ss);
+                        task.setTasks(tasks);
                     }
-                    mainTask.setTasks(tasks1);
                 }
-            }
-        } else {
-            return null;
-        }
-        if (mainTask.getTasks() != null) {
-            for (Task task : mainTask.getTasks()) {
-                getChildrenTasks(taskDtos, task);
+            } else {
+                task.setIcon(3);
+                task.setPath(path.substring(1));
             }
         }
-        return mainTask;
+        return task;
     }
 
     private static String validateZip(String archiveName, String companyName) throws IOException {
@@ -234,39 +235,5 @@ public class ReportService {
 
     private static boolean existsZip(String archiveName) {
         return new File(rootPath + "/" + archiveName + ".zip").exists();
-    }
-
-    private static void unzip(final String zipFilePath, final String unzipLocation) throws IOException {
-
-        if (!(Files.exists(Paths.get(unzipLocation)))) {
-            Files.createDirectories(Paths.get(unzipLocation));
-        }
-        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFilePath))) {
-            ZipEntry entry = zipInputStream.getNextEntry();
-            while (entry != null) {
-                Path filePath = Paths.get(unzipLocation, entry.getName());
-                if (!entry.isDirectory()) {
-                    unzipFiles(zipInputStream, filePath);
-                } else {
-                    Files.createDirectories(filePath);
-                }
-
-                zipInputStream.closeEntry();
-                entry = zipInputStream.getNextEntry();
-            }
-        }
-    }
-
-    private static void unzipFiles(final ZipInputStream zipInputStream, final Path unzipFilePath) throws IOException {
-        try (BufferedOutputStream bos = new BufferedOutputStream(
-                new FileOutputStream(unzipFilePath.toAbsolutePath().toString()))
-        ) {
-            byte[] bytesIn = new byte[1024];
-            int read;
-            while ((read = zipInputStream.read(bytesIn)) != -1) {
-                bos.write(bytesIn, 0, read);
-            }
-        }
-
     }
 }

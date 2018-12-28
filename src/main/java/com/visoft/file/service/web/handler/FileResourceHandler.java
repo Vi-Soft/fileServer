@@ -29,7 +29,6 @@ public class FileResourceHandler extends ResourceHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-
         AuthenticatedUser authenticatedUser = SecurityHandler.authenticatedUser;
         User user = authenticatedUser.getUser();
         String requestURI = exchange.getRequestURI();
