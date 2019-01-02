@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface FolderService extends AbstractService<Folder> {
 
+    void create(String folder);
+
     void findById(HttpServerExchange exchange);
 
     boolean existsFolder(ObjectId folder);

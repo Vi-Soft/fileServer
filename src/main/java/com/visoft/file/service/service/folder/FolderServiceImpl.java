@@ -28,6 +28,11 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     }
 
     @Override
+    public void create(String folder) {
+        super.create(new Folder(folder));
+    }
+
+    @Override
     public void findById(HttpServerExchange exchange) {
         Folder folder = findById(getIdFromRequest(exchange));
         if (folder == null) {

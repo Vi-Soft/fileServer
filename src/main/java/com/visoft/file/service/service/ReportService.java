@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 
 public class ReportService {
@@ -71,7 +72,7 @@ public class ReportService {
                 setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
                 getDeleteNotWantFiles(fullTree);
                 saveIndexHtml(fullTree);
-
+                FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
             }
         }
     }
