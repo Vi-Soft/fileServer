@@ -8,6 +8,7 @@ import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.resource.ResourceHandler;
 import io.undertow.server.handlers.resource.ResourceManager;
+import org.apache.commons.io.FilenameUtils;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
@@ -18,7 +19,6 @@ import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
-import static com.visoft.file.service.service.util.PropertiesService.getReportExtension;
 import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 
 public class FileResourceHandler extends ResourceHandler {
@@ -32,11 +32,12 @@ public class FileResourceHandler extends ResourceHandler {
         AuthenticatedUser authenticatedUser = SecurityHandler.authenticatedUser;
         User user = authenticatedUser.getUser();
         String requestURI = exchange.getRequestURI();
-        if (requestURI.contains(getReportExtension())) {
+        String extension = FilenameUtils.getExtension(requestURI);
+        if (extension != null && !extension.isEmpty()) {
             if (user.getRole().equals(ADMIN)) {
                 super.handleRequest(exchange);
             } else {
-                if (getFolders(user).contains(requestURI.substring(0, getURLWithoutDownloadFile(requestURI)))) {
+                if (haveAccess(user, requestURI)) {
                     super.handleRequest(exchange);
                 } else {
                     sendStatusCode(exchange, FORBIDDEN);
@@ -50,14 +51,26 @@ public class FileResourceHandler extends ResourceHandler {
                 if (user.getRole().equals(USER)) {
                     requestURI = reorganizeRequestURI(requestURI);
                 }
-                if (!getFolders(user).contains(requestURI)) {
+                if (!haveAccess(user, requestURI)) {
                     sendResponse(exchange, user);
                 } else {
                     sendResponse(exchange, requestURI);
                 }
             }
         }
+    }
 
+    private boolean haveAccess(User user, String requestURI) {
+        if (user.getRole().equals(ADMIN)) {
+            return true;
+        }
+        for (String folder : getFolders(user)) {
+            if (requestURI.startsWith(folder)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void sendResponse(HttpServerExchange exchange, User user) {

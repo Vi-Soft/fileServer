@@ -5,7 +5,6 @@ import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.ReportDto;
 import com.visoft.file.service.dto.Task;
 import com.visoft.file.service.dto.TaskDto;
-import com.visoft.file.service.service.util.PageService;
 import com.visoft.file.service.service.util.PropertiesService;
 import io.undertow.server.HttpServerExchange;
 import org.zeroturnaround.zip.ZipUtil;
@@ -18,6 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 
 public class ReportService {
 
@@ -61,12 +62,40 @@ public class ReportService {
                         new File(rootPath + "/" + reportDto.getCompanyName()));
                 Report fullTree = getFullTree(reportDto);
                 getRealTask(fullTree.getTask(), reportDto.getTasks());
-                PageService.saveIndexHtml(fullTree);
+                saveIndexHtml(fullTree);
                 ZipUtil.pack(
                         new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
                         new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
                 );
                 new File(rootPath + "/" + reportDto.getArchiveName() + ".zip").delete();
+                setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                getDeleteNotWantFiles(fullTree);
+                saveIndexHtml(fullTree);
+
+            }
+        }
+    }
+
+    private static void getDeleteNotWantFiles(Report report) {
+        List<Task> deletedTask = new ArrayList<>();
+        for (Task task : report.getTask().getTasks()) {
+            String taskName = task.getName();
+            if (taskName.equals("index.html")
+                    || taskName.equals("g.png")
+                    || taskName.equals("r.png")) {
+                deletedTask.add(task);
+            }
+        }
+        report.getTask().getTasks().removeAll(deletedTask);
+    }
+
+    private static void setPathFullPath(Task task, String path) {
+        if (task.getTasks() != null && !task.getTasks().isEmpty()) {
+            for (Task taskTask : task.getTasks()) {
+                if (taskTask.getIcon() == 3) {
+                    taskTask.setPath("/" + path + "/" + taskTask.getPath());
+                }
+                setPathFullPath(taskTask, path);
             }
         }
     }
@@ -207,7 +236,9 @@ public class ReportService {
                 task.setIcon(3);
                 task.setPath(path.substring(1));
             }
+
         }
+
         return task;
     }
 
