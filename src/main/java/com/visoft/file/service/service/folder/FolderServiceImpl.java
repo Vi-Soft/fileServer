@@ -10,6 +10,7 @@ import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.NOT_FOUND;
 import static com.visoft.file.service.service.util.JsonService.toJson;
+import static com.visoft.file.service.service.util.PropertiesService.getRootPath;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
 import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
@@ -58,12 +60,17 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     @Override
     public void delete(HttpServerExchange exchange) {
         List<User> users = USER_SERVICE.findAll();
-        for (User currentUser : users) {
-            List<ObjectId> folders = currentUser.getFolders();
-            folders.remove(getIdFromRequest(exchange));
-            USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
-            //TODO delete folder on filesystem
+        ObjectId folderId = getIdFromRequest(exchange);
+        Folder folder = findById(folderId);
+        if (folder != null) {
+            for (User currentUser : users) {
+                List<ObjectId> folders = currentUser.getFolders();
+                folders.remove(folderId);
+                USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
+                new File(getRootPath() + "/" + findById(folderId).getFolder()).delete();
+            }
         }
+        sendStatusCode(exchange, NOT_FOUND);
     }
 
     @Override
