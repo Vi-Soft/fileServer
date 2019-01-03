@@ -204,9 +204,6 @@ public class PageService {
             case 2:
                 htmlTree = htmlTree + " id= \"red\"";
                 break;
-//            case 3:
-//                htmlTree = htmlTree + " id= \"gold\"";
-//                break;
         }
         return htmlTree;
     }
