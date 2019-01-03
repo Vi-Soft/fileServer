@@ -9,6 +9,8 @@ public interface Repository<T> {
 
     void create(T t);
 
+    void delete(ObjectId id);
+
     List<T> findAll();
 
     List<T> findAllDeleted();

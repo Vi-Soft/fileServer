@@ -7,10 +7,11 @@ import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
 import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
+import com.visoft.file.service.service.util.FileSystemService;
 import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,14 +64,29 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         ObjectId folderId = getIdFromRequest(exchange);
         Folder folder = findById(folderId);
         if (folder != null) {
-            for (User currentUser : users) {
-                List<ObjectId> folders = currentUser.getFolders();
-                folders.remove(folderId);
-                USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
-                new File(getRootPath() + "/" + findById(folderId).getFolder()).delete();
+            removeFolderInUsers(users, folderId);
+            super.delete(folderId);
+            String folderPath = folder.getFolder();
+            try {
+                FileSystemService.delete(getRootPath() + folderPath);
+                FileSystemService.delete(getRootPath() + folderPath + ".zip");
+                String[] split = folderPath.split("/");
+                String companyFolder = split[split.length - 1 - 1];
+                FileSystemService.deleteIfEmpty(getRootPath() + "/" + companyFolder);
+            } catch (IOException e) {
+                sendStatusCode(exchange, NOT_FOUND);
             }
+        } else {
+            sendStatusCode(exchange, NOT_FOUND);
         }
-        sendStatusCode(exchange, NOT_FOUND);
+    }
+
+    private void removeFolderInUsers(List<User> users, ObjectId folderId) {
+        for (User currentUser : users) {
+            List<ObjectId> folders = currentUser.getFolders();
+            folders.remove(folderId);
+            USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
+        }
     }
 
     @Override
@@ -104,7 +120,11 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         }
         List<ObjectId> folderIds = new ArrayList<>();
         for (String objectId : ids) {
-            folderIds.add(new ObjectId(objectId));
+            if (existsFolder(new ObjectId(objectId))) {
+                folderIds.add(new ObjectId(objectId));
+            } else {
+                return null;
+            }
         }
         return folderIds;
     }

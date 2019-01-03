@@ -253,11 +253,11 @@ public class ReportService {
                     return "Already unzip";
                 }
             }
-            if (!existsZip(archiveName)) {
-                return archiveName + ".zip not exists";
-            }
-        }
 
+        }
+        if (!existsZip(archiveName)) {
+            return archiveName + ".zip not exists";
+        }
         return null;
     }
 

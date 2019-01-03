@@ -64,4 +64,9 @@ public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
     public long update(final T t, ObjectId id) {
         return repository.update(t, id);
     }
+
+    @Override
+    public void delete(ObjectId id) {
+        repository.delete(id);
+    }
 }

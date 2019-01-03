@@ -29,6 +29,11 @@ public class AbstractRepository<T> implements Repository<T> {
     }
 
     @Override
+    public void delete(ObjectId id) {
+        mongoCollection.deleteOne(eq(_ID, id));
+    }
+
+    @Override
     public List<T> findAll() {
         return StreamSupport
                 .stream(

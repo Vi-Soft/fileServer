@@ -20,8 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
 import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.persistance.entity.UserConst.*;
@@ -51,7 +50,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 sendStatusCode(exchange, BAD_REQUEST);
             }
             List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
-            if (isExistsByLogin(dto.getLogin())) {
+            if (isExistsByLogin(dto.getLogin(), user.getId())) {
                 sendStatusCode(exchange, BAD_REQUEST);
                 sendMessage(exchange, LOGIN_EXISTS);
             } else {
@@ -229,5 +228,9 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     private boolean isExistsByLogin(String login) {
         return isExists(eq(UserConst.LOGIN, login));
+    }
+
+    private boolean isExistsByLogin(String login, ObjectId id) {
+        return isExists(and(eq(UserConst.LOGIN, login), ne(_ID, id)));
     }
 }

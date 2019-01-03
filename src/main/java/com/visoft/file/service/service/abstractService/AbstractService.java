@@ -26,4 +26,6 @@ public interface AbstractService<T> {
     boolean update(ObjectId id, String name, Object value);
 
     long update(T t, ObjectId id);
+
+    void delete(ObjectId id);
 }
