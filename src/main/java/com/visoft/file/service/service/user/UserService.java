@@ -8,6 +8,8 @@ public interface UserService extends AbstractService<User> {
 
     void findAll(HttpServerExchange exchange);
 
+    void createAdmin(HttpServerExchange exchange);
+
     void delete(HttpServerExchange exchange);
 
     void update(HttpServerExchange exchange);

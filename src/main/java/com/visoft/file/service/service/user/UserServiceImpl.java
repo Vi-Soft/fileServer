@@ -101,6 +101,26 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
+    public void createAdmin(HttpServerExchange exchange) {
+        UserCreateDto dto = getCreateUserRequestBody(exchange);
+        List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+        if (isExistsByLogin(dto.getLogin())) {
+            sendMessage(exchange, LOGIN_EXISTS);
+            sendStatusCode(exchange, BAD_REQUEST);
+        }
+        User createdUser = new User(dto.getLogin(), getEncode(
+                dto.getPassword()),
+                ADMIN, folders
+        );
+        create(createdUser);
+        Token createdUserToken = new Token(
+                generate(ObjectId.get()),
+                createdUser.getId());
+        TOKEN_SERVICE.create(createdUserToken);
+        sendStatusCode(exchange, CREATE);
+    }
+
+    @Override
     public void delete(HttpServerExchange exchange) {
         ObjectId userId = getIdFromRequest(exchange);
         User currentUser = findByIdNotDeleted(getIdFromRequest(exchange));

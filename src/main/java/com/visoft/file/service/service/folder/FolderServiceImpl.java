@@ -84,8 +84,10 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     private void removeFolderInUsers(List<User> users, ObjectId folderId) {
         for (User currentUser : users) {
             List<ObjectId> folders = currentUser.getFolders();
-            folders.remove(folderId);
-            USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
+            if (folders != null) {
+                folders.remove(folderId);
+                USER_SERVICE.update(currentUser.getId(), UserConst.FOLDERS, currentUser.getFolders());
+            }
         }
     }
 

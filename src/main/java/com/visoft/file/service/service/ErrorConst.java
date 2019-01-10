@@ -32,5 +32,7 @@ public interface ErrorConst {
 
     int CREATE = 201;
 
+    int OK = 200;
+
     int NOT_FOUND = 404;
 }

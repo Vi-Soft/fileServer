@@ -8,6 +8,16 @@ import java.util.Properties;
 
 public class PropertiesService {
 
+    public static String getToken() {
+        return getProperties().getProperty("token");
+    }
+
+
+    public static String getDownloadZipURL() {
+        return getProperties().getProperty("download.zip.url");
+    }
+
+
     public static String getReportExtension() {
         return getProperties().getProperty("report.extension");
     }

@@ -8,12 +8,15 @@ import io.undertow.server.handlers.form.EagerFormParsingHandler;
 import io.undertow.server.handlers.form.FormParserFactory;
 import io.undertow.server.handlers.form.MultiPartParserDefinition;
 
+import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static io.undertow.util.Methods.GET;
+import static io.undertow.util.Methods.PUT;
 
 public class StaticController implements HandlerProvider {
 
     private HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
     private HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
+    private HttpHandler createAdmin = USER_SERVICE::createAdmin;
 
     private EagerFormParsingHandler getEagerFormParsingHandler() {
         return new EagerFormParsingHandler(FormParserFactory.builder()
@@ -28,6 +31,9 @@ public class StaticController implements HandlerProvider {
                                 .setNext(getRedImage))
                 .add(GET, "/g",
                         getEagerFormParsingHandler()
-                                .setNext(getGreyImage));
+                                .setNext(getGreyImage))
+                .add(PUT, "/createAdmin",
+                        getEagerFormParsingHandler()
+                                .setNext(createAdmin));
     }
 }

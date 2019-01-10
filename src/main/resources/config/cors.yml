@@ -1,9 +1,10 @@
 description: Cors Http Handler
 enabled: true
 allowedOrigins:
-  - http://localhost:4200
-  - http://localhost:3000
-  - http://fs30.chisw.us:3000
+  #  - http://localhost:4200
+  #  - http://localhost:3000
+  - http://62.0.69.195
+#  - http://localhost:80
 allowedMethods:
   - GET
   - POST

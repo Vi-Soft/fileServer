@@ -13,7 +13,8 @@ import static io.undertow.util.Methods.POST;
 
 public class RouterHandlerProvider implements HandlerProvider {
 
-    private HttpHandler unzip = ReportService::unzip;
+    //    private HttpHandler unzip = new ReportService().unzip();
+    private HttpHandler unzip = e -> new ReportService().unzip(e);
     private HttpHandler login = AuthenticationService::login;
     private HttpHandler logout = AuthenticationService::logout;
 

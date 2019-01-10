@@ -138,7 +138,6 @@ public class PageService {
                         "</style>\n" +
                         "</head>\n" +
                         "<body>\n"
-
         );
         htmlString.append("<h2>" + tree.getProjectName() + "</h2>");
         htmlString.append("<ul id=\"myUL\">");
@@ -181,7 +180,7 @@ public class PageService {
             } else {
                 htmlTree = htmlTree + "<li";
                 if (task.getIcon() == 3) {
-                    htmlTree = htmlTree + "><a href=\"" + task.getPath() + "\">" + task.getName() + "</a></li>\n";
+                    htmlTree = htmlTree + "><a href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
                 } else {
                     htmlTree = addColorId(htmlTree, task);
                     htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
