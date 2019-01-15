@@ -7,6 +7,9 @@ import com.visoft.file.service.service.token.TokenServiceImpl;
 import com.visoft.file.service.service.user.UserService;
 import com.visoft.file.service.service.user.UserServiceImpl;
 
+/**
+ * Dependency injection class
+ */
 public interface DependencyInjectionService {
 
     UserService USER_SERVICE = new UserServiceImpl();

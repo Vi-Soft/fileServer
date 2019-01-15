@@ -4,12 +4,21 @@ import com.visoft.file.service.persistance.entity.Folder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * OutcomeDto for {@link Folder}
+ */
 @Data
 @NoArgsConstructor
 public class FolderOutcomeDto {
 
+    /**
+     * {@link Folder#getId() id}
+     */
     private String id;
 
+    /**
+     * {@link Folder#getFolder() folder}
+     */
     private String folder;
 
     public FolderOutcomeDto(Folder folder) {

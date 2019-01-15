@@ -49,11 +49,11 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     }
 
     @Override
-    public boolean existsFolder(ObjectId folder) {
+    public boolean existsFolder(ObjectId id) {
         return isExists(
                 eq(
                         GeneralConst._ID,
-                        folder
+                        id
                 )
         );
     }

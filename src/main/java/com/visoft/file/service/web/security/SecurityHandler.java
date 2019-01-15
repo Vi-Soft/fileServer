@@ -22,6 +22,7 @@ import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKE
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
 import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
+import static com.visoft.file.service.service.util.PageService.redirectToLoginPage;
 
 public class SecurityHandler implements MiddlewareHandler {
 
@@ -42,7 +43,8 @@ public class SecurityHandler implements MiddlewareHandler {
         } else {
             Cookie cookie = getCookie(exchange);
             if (cookie == null) {
-                exchange.setStatusCode(UNAUTHORIZED);
+                redirectToLoginPage(exchange);
+//                exchange.setStatusCode(UNAUTHORIZED);
             } else {
                 Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
                 if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {

@@ -10,9 +10,12 @@ import io.undertow.server.HttpServerExchange;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -125,11 +128,10 @@ public class ReportService {
                     return "Already unzip";
                 }
             }
-
         }
-        if (!existsZip(archiveName)) {
-            return archiveName + ".zip not exists";
-        }
+//        if (!existsZip(archiveName)) {
+//            return archiveName + ".zip not exists";
+//        }
         return null;
     }
 
@@ -235,56 +237,70 @@ public class ReportService {
         return task;
     }
 
+    private static void downloadZip(String fileName) throws IOException {
+        System.out.println("start down " + fileName);
+        URL website = new URL(getDownloadZipURL() + fileName + "&customToken=" + getToken());
+        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
+        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        System.out.println("finish down" + fileName);
+    }
+
+    private static boolean existsFolder(String path) {
+        return new File(path).exists();
+    }
+
+    private static boolean existsZip(String archiveName) {
+        return new File(rootPath + "/" + archiveName + ".zip").exists();
+    }
+
     public void unzip(HttpServerExchange exchange) throws IOException {
 
         try {
             ReportDto reportDto = getRequestBody(exchange);
             String token = reportDto.getCustomToken();
             if (token != null && !token.isEmpty() && token.equals(getToken())) {
-                sortByParentIdAndOrderInGroup(reportDto);
                 String validateReportDtoResult = validateReportDto(reportDto);
                 if (validateReportDtoResult != null) {
                     exchange.getResponseSender().send(validateReportDtoResult);
                 } else {
+                    sortByParentIdAndOrderInGroup(reportDto);
                     String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
 
                     if (validateZipResult != null) {
                         exchange.getResponseSender().send(validateZipResult);
                     } else {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-//                                    downloadZip(reportDto.getArchiveName());
-                                    System.out.println("start unzip");
-                                    ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
-//                                            new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),);
-                                            new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()), Charset.forName("Cp437"));
-                                    System.out.println("finish unzip");
+                        new Thread(() -> {
+                            try {
+                                downloadZip(reportDto.getArchiveName());
+                                System.out.println("start unzip");
+                                ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
+                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()));
+                                System.out.println("finish unzip");
 //                                    new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()).delete();
-                                    System.out.println("delete zip");
-                                    System.out.println("start tree web");
-                                    Report fullTree = getFullTree(reportDto);
-                                    getRealTask(fullTree.getTask(), reportDto.getTasks());
-                                    saveIndexHtml(fullTree);
-                                    System.out.println("finish tree web");
-                                    System.out.println("start zip");
-                                    ZipUtil.pack(
-                                            new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
-                                            new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
-                                    );
-                                    System.out.println("finish zip");
-                                    System.out.println("start tree zip");
-                                    setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
-                                    getDeleteNotWantFiles(fullTree);
-                                    saveIndexHtml(fullTree);
-                                    System.out.println("finish tree zip");
-                                    FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
-                                    System.out.println("create folder db");
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    System.out.println("error");
-                                }
+                                System.out.println("delete zip");
+                                System.out.println("start tree web");
+                                Report fullTree = getFullTree(reportDto);
+                                getRealTask(fullTree.getTask(), reportDto.getTasks());
+                                saveIndexHtml(fullTree);
+                                System.out.println("finish tree web");
+                                System.out.println("start zip");
+                                ZipUtil.pack(
+                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
+                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
+                                );
+                                System.out.println("finish zip");
+                                System.out.println("start tree zip");
+                                setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                                getDeleteNotWantFiles(fullTree);
+                                saveIndexHtml(fullTree);
+                                System.out.println("finish tree zip");
+                                FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                                System.out.println("create folder db");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                System.out.println("error");
+                            }
 //                                finally {
 //                                    System.out.println("delete zip finally");
 //                                    File file = new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension());
@@ -292,7 +308,6 @@ public class ReportService {
 //                                        file.delete();
 //                                    }
 //                                }
-                            }
                         }).start();
                         sendStatusCode(exchange, OK);
                     }
@@ -304,22 +319,4 @@ public class ReportService {
             sendStatusCode(exchange, BAD_REQUEST);
         }
     }
-
-    private static boolean existsFolder(String path) {
-        return new File(path).exists();
-    }
-
-    private static boolean existsZip(String archiveName) {
-        return new File(rootPath + "/" + archiveName + ".zip").exists();
-    }
-
-//    private static void downloadZip(String fileName) throws IOException {
-//        System.out.println("start down "+fileName);
-//        URL website = new URL(getDownloadZipURL() + fileName+"&customToken="+getToken());
-////        URL website = new URL("https://download.jetbrains.com/idea/ideaIU-2018.3.1.tar.gz");
-//        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-//        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
-//        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-//        System.out.println("finish down"+fileName);
-//    }
 }

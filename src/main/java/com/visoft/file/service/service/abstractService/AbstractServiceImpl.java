@@ -6,6 +6,11 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+/**
+ * Abstract class for entity actions
+ *
+ * @param <T> describes entity parameter
+ */
 public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
 
     private AbstractRepository<T> repository;
@@ -61,7 +66,7 @@ public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
     }
 
     @Override
-    public long update(final T t, ObjectId id) {
+    public long update(T t, ObjectId id) {
         return repository.update(t, id);
     }
 

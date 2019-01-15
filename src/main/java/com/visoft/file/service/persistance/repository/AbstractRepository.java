@@ -15,6 +15,11 @@ import static com.mongodb.client.model.Updates.set;
 import static com.visoft.file.service.persistance.entity.GeneralConst.DELETED;
 import static com.visoft.file.service.persistance.entity.GeneralConst._ID;
 
+/**
+ * Abstract class for entity actions
+ *
+ * @param <T> describes entity parameter
+ */
 public class AbstractRepository<T> implements Repository<T> {
 
     private final MongoCollection<T> mongoCollection;
