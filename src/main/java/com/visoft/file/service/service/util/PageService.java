@@ -4,11 +4,13 @@ import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.Task;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import lombok.extern.log4j.Log4j;
 
 import java.io.*;
 import java.util.List;
 import java.util.Objects;
 
+@Log4j
 public class PageService {
 
     private static String rootPath = PropertiesService.getRootPath();
@@ -36,8 +38,8 @@ public class PageService {
                         "  <meta charset=\"utf-8\">\n" +
                         "  <title>Root</title>\n" +
                         " </head>\n" +
-                        " <body>\n"+
-                        "<form action=\""+server+"/api/logout\" method=\"post\">\n" +
+                        " <body>\n" +
+                        "<form action=\"" + server + "/api/logout\" method=\"post\">\n" +
                         "    <input type=\"submit\" value=\"Logout\" />\n" +
                         "</form>"
         );
@@ -67,11 +69,11 @@ public class PageService {
         }
 
         String[] split = htmlString.split("<body>");
-        htmlString=split[0]+
-                "<body>\n"+
-                "<form action=\""+server+"/api/logout\" method=\"post\">\n" +
+        htmlString = split[0] +
+                "<body>\n" +
+                "<form action=\"" + server + "/api/logout\" method=\"post\">\n" +
                 "    <input type=\"submit\" value=\"Logout\" />\n" +
-                "</form>"+
+                "</form>" +
                 "<a href=\"" + PropertiesService.getServerName() + folder + ".zip\">\n" +
                 "\t\t<button>Download</button></p>\n" +
                 "\t</a>" +
@@ -83,6 +85,7 @@ public class PageService {
     }
 
     public static void saveIndexHtml(Report tree) throws FileNotFoundException {
+        log.info("report: " + tree);
         StringBuilder htmlString = new StringBuilder();
         htmlString.append(
                 "<!DOCTYPE html>\n" +

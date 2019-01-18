@@ -43,11 +43,11 @@
             <artifactId>client</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>audit</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.networknt</groupId>-->
+        <!--<artifactId>audit</artifactId>-->
+        <!--<version>${version.light-4j}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>info</artifactId>
@@ -183,6 +183,11 @@
             <groupId>com.googlecode.juniversalchardet</groupId>
             <artifactId>juniversalchardet</artifactId>
             <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
         </dependency>
 
     </dependencies>

@@ -20,8 +20,6 @@ import java.util.List;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKEN_SERVICE;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
-import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
-import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 import static com.visoft.file.service.service.util.PageService.redirectToLoginPage;
 
 public class SecurityHandler implements MiddlewareHandler {
@@ -48,16 +46,19 @@ public class SecurityHandler implements MiddlewareHandler {
             } else {
                 Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
                 if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
-                    exchange.setStatusCode(UNAUTHORIZED);
+                    redirectToLoginPage(exchange);
+//                    exchange.setStatusCode(UNAUTHORIZED);
                 } else {
                     User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
                     if (user == null) {
-                        exchange.setStatusCode(FORBIDDEN);
+                        redirectToLoginPage(exchange);
+//                        exchange.setStatusCode(FORBIDDEN);
                     } else {
                         authenticatedUser = new AuthenticatedUser(user, cookie, token);
                         String requestURI = exchange.getRequestURI();
                         if (requestURI.startsWith(ADMIN_URI) && user.getRole().equals(USER)) {
-                            exchange.setStatusCode(FORBIDDEN);
+                            redirectToLoginPage(exchange);
+//                            exchange.setStatusCode(FORBIDDEN);
                         } else {
                             TOKEN_SERVICE.addExpiration(authenticatedUser.getToken().getUserId());
                             Handler.next(exchange, next);

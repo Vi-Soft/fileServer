@@ -11,6 +11,7 @@ import com.visoft.file.service.service.util.PageService;
 import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.CookieImpl;
+import lombok.extern.log4j.Log4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +22,7 @@ import static com.visoft.file.service.service.ErrorConst.BAD_REQUEST;
 import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
 import static com.visoft.file.service.service.util.SenderService.sendMessage;
 
+@Log4j
 public class AuthenticationService {
 
     public static void logout(HttpServerExchange exchange) {
@@ -30,6 +32,7 @@ public class AuthenticationService {
     }
 
     public static void login(HttpServerExchange exchange) {
+        log.warn("log");
         LoginDto loginDto = getRequestBody(exchange);
         if (loginDto == null) {
             exchange.setStatusCode(BAD_REQUEST);

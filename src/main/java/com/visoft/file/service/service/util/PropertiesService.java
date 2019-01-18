@@ -8,34 +8,60 @@ import java.util.Properties;
 
 public class PropertiesService {
 
-    public static String getToken() {
-        return getProperties().getProperty("token");
+    static String getEmailSuccessMessage() {
+        return getProperty("email.success.message");
     }
 
+    static String getEmailErrorMessage() {
+        return getProperty("email.error.message");
+    }
+
+    static String getEmailPassword() {
+        return getProperty("email.password");
+    }
+
+    static String getEmailSubject() {
+        return getProperty("email.subject");
+    }
+
+    static String getEmailLogin() {
+        return getProperty("email.login");
+    }
+
+    static String getEmailTo() {
+        return getProperty("email.to");
+    }
+
+    public static String getToken() {
+        return getProperty("token");
+    }
 
     public static String getDownloadZipURL() {
-        return getProperties().getProperty("download.zip.url");
+        return getProperty("download.zip.url");
     }
 
-
     public static String getReportExtension() {
-        return getProperties().getProperty("report.extension");
+        return getProperty("report.extension");
     }
 
     static String getLoginPage() {
-        return getProperties().getProperty("login.html.url");
+        return getProperty("login.html.url");
     }
 
     public static String getRootPath() {
-        return getProperties().getProperty("root.path");
+        return getProperty("root.path");
     }
 
     static String getServerName() {
-        return getProperties().getProperty("server.domain");
+        return getProperty("server.domain");
     }
 
     public static String getDBName() {
-        return getProperties().getProperty("db");
+        return getProperty("db");
+    }
+
+    private static String getProperty(String value) {
+        return getProperties().getProperty(value);
     }
 
     private static Properties getProperties() {
