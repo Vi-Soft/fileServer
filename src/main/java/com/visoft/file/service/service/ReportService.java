@@ -35,28 +35,6 @@ import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 @Log4j
 public class ReportService {
 
-    private static final String PROJECT_NAME_NOT_CORRECT = "Project name must be not null and not empty";
-
-    private static final String COMPANY_NAME_NOT_CORRECT = "Company name must be not null and not empty";
-
-    private static final String ARCHIVE_NAME_NOT_CORRECT = "Archive name must be not null and not empty";
-
-    private static final String TASK_NAME_NOT_CORRECT = "Task name must be not null and not empty";
-
-    private static final String TASK_ID_NOT_CORRECT = "Task id must be not null and > 0";
-
-    private static final String MORE_ONE_EQUALS_TASK_ID = "More equals task id";
-
-    private static final String PARENT_TASK_ID_NOT_CORRECT = "Parent task id must be not null and not equals 0 and < -1";
-
-    private static final String MORE_ONE_EQUALS_PARENT_TASK_ID = "More one equals parent task id";
-
-    private static final String ORDER_IN_GROUP_NOT_CORRECT = "Order in group be not null";
-
-    private static final String MORE_ONE_EQUALS_ORDER_IN_GROUP = "More one equals order in group";
-
-    private static final String ICON_NOT_CORRECT = "Icon must be not null and > -1 and < 3";
-
     private static String rootPath = getRootPath();
 
     private static Report getFullTree(ReportDto reportDto) {
@@ -130,13 +108,10 @@ public class ReportService {
                     .collect(Collectors.toList());
             for (Path path : subfolder) {
                 if (path.getFileName().toString().equals(archiveName)) {
-                    return "Already unzip";
+                    return ALREADY_UNZIP;
                 }
             }
         }
-//        if (!existsZip(archiveName)) {
-//            return archiveName + ".zip not exists";
-//        }
         return null;
     }
 
@@ -253,10 +228,6 @@ public class ReportService {
 
     private static boolean existsFolder(String path) {
         return new File(path).exists();
-    }
-
-    private static boolean existsZip(String archiveName) {
-        return new File(rootPath + "/" + archiveName + ".zip").exists();
     }
 
     public void unzip(HttpServerExchange exchange) throws IOException {
