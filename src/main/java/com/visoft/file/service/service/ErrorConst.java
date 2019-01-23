@@ -30,6 +30,10 @@ public interface ErrorConst {
 
     String ALREADY_UNZIP = "Already unzip";
 
+    String RETURN = "return: ";
+
+    String SUCCESS = "success";
+
     int UNAUTHORIZED = 401;
 
     int FORBIDDEN = 403;

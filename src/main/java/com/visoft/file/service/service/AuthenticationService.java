@@ -20,7 +20,7 @@ import java.util.Scanner;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.BAD_REQUEST;
 import static com.visoft.file.service.service.ErrorConst.UNAUTHORIZED;
-import static com.visoft.file.service.service.util.SenderService.sendMessage;
+import static com.visoft.file.service.service.util.SenderService.send;
 
 @Log4j
 public class AuthenticationService {
@@ -55,7 +55,7 @@ public class AuthenticationService {
                                 user.getRole()
                         );
                         exchange.setResponseCookie(new CookieImpl("token", token.getToken()).setPath("/"));
-                        sendMessage(exchange, JsonService.toJson(tokenOutcomeDto));
+                        send(exchange, JsonService.toJson(tokenOutcomeDto));
 
                     }
                 }

@@ -1,11 +1,11 @@
 package com.visoft.file.service.service;
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.networknt.config.Config;
 import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.ReportDto;
 import com.visoft.file.service.dto.Task;
 import com.visoft.file.service.dto.TaskDto;
+import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.extern.log4j.Log4j;
 import org.zeroturnaround.zip.ZipUtil;
@@ -29,13 +29,202 @@ import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
-import static com.visoft.file.service.service.util.SenderService.sendMessage;
-import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
 
 @Log4j
 public class ReportService {
 
     private static String rootPath = getRootPath();
+
+    private static ReportDto getRequestBody(HttpServerExchange exchange) {
+        log.info("getRequestBody");
+        ReportDto reportDto;
+        exchange.startBlocking();
+        InputStream is = exchange.getInputStream();
+        String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
+        try {
+            reportDto = Config.getInstance().getMapper().readValue(s, ReportDto.class);
+        } catch (IOException e) {
+            log.warn(e.getMessage());
+            return null;
+        }
+        log.info(RETURN + reportDto);
+        return reportDto;
+    }
+
+    private static String validateReportDto(ReportDto dto) {
+        String validateProjectNameResult = validateProjectName(dto);
+        if (validateProjectNameResult != null) {
+            log.warn(RETURN + validateProjectNameResult);
+            return validateProjectNameResult;
+        }
+        String validateCompanyNameResult = validateCompanyName(dto);
+        if (validateCompanyNameResult != null) {
+            log.warn(RETURN + validateCompanyNameResult);
+            return validateCompanyNameResult;
+        }
+        String validateArchiveNameResult = validateArchiveName(dto);
+        if (validateArchiveNameResult != null) {
+            log.warn(RETURN + validateArchiveNameResult);
+            return validateArchiveNameResult;
+        }
+        int parentIdNullCount = 0;
+        Set<Long> ids = new HashSet<>();
+        for (TaskDto task : dto.getTasks()) {
+            String name = task.getName();
+            Long id = task.getId();
+            Long parentId = task.getParentId();
+            Long orderInGroup = task.getOrderInGroup();
+            Integer icon = task.getIcon();
+            if (name == null || name.equals("")) {
+                log.warn(TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                return TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
+            }
+            if (id == null || id < 1) {
+                log.warn(TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                return TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
+            }
+            ids.add(id);
+            if (parentId == null || parentId == 0 || parentId < -1) {
+                log.warn(PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                return PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
+            }
+            if (task.getParentId() == -1) {
+                parentIdNullCount++;
+            }
+            if (orderInGroup == null) {
+                log.warn(ORDER_IN_GROUP_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                return ORDER_IN_GROUP_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
+            }
+            if (icon == null || icon < 0 || icon > 2) {
+                log.warn(ICON_NOT_CORRECT);
+                return ICON_NOT_CORRECT;
+            }
+        }
+        if (parentIdNullCount > 1) {
+            log.warn(MORE_ONE_EQUALS_PARENT_TASK_ID);
+            return MORE_ONE_EQUALS_PARENT_TASK_ID;
+        }
+        if (ids.size() != dto.getTasks().size()) {
+            log.warn(MORE_ONE_EQUALS_TASK_ID);
+            return MORE_ONE_EQUALS_TASK_ID;
+        }
+        log.info(RETURN + SUCCESS);
+        return null;
+    }
+
+    private static String validateProjectName(ReportDto dto) {
+        if (validateName(dto.getProjectName())) {
+            log.warn(RETURN + PROJECT_NAME_NOT_CORRECT);
+            return PROJECT_NAME_NOT_CORRECT;
+        }
+        log.info(RETURN + SUCCESS);
+        return null;
+    }
+
+    private static String validateCompanyName(ReportDto dto) {
+        if (validateName(dto.getCompanyName())) {
+            log.warn(RETURN + COMPANY_NAME_NOT_CORRECT);
+            return COMPANY_NAME_NOT_CORRECT;
+        }
+        log.info(RETURN + SUCCESS);
+        return null;
+    }
+
+    private static String validateArchiveName(ReportDto dto) {
+        if (validateName(dto.getArchiveName())) {
+            log.warn(RETURN + ARCHIVE_NAME_NOT_CORRECT);
+            return ARCHIVE_NAME_NOT_CORRECT;
+        }
+        log.info(RETURN + SUCCESS);
+        return null;
+    }
+
+    private static boolean validateName(String name) {
+        return name == null || name.equals("");
+    }
+
+    public void unzip(HttpServerExchange exchange) throws IOException {
+        log.info("unzip");
+        ReportDto reportDto = getRequestBody(exchange);
+        if (reportDto != null) {
+            if (validateToken(reportDto.getCustomToken())) {
+                String validateReportDtoResult = validateReportDto(reportDto);
+                if (validateReportDtoResult != null) {
+                    SenderService.send(exchange, BAD_REQUEST);
+                    log.warn("not correct report dto: " + validateReportDtoResult);
+                } else {
+                    sortByParentIdAndOrderInGroup(reportDto);
+                    log.info("sort report dto");
+                    String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
+                    log.info("validate zip");
+                    if (validateZipResult != null) {
+                        SenderService.send(exchange, BAD_REQUEST);
+                        SenderService.send(exchange, validateZipResult);
+                        log.warn("not correct zip: " + validateZipResult);
+                    } else {
+                        new Thread(() -> {
+                            try {
+                                downloadZip(reportDto.getArchiveName());
+                                log.info("start unzip: " + reportDto.getArchiveName());
+                                ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
+                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()));
+                                log.info("finish unzip: " + reportDto.getArchiveName());
+                                new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()).delete();
+                                log.info("delete zip: " + reportDto.getArchiveName());
+                                log.info("start tree web");
+                                Report fullTree = getFullTree(reportDto);
+                                getRealTask(fullTree.getTask(), reportDto.getTasks());
+                                saveIndexHtml(fullTree);
+                                log.info("finish tree web");
+                                log.info("start zip: " + reportDto.getArchiveName());
+                                System.out.println("start zip" + reportDto.getArchiveName());
+                                ZipUtil.pack(
+                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
+                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
+                                );
+                                log.info("start finish: " + reportDto.getArchiveName());
+                                log.info("start tree zip");
+                                setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                                getDeleteNotWantFiles(fullTree);
+                                saveIndexHtml(fullTree);
+                                log.info("finish tree zip");
+                                FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                                log.info("create folder db");
+                                sendSuccess(reportDto.getArchiveName());
+                                log.info("send email success ");
+                            } catch (Exception e) {
+                                log.error(e.getMessage());
+                                sendError(reportDto.getArchiveName());
+                                log.error("send error email");
+                            } finally {
+                                log.error("delete zip finally");
+                                File file = new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension());
+                                if (file.exists()) {
+                                    file.delete();
+                                }
+                            }
+                        }).start();
+                        SenderService.send(exchange, OK);
+                        log.info("send OK");
+                    }
+                }
+            } else {
+                log.warn(RETURN + FORBIDDEN);
+                SenderService.send(exchange, FORBIDDEN);
+            }
+        } else {
+            log.warn(RETURN + BAD_REQUEST);
+            SenderService.send(exchange, BAD_REQUEST);
+        }
+    }
+
+    private boolean validateToken(String token) {
+        log.info("validateToken");
+        boolean result = token != null && !token.isEmpty() && token.equals(getToken());
+        log.info(RETURN + result);
+        return result;
+    }
+
 
     private static Report getFullTree(ReportDto reportDto) {
 
@@ -121,69 +310,6 @@ public class ReportService {
         );
     }
 
-    private static ReportDto getRequestBody(HttpServerExchange exchange) throws IOException {
-        exchange.startBlocking();
-        InputStream is = exchange.getInputStream();
-        String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
-        ReportDto reportDto = Config.getInstance().getMapper().readValue(s, ReportDto.class);
-        log.info(" dto: " + reportDto);
-        return reportDto;
-    }
-
-    private static String validateReportDto(ReportDto dto) {
-        log.info("start validate dto");
-        String projectName = dto.getProjectName();
-        String companyName = dto.getCompanyName();
-        String archiveName = dto.getArchiveName();
-        if (projectName == null || projectName.equals("")) {
-            log.warn(PROJECT_NAME_NOT_CORRECT);
-            return PROJECT_NAME_NOT_CORRECT;
-        }
-        if (companyName == null || companyName.equals("")) {
-            log.warn(COMPANY_NAME_NOT_CORRECT);
-            return COMPANY_NAME_NOT_CORRECT;
-        }
-        if (archiveName == null || archiveName.equals("")) {
-            log.warn(ARCHIVE_NAME_NOT_CORRECT);
-            return ARCHIVE_NAME_NOT_CORRECT;
-        }
-        int parentIdNullCount = 0;
-        Set<Long> ids = new HashSet<>();
-        for (TaskDto task : dto.getTasks()) {
-            String name = task.getName();
-            Long id = task.getId();
-            Long parentId = task.getParentId();
-            Long orderInGroup = task.getOrderInGroup();
-            Integer icon = task.getIcon();
-            if (name == null || name.equals("")) {
-                return TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
-            }
-            if (id == null || id < 1) {
-                return TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
-            }
-            ids.add(id);
-            if (parentId == null || parentId == 0 || parentId < -1) {
-                return PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
-            }
-            if (task.getParentId() == -1) {
-                parentIdNullCount++;
-            }
-            if (orderInGroup == null) {
-                return ORDER_IN_GROUP_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
-            }
-            if (icon == null || icon < 0 || icon > 2) {
-                return ICON_NOT_CORRECT;
-            }
-
-        }
-        if (parentIdNullCount > 1) {
-            return MORE_ONE_EQUALS_PARENT_TASK_ID;
-        }
-        if (ids.size() != dto.getTasks().size()) {
-            return MORE_ONE_EQUALS_TASK_ID;
-        }
-        return null;
-    }
 
     private static void sortByParentIdAndOrderInGroup(ReportDto reportDto) {
         reportDto.getTasks().sort(Comparator
@@ -230,82 +356,5 @@ public class ReportService {
         return new File(path).exists();
     }
 
-    public void unzip(HttpServerExchange exchange) throws IOException {
-        try {
-            ReportDto reportDto = getRequestBody(exchange);
-            String token = reportDto.getCustomToken();
-            System.out.println(reportDto);
 
-            if (token != null && !token.isEmpty() && token.equals(getToken())) {
-                String validateReportDtoResult = validateReportDto(reportDto);
-                log.info("validate report dto");
-                if (validateReportDtoResult != null) {
-                    sendStatusCode(exchange, BAD_REQUEST);
-                    sendMessage(exchange, validateReportDtoResult);
-                    log.warn("not correct report dto: " + validateReportDtoResult);
-                } else {
-                    sortByParentIdAndOrderInGroup(reportDto);
-                    log.info("sort report dto");
-                    String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
-                    log.info("validate zip");
-                    if (validateZipResult != null) {
-                        sendStatusCode(exchange, BAD_REQUEST);
-                        sendMessage(exchange, validateZipResult);
-                        log.warn("not correct zip: " + validateZipResult);
-                    } else {
-                        new Thread(() -> {
-                            try {
-                                downloadZip(reportDto.getArchiveName());
-                                log.info("start unzip: " + reportDto.getArchiveName());
-                                ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
-                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()));
-                                log.info("finish unzip: " + reportDto.getArchiveName());
-                                new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()).delete();
-                                log.info("delete zip: " + reportDto.getArchiveName());
-                                log.info("start tree web");
-                                Report fullTree = getFullTree(reportDto);
-                                getRealTask(fullTree.getTask(), reportDto.getTasks());
-                                saveIndexHtml(fullTree);
-                                log.info("finish tree web");
-                                log.info("start zip: " + reportDto.getArchiveName());
-                                System.out.println("start zip" + reportDto.getArchiveName());
-                                ZipUtil.pack(
-                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
-                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
-                                );
-                                log.info("start finish: " + reportDto.getArchiveName());
-                                log.info("start tree zip");
-                                setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
-                                getDeleteNotWantFiles(fullTree);
-                                saveIndexHtml(fullTree);
-                                log.info("finish tree zip");
-                                FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
-                                log.info("create folder db");
-                                sendSuccess(reportDto.getArchiveName());
-                                log.info("send email success ");
-                            } catch (Exception e) {
-                                log.error(e.getMessage());
-                                sendError(reportDto.getArchiveName());
-                                log.error("send error email");
-                            } finally {
-                                log.error("delete zip finally");
-                                File file = new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension());
-                                if (file.exists()) {
-                                    file.delete();
-                                }
-                            }
-                        }).start();
-                        sendStatusCode(exchange, OK);
-                        log.info("send OK");
-                    }
-                }
-            } else {
-                log.warn("Token not found: " + token);
-                sendStatusCode(exchange, FORBIDDEN);
-            }
-        } catch (UnrecognizedPropertyException e) {
-            log.warn("bad json");
-            sendStatusCode(exchange, BAD_REQUEST);
-        }
-    }
 }

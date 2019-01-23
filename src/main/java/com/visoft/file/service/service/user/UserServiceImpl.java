@@ -30,8 +30,7 @@ import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
-import static com.visoft.file.service.service.util.SenderService.sendMessage;
-import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
+import static com.visoft.file.service.service.util.SenderService.send;
 
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
 
@@ -43,16 +42,16 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public void update(HttpServerExchange exchange) {
         UserUpdateDto dto = getUpdateUserRequestBody(exchange);
         if (!validate(dto)) {
-            sendStatusCode(exchange, BAD_REQUEST);
+            send(exchange, BAD_REQUEST);
         } else {
             User user = findUserNotAdmin(new ObjectId(dto.getId()));
             if (user == null) {
-                sendStatusCode(exchange, BAD_REQUEST);
+                send(exchange, BAD_REQUEST);
             }
             List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
             if (isExistsByLogin(dto.getLogin(), user.getId())) {
-                sendStatusCode(exchange, BAD_REQUEST);
-                sendMessage(exchange, LOGIN_EXISTS);
+                send(exchange, BAD_REQUEST);
+                send(exchange, LOGIN_EXISTS);
             } else {
                 user.setLogin(dto.getLogin());
                 user.setPassword(getEncode(dto.getPassword()));
@@ -66,9 +65,9 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public void findById(HttpServerExchange exchange) {
         User user = findUserNotAdmin(getIdFromRequest(exchange));
         if (user == null) {
-            sendStatusCode(exchange, NOT_FOUND);
+            send(exchange, NOT_FOUND);
         } else {
-            sendMessage(
+            send(
                     exchange,
                     toJson(new UserOutcomeDto(user)
                     )
@@ -80,12 +79,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public void create(HttpServerExchange exchange) {
         UserCreateDto dto = getCreateUserRequestBody(exchange);
         if (!validate(dto)) {
-            sendStatusCode(exchange, BAD_REQUEST);
+            send(exchange, BAD_REQUEST);
         } else {
             List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
             if (isExistsByLogin(dto.getLogin())) {
-                sendMessage(exchange, LOGIN_EXISTS);
-                sendStatusCode(exchange, BAD_REQUEST);
+                send(exchange, LOGIN_EXISTS);
+                send(exchange, BAD_REQUEST);
             }
             User createdUser = new User(dto.getLogin(), getEncode(
                     dto.getPassword()),
@@ -96,7 +95,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                     generate(ObjectId.get()),
                     createdUser.getId());
             TOKEN_SERVICE.create(createdUserToken);
-            sendStatusCode(exchange, CREATE);
+            send(exchange, CREATE);
         }
     }
 
@@ -105,8 +104,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         UserCreateDto dto = getCreateUserRequestBody(exchange);
         List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
         if (isExistsByLogin(dto.getLogin())) {
-            sendMessage(exchange, LOGIN_EXISTS);
-            sendStatusCode(exchange, BAD_REQUEST);
+            send(exchange, LOGIN_EXISTS);
+            send(exchange, BAD_REQUEST);
         }
         User createdUser = new User(dto.getLogin(), getEncode(
                 dto.getPassword()),
@@ -117,15 +116,15 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 generate(ObjectId.get()),
                 createdUser.getId());
         TOKEN_SERVICE.create(createdUserToken);
-        sendStatusCode(exchange, CREATE);
+        send(exchange, CREATE);
     }
 
     @Override
     public void delete(HttpServerExchange exchange) {
         ObjectId userId = getIdFromRequest(exchange);
         User currentUser = findByIdNotDeleted(getIdFromRequest(exchange));
-        if (currentUser == null || currentUser.getRole().equals(ADMIN)) {
-            sendStatusCode(exchange, FORBIDDEN);
+        if (currentUser == null || currentUser.getId().equals(userId)) {
+            send(exchange, FORBIDDEN);
         } else {
             update(userId, DELETED, true);
         }
@@ -136,7 +135,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         ObjectId userId = getIdFromRequest(exchange);
         User currentUser = USER_SERVICE.findById(userId);
         if (currentUser == null || currentUser.getDeleted().equals(false) || currentUser.getRole().equals(ADMIN)) {
-            sendStatusCode(exchange, FORBIDDEN);
+            send(exchange, FORBIDDEN);
         } else {
             update(
                     userId,
@@ -149,7 +148,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     @Override
     public void findAll(HttpServerExchange exchange) {
         Bson filter = eq(ROLE, USER.toString());
-        sendMessage(
+        send(
                 exchange,
                 toJson(
                         getIds(getListObject(filter))

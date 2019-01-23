@@ -19,7 +19,7 @@ import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
-import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
+import static com.visoft.file.service.service.util.SenderService.send;
 
 public class FileResourceHandler extends ResourceHandler {
 
@@ -40,7 +40,7 @@ public class FileResourceHandler extends ResourceHandler {
                 if (haveAccess(user, requestURI)) {
                     super.handleRequest(exchange);
                 } else {
-                    sendStatusCode(exchange, FORBIDDEN);
+                    send(exchange, FORBIDDEN);
                 }
             }
         } else {

@@ -21,8 +21,7 @@ import static com.visoft.file.service.service.ErrorConst.NOT_FOUND;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.PropertiesService.getRootPath;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
-import static com.visoft.file.service.service.util.SenderService.sendMessage;
-import static com.visoft.file.service.service.util.SenderService.sendStatusCode;
+import static com.visoft.file.service.service.util.SenderService.send;
 
 public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements FolderService {
 
@@ -39,9 +38,9 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     public void findById(HttpServerExchange exchange) {
         Folder folder = findById(getIdFromRequest(exchange));
         if (folder == null) {
-            sendStatusCode(exchange, NOT_FOUND);
+            send(exchange, NOT_FOUND);
         } else {
-            sendMessage(
+            send(
                     exchange,
                     toJson(new FolderOutcomeDto(folder))
             );
@@ -74,10 +73,10 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
                 String companyFolder = split[split.length - 1 - 1];
                 FileSystemService.deleteIfEmpty(getRootPath() + "/" + companyFolder);
             } catch (IOException e) {
-                sendStatusCode(exchange, NOT_FOUND);
+                send(exchange, NOT_FOUND);
             }
         } else {
-            sendStatusCode(exchange, NOT_FOUND);
+            send(exchange, NOT_FOUND);
         }
     }
 
@@ -93,7 +92,7 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
 
     @Override
     public void findAll(HttpServerExchange exchange) {
-        sendMessage(
+        send(
                 exchange,
                 toJson(
                         getIdsFromFolders(
