@@ -29,13 +29,13 @@ public class StaticController implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-                .add(GET, "/getHighlight",
+                .add(GET, "/highlight",
                         getEagerFormParsingHandler()
                                 .setNext(getHighlight))
-                .add(GET, "/getJquery",
+                .add(GET, "/jquery",
                         getEagerFormParsingHandler()
                                 .setNext(getJquery))
-                .add(GET, "/getScrollToMin",
+                .add(GET, "/scrollToMin",
                         getEagerFormParsingHandler()
                                 .setNext(getScrollToMin))
                 .add(GET, "/r",

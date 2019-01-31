@@ -66,9 +66,9 @@ public class PageService {
             }
             htmlString = sb.toString().replace("r.png", PropertiesService.getServerName() + "/static/r");
             htmlString = htmlString.replace("g.png", PropertiesService.getServerName() + "/static/g");
-            htmlString = htmlString.replace("highlight.js", PropertiesService.getServerName() + "/static/getHighlight");
-            htmlString = htmlString.replace("jquery.js", PropertiesService.getServerName() + "/static/getScrollToMin");
-            htmlString = htmlString.replace("scrollTo-min.js", PropertiesService.getServerName() + "/static/scrollTo-min");
+            htmlString = htmlString.replace("highlight.js", PropertiesService.getServerName() + "/static/highlight");
+            htmlString = htmlString.replace("jquery.js", PropertiesService.getServerName() + "/static/jquery");
+            htmlString = htmlString.replace("scrollTo-min.js", PropertiesService.getServerName() + "/static/scrollToMin");
         }
         String[] split = htmlString.split("<body>");
         htmlString = split[0] +
