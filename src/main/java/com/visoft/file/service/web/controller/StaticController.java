@@ -16,6 +16,9 @@ public class StaticController implements HandlerProvider {
 
     private HttpHandler getRedImage = (exchange) -> ImageService.getImage(exchange, "r.png");
     private HttpHandler getGreyImage = (exchange) -> ImageService.getImage(exchange, "g.png");
+    private HttpHandler getHighlight = (exchange) -> ImageService.getJS(exchange, "highlight.js");
+    private HttpHandler getJquery = (exchange) -> ImageService.getJS(exchange, "jquery.js");
+    private HttpHandler getScrollToMin = (exchange) -> ImageService.getJS(exchange, "scrollTo-min.js");
     private HttpHandler createAdmin = USER_SERVICE::createAdmin;
 
     private EagerFormParsingHandler getEagerFormParsingHandler() {
@@ -26,6 +29,15 @@ public class StaticController implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
+                .add(GET, "/getHighlight",
+                        getEagerFormParsingHandler()
+                                .setNext(getHighlight))
+                .add(GET, "/getJquery",
+                        getEagerFormParsingHandler()
+                                .setNext(getJquery))
+                .add(GET, "/getScrollToMin",
+                        getEagerFormParsingHandler()
+                                .setNext(getScrollToMin))
                 .add(GET, "/r",
                         getEagerFormParsingHandler()
                                 .setNext(getRedImage))

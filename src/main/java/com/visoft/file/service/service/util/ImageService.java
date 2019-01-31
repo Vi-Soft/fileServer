@@ -9,10 +9,38 @@ import java.nio.ByteBuffer;
 import java.util.Objects;
 
 public class ImageService {
-    public static void getImage(HttpServerExchange exchange, String imageName) throws IOException {
-        byte[] fileContent = IOUtils.toByteArray(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream("image/" + imageName)));
-        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "image/png; charset=UTF-8");
-        exchange.getResponseSender().send(ByteBuffer.wrap(fileContent));
+    private static String JS = "text/javascript";
+    private static String PNG = "image/png";
 
+    public static void getJS(HttpServerExchange exchange, String imageName) throws IOException {
+        sendFile(
+                exchange,
+                JS,
+                getByteFromFile(imageName)
+        );
+
+    }
+
+    public static void getImage(HttpServerExchange exchange, String imageName) {
+        sendFile(
+                exchange,
+                PNG,
+                getByteFromFile(imageName)
+        );
+    }
+
+    private static byte[] getByteFromFile(String fileName) {
+        byte[] fileContent = new byte[0];
+        try {
+            fileContent = IOUtils.toByteArray(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream("file/" + fileName)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileContent;
+    }
+
+    private static void sendFile(HttpServerExchange exchange, String type, byte[] fileContent) {
+        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, type + "; charset=UTF-8");
+        exchange.getResponseSender().send(ByteBuffer.wrap(fileContent));
     }
 }
