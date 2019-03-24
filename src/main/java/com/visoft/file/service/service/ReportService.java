@@ -167,9 +167,9 @@ public class ReportService {
                                 downloadZip(reportDto.getArchiveName());
                                 log.info("start unzip: " + reportDto.getArchiveName());
                                 ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
-                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()));
+                                        new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName()).toString()));
                                 log.info("finish unzip: " + reportDto.getArchiveName());
-                                new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()).delete();
+                                new File(Paths.get(rootPath, reportDto.getArchiveName() + getReportExtension()).toString()).delete();
                                 log.info("delete zip: " + reportDto.getArchiveName());
                                 log.info("start tree web");
                                 Report fullTree = getFullTree(reportDto);
@@ -179,8 +179,8 @@ public class ReportService {
                                 log.info("start zip: " + reportDto.getArchiveName());
                                 System.out.println("start zip" + reportDto.getArchiveName());
                                 ZipUtil.pack(
-                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName()),
-                                        new File(rootPath + "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName() + ".zip")
+                                        new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName()).toString()),
+                                        new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName() + ".zip").toString())
                                 );
                                 log.info("start finish: " + reportDto.getArchiveName());
                                 log.info("start tree zip");
@@ -190,11 +190,11 @@ public class ReportService {
                                 log.info("finish tree zip");
                                 FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
                                 log.info("create folder db");
-                                sendSuccess(reportDto.getArchiveName());
+                                sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
                                 log.info("send email success ");
                             } catch (Exception e) {
                                 log.error(e.getMessage());
-                                sendError(reportDto.getArchiveName());
+                                sendError(reportDto.getArchiveName(), reportDto.getEmail());
                                 log.error("send error email");
                             } finally {
                                 log.error("delete zip finally");

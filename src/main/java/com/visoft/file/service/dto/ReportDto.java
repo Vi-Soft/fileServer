@@ -7,6 +7,8 @@ import java.util.List;
 @Data
 public class ReportDto {
 
+    private String email;
+
     private String customToken;
 
     private String projectName;

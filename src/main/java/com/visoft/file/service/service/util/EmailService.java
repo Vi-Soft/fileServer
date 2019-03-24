@@ -11,15 +11,15 @@ import static com.visoft.file.service.service.util.PropertiesService.*;
 
 public class EmailService {
 
-    public static void sendError(String reportName) {
-        send(getEmailErrorMessage() + " " + reportName);
+    public static void sendError(String reportName, String email) {
+        send(getEmailErrorMessage() + " " + reportName, email);
     }
 
-    public static void sendSuccess(String reportName) {
-        send(getEmailSuccessMessage() + " " + reportName);
+    public static void sendSuccess(String reportName, String email) {
+        send(getEmailSuccessMessage() + " " + reportName, email);
     }
 
-    private static void send(String emailMessage) {
+    private static void send(String emailMessage, String userEmail) {
         Email email = new SimpleEmail();
         email.setHostName("smtp.googlemail.com");
         email.setSmtpPort(465);
@@ -30,9 +30,14 @@ public class EmailService {
             email.setSubject(getEmailSubject());
             email.setMsg(new String(emailMessage.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
             email.addTo(getEmailTo());
+            email.addTo(userEmail);
             email.send();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        send("12", "vladimir.zubencko@gmail.com");
     }
 }
