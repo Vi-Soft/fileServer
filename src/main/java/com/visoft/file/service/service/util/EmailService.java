@@ -36,8 +36,4 @@ public class EmailService {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        send("12", "vladimir.zubencko@gmail.com");
-    }
 }

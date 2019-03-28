@@ -42,17 +42,14 @@ public class SecurityHandler implements MiddlewareHandler {
             Cookie cookie = getCookie(exchange);
             if (cookie == null) {
                 redirectToLoginPage(exchange);
-//                exchange.setStatusCode(UNAUTHORIZED);
             } else {
                 Token token = TOKEN_SERVICE.findByToken(cookie.getValue());
                 if (token == null || token.getExpiration().toEpochMilli() < Instant.now().toEpochMilli()) {
                     redirectToLoginPage(exchange);
-//                    exchange.setStatusCode(UNAUTHORIZED);
                 } else {
                     User user = USER_SERVICE.findByIdNotDeleted(token.getUserId());
                     if (user == null) {
                         redirectToLoginPage(exchange);
-//                        exchange.setStatusCode(FORBIDDEN);
                     } else {
                         authenticatedUser = new AuthenticatedUser(user, cookie, token);
                         String requestURI = exchange.getRequestURI();

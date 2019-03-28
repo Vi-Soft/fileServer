@@ -12,7 +12,7 @@ import static io.undertow.util.Methods.*;
 
 public class AdminUserController implements HandlerProvider {
 
-    private HttpHandler createUser = USER_SERVICE::create;
+    private HttpHandler createUser = USER_SERVICE::createUser;
     private HttpHandler deleteUser = USER_SERVICE::delete;
     private HttpHandler recoveryUser = USER_SERVICE::recovery;
     private HttpHandler findAllUser = USER_SERVICE::findAll;

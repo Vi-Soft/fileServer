@@ -189,12 +189,12 @@ public class ReportService {
                                 saveIndexHtml(fullTree);
                                 log.info("finish tree zip");
                                 FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
-                                log.info("create folder db");
+                                log.info("createUser folder db");
                                 sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
                                 log.info("send email success ");
                             } catch (Exception e) {
                                 log.error(e.getMessage());
-                                sendError(reportDto.getArchiveName(), reportDto.getEmail());
+                                sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
                                 log.error("send error email");
                             } finally {
                                 log.error("delete zip finally");

@@ -16,7 +16,7 @@ public interface UserService extends AbstractService<User> {
 
     void findById(HttpServerExchange exchange);
 
-    void create(HttpServerExchange exchange);
+    void createUser(HttpServerExchange exchange);
 
     User findByLoginAndPassword(String login, String password);
 

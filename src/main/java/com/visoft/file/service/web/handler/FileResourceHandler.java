@@ -64,12 +64,14 @@ public class FileResourceHandler extends ResourceHandler {
         if (user.getRole().equals(ADMIN)) {
             return true;
         }
-        for (String folder : getFolders(user)) {
-            if (requestURI.startsWith(folder)) {
-                return true;
+        List<String> folders = getFolders(user);
+        if (folders != null && !folders.isEmpty()) {
+            for (String folder : getFolders(user)) {
+                if (requestURI.startsWith(folder)) {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 

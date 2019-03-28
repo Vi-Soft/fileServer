@@ -4,11 +4,13 @@ import com.networknt.config.Config;
 import com.visoft.file.service.dto.user.UserCreateDto;
 import com.visoft.file.service.dto.user.UserOutcomeDto;
 import com.visoft.file.service.dto.user.UserUpdateDto;
+import com.visoft.file.service.persistance.entity.Role;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
 import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
+import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -23,7 +25,8 @@ import java.util.Scanner;
 import static com.mongodb.client.model.Filters.*;
 import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
-import static com.visoft.file.service.persistance.entity.UserConst.*;
+import static com.visoft.file.service.persistance.entity.UserConst.DELETED;
+import static com.visoft.file.service.persistance.entity.UserConst._ID;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
@@ -44,14 +47,20 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         if (!validate(dto)) {
             send(exchange, BAD_REQUEST);
         } else {
-            User user = findUserNotAdmin(new ObjectId(dto.getId()));
+            User user = findById(new ObjectId(dto.getId()));
             if (user == null) {
                 send(exchange, BAD_REQUEST);
             }
-            List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+            List<ObjectId> folders = null;
+            if (dto.getFolders() != null && !dto.getFolders().isEmpty()) {
+                folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+            }
             if (isExistsByLogin(dto.getLogin(), user.getId())) {
-                send(exchange, BAD_REQUEST);
-                send(exchange, LOGIN_EXISTS);
+                send(
+                        exchange,
+                        LOGIN_EXISTS,
+                        BAD_REQUEST
+                );
             } else {
                 user.setLogin(dto.getLogin());
                 user.setPassword(getEncode(dto.getPassword()));
@@ -63,7 +72,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void findById(HttpServerExchange exchange) {
-        User user = findUserNotAdmin(getIdFromRequest(exchange));
+        User user = findById(getIdFromRequest(exchange));
         if (user == null) {
             send(exchange, NOT_FOUND);
         } else {
@@ -76,54 +85,55 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     }
 
     @Override
-    public void create(HttpServerExchange exchange) {
-        UserCreateDto dto = getCreateUserRequestBody(exchange);
+    public void createUser(HttpServerExchange exchange) {
+        create(
+                getCreateUserRequestBody(exchange),
+                exchange,
+                USER
+        );
+    }
+
+    @Override
+    public void createAdmin(HttpServerExchange exchange) {
+        create(
+                getCreateUserRequestBody(exchange),
+                exchange,
+                ADMIN
+        );
+    }
+
+    private void create(UserCreateDto dto, HttpServerExchange exchange, Role role) {
         if (!validate(dto)) {
             send(exchange, BAD_REQUEST);
         } else {
-            List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+            List<ObjectId> folders = null;
+            if (dto.getFolders() != null && !dto.getFolders().isEmpty()) {
+                folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
+            }
+
             if (isExistsByLogin(dto.getLogin())) {
-                send(exchange, LOGIN_EXISTS);
-                send(exchange, BAD_REQUEST);
+                send(exchange, LOGIN_EXISTS, BAD_REQUEST);
             }
             User createdUser = new User(dto.getLogin(), getEncode(
                     dto.getPassword()),
-                    USER, folders
+                    role, folders
             );
             create(createdUser);
             Token createdUserToken = new Token(
                     generate(ObjectId.get()),
-                    createdUser.getId());
+                    createdUser.getId()
+            );
             TOKEN_SERVICE.create(createdUserToken);
             send(exchange, CREATE);
         }
     }
 
     @Override
-    public void createAdmin(HttpServerExchange exchange) {
-        UserCreateDto dto = getCreateUserRequestBody(exchange);
-        List<ObjectId> folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
-        if (isExistsByLogin(dto.getLogin())) {
-            send(exchange, LOGIN_EXISTS);
-            send(exchange, BAD_REQUEST);
-        }
-        User createdUser = new User(dto.getLogin(), getEncode(
-                dto.getPassword()),
-                ADMIN, folders
-        );
-        create(createdUser);
-        Token createdUserToken = new Token(
-                generate(ObjectId.get()),
-                createdUser.getId());
-        TOKEN_SERVICE.create(createdUserToken);
-        send(exchange, CREATE);
-    }
-
-    @Override
     public void delete(HttpServerExchange exchange) {
         ObjectId userId = getIdFromRequest(exchange);
         User currentUser = findByIdNotDeleted(getIdFromRequest(exchange));
-        if (currentUser == null || currentUser.getId().equals(userId)) {
+        if (currentUser == null || currentUser.getId().equals(SecurityHandler.authenticatedUser.getUser().getId())) {
+            send(exchange, "User not found");
             send(exchange, FORBIDDEN);
         } else {
             update(userId, DELETED, true);
@@ -134,7 +144,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public void recovery(HttpServerExchange exchange) {
         ObjectId userId = getIdFromRequest(exchange);
         User currentUser = USER_SERVICE.findById(userId);
-        if (currentUser == null || currentUser.getDeleted().equals(false) || currentUser.getRole().equals(ADMIN)) {
+        if (currentUser == null || currentUser.getDeleted().equals(false)) {
             send(exchange, FORBIDDEN);
         } else {
             update(
@@ -147,11 +157,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void findAll(HttpServerExchange exchange) {
-        Bson filter = eq(ROLE, USER.toString());
         send(
                 exchange,
                 toJson(
-                        getIds(getListObject(filter))
+                        getIds(findAll())
                 )
         );
     }
@@ -163,14 +172,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 eq(UserConst.LOGIN, login),
                 eq(UserConst.PASSWORD, getEncode(password)));
         return super.getObject(filter);
-    }
-
-    private User findUserNotAdmin(ObjectId id) {
-        Bson filter = and(
-                eq(_ID, id),
-                eq(ROLE, USER.toString())
-        );
-        return getObject(filter);
     }
 
     private UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
@@ -231,15 +232,17 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         if (password == null || password.isEmpty()) {
             return false;
         }
-        if (folders == null || folders.isEmpty()) {
+        if (folders == null) {
             return false;
         }
-        if (new HashSet<>(folders).size() != folders.size()) {
-            return false;
-        }
-        for (String folder : folders) {
-            if (!FOLDER_SERVICE.existsFolder(new ObjectId(folder))) {
+        if (!folders.isEmpty()) {
+            if (new HashSet<>(folders).size() != folders.size()) {
                 return false;
+            }
+            for (String folder : folders) {
+                if (!FOLDER_SERVICE.existsFolder(new ObjectId(folder))) {
+                    return false;
+                }
             }
         }
         return true;
