@@ -2,6 +2,8 @@ package com.visoft.file.service.dto;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class TaskDto {
 
@@ -14,4 +16,8 @@ public class TaskDto {
     private Long orderInGroup;
 
     private Integer icon;
+
+    private String color;
+
+    private Map<String, String> detail;
 }

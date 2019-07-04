@@ -1,5 +1,6 @@
 package com.visoft.file.service.dto;
 
+import com.visoft.file.service.Version;
 import lombok.Data;
 
 import java.util.List;
@@ -8,6 +9,10 @@ import java.util.List;
 public class ReportDto {
 
     private String email;
+
+    private Version version;
+
+    private String url;
 
     private String customToken;
 

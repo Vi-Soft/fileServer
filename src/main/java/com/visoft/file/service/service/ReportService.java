@@ -9,14 +9,17 @@ import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.extern.log4j.Log4j;
 import org.zeroturnaround.zip.ZipUtil;
+import sun.text.normalizer.UTF16;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -112,6 +115,7 @@ public class ReportService {
         return null;
     }
 
+
     private static String validateProjectName(ReportDto dto) {
         if (validateName(dto.getProjectName())) {
             log.warn(RETURN + PROJECT_NAME_NOT_CORRECT);
@@ -144,8 +148,31 @@ public class ReportService {
     }
 
     public void unzip(HttpServerExchange exchange) throws IOException {
+//        ReportDto reportDto = getRequestBody(exchange);
+//        if (reportDto != null && reportDto.getVersion() != null) {
+//            switch (reportDto.getVersion()) {
+//                case HE:
+        unzipHE(exchange);
+//                    break;
+//                case RU:
+//                    unzipRU(exchange);
+//                    break;
+//                default:
+//                    SenderService.send(exchange, BAD_REQUEST);
+//            }
+//            if (reportDto.getVersion() == Version.HE) {
+//                unzipHE(exchange);
+//            }
+//        } else {
+//            SenderService.send(exchange, BAD_REQUEST);
+//        }
+    }
+
+    private void unzipHE(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
+        System.out.print(reportDto);
+        log.info("report body:\n" + reportDto);
         if (reportDto != null) {
             if (validateToken(reportDto.getCustomToken())) {
                 String validateReportDtoResult = validateReportDto(reportDto);
@@ -164,7 +191,7 @@ public class ReportService {
                     } else {
                         new Thread(() -> {
                             try {
-                                downloadZip(reportDto.getArchiveName());
+                                downloadZip(reportDto);
                                 log.info("start unzip: " + reportDto.getArchiveName());
                                 ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
                                         new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName()).toString()));
@@ -233,13 +260,13 @@ public class ReportService {
                 .companyName(reportDto.getCompanyName())
                 .archiveName(reportDto.getArchiveName())
                 .build();
-        Task task = new Task(report.getProjectName(), null, new ArrayList<>(), -10000L, 0);
+        Task task = new Task(report.getProjectName(), null, new ArrayList<>(), -10000L, 0, null, null);
         List<Task> tasks = new ArrayList<>();
 
         String[] list = new File(rootPath + "/" + report.getCompanyName() + "/" + report.getArchiveName()).list();
         if (list != null && list.length != 0) {
             for (String s : list) {
-                Task currentTask = new Task(s, null, new ArrayList<>(), 100000L, 0);
+                Task currentTask = new Task(s, null, new ArrayList<>(), 100000L, 0, null, null);
                 tasks.add(new ReportService().getTreeByFileSystem(currentTask, "/" + currentTask.getName(), "/" + report.getCompanyName(), "/" + report.getArchiveName()));
 
             }
@@ -290,6 +317,7 @@ public class ReportService {
         }
     }
 
+
     private static String validateZip(String archiveName, String companyName) throws IOException {
         if (existsFolder(rootPath + "/" + companyName)) {
             List<Path> subfolder = Files.walk(Paths.get(rootPath + "/" + companyName), 1)
@@ -326,7 +354,7 @@ public class ReportService {
                 List<Task> tasks = new ArrayList<>();
                 if (list != null) {
                     for (String s : list) {
-                        Task currentTask = new Task(s, null, new ArrayList<>(), 10L, 0);
+                        Task currentTask = new Task(s, null, new ArrayList<>(), 10L, 0, null, null);
                         Task ss = getTreeByFileSystem(currentTask, path + "/" + currentTask.getName(), companyName, projectName);
                         tasks.add(ss);
                         task.setTasks(tasks);
@@ -342,10 +370,11 @@ public class ReportService {
         return task;
     }
 
-    private static void downloadZip(String fileName) throws IOException {
+    private static void downloadZip(ReportDto reportDto) throws IOException {
+        String fileName = reportDto.getArchiveName();
         log.info("start download: " + fileName);
         System.out.println("start down " + fileName);
-        URL website = new URL(getDownloadZipURL() + fileName + "&customToken=" + getToken());
+        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName + "&customToken=" + getToken());
         ReadableByteChannel rbc = Channels.newChannel(website.openStream());
         FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
