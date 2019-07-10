@@ -147,28 +147,7 @@ public class ReportService {
         return name == null || name.equals("");
     }
 
-    public void unzip(HttpServerExchange exchange) throws IOException {
-//        ReportDto reportDto = getRequestBody(exchange);
-//        if (reportDto != null && reportDto.getVersion() != null) {
-//            switch (reportDto.getVersion()) {
-//                case HE:
-        unzipHE(exchange);
-//                    break;
-//                case RU:
-//                    unzipRU(exchange);
-//                    break;
-//                default:
-//                    SenderService.send(exchange, BAD_REQUEST);
-//            }
-//            if (reportDto.getVersion() == Version.HE) {
-//                unzipHE(exchange);
-//            }
-//        } else {
-//            SenderService.send(exchange, BAD_REQUEST);
-//        }
-    }
-
-    private void unzipHE(HttpServerExchange exchange) throws IOException {
+    private void unzip(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
         System.out.print(reportDto);

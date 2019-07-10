@@ -301,14 +301,14 @@ public class PageService {
                 htmlTree = htmlTree + "<li>";
                 htmlTree = htmlTree + addImage(task);
                 htmlTree = htmlTree + "<span class=\"box\"";
-                htmlTree = addColorId(htmlTree, task);
-                htmlTree = htmlTree + ">" + task.getName() +getDetails(task)+ "</span>";
+                htmlTree = addNameColor(htmlTree, task);
+                htmlTree = htmlTree + ">" + task.getName() + getDetails(task) + "</span>";
             } else {
                 htmlTree = htmlTree + "<li";
                 if (task.getIcon() == 3) {
                     htmlTree = htmlTree + "><a href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
                 } else {
-                    htmlTree = addColorId(htmlTree, task);
+                    htmlTree = addNameColor(htmlTree, task);
                     htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
                 }
             }
@@ -321,25 +321,23 @@ public class PageService {
         return htmlTree;
     }
 
-    private static String addColorId(String htmlTree, Task task) {
-//        switch (task.getIcon()) {
-//            case 1:
-//        StringBuilder htmlDetails = new StringBuilder();
-//        if (task.getDetail() != null && !task.getDetail().isEmpty()) {
-//            for (Map.Entry<String, String> entry : task.getDetail().entrySet()) {
-//                htmlDetails.append("<span style=\"color: ").append(entry.getValue()).append("\">").append(entry.getKey()).append("</span>");
-//            }
-//        }
-        htmlTree = htmlTree + " style=\"color: " + task.getColor() + "\"";
-//                break;
-//            case 2:
-//                htmlTree = htmlTree + " id= \"red\"";
-//                break;
-//        }
-        return htmlTree;
+    private static String addNameColor(String htmlTree, Task task) {
+        String color = "black";
+        if (task.getColor() == null) {
+            switch (task.getIcon()) {
+                case 1:
+                    color = "grey";
+                    break;
+                case 2:
+                    color = "red";
+            }
+        } else {
+            color = task.getColor();
+        }
+        return htmlTree + " style=\"color: " + color + "\"";
     }
 
-    private static String getDetails(Task task){
+    private static String getDetails(Task task) {
         StringBuilder htmlDetails = new StringBuilder();
         if (task.getDetail() != null && !task.getDetail().isEmpty()) {
             for (Map.Entry<String, String> entry : task.getDetail().entrySet()) {
