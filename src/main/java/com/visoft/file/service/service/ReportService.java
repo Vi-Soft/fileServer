@@ -308,6 +308,8 @@ public class ReportService {
                         taskTask.setIcon(taskDto.getIcon());
                         taskTask.setName(taskDto.getName());
                         taskTask.setOrderInGroup(taskDto.getOrderInGroup());
+                        taskTask.setColor(taskDto.getColor());
+                        taskTask.setDetail(taskDto.getDetail());
                     }
                 }
 

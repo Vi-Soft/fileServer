@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Log4j
@@ -301,7 +302,7 @@ public class PageService {
                 htmlTree = htmlTree + addImage(task);
                 htmlTree = htmlTree + "<span class=\"box\"";
                 htmlTree = addColorId(htmlTree, task);
-                htmlTree = htmlTree + ">" + task.getName() + "</span>";
+                htmlTree = htmlTree + ">" + task.getName() +getDetails(task)+ "</span>";
             } else {
                 htmlTree = htmlTree + "<li";
                 if (task.getIcon() == 3) {
@@ -321,15 +322,31 @@ public class PageService {
     }
 
     private static String addColorId(String htmlTree, Task task) {
-        switch (task.getIcon()) {
-            case 1:
-                htmlTree = htmlTree + " id= \"grey\"";
-                break;
-            case 2:
-                htmlTree = htmlTree + " id= \"red\"";
-                break;
-        }
+//        switch (task.getIcon()) {
+//            case 1:
+//        StringBuilder htmlDetails = new StringBuilder();
+//        if (task.getDetail() != null && !task.getDetail().isEmpty()) {
+//            for (Map.Entry<String, String> entry : task.getDetail().entrySet()) {
+//                htmlDetails.append("<span style=\"color: ").append(entry.getValue()).append("\">").append(entry.getKey()).append("</span>");
+//            }
+//        }
+        htmlTree = htmlTree + " style=\"color: " + task.getColor() + "\"";
+//                break;
+//            case 2:
+//                htmlTree = htmlTree + " id= \"red\"";
+//                break;
+//        }
         return htmlTree;
+    }
+
+    private static String getDetails(Task task){
+        StringBuilder htmlDetails = new StringBuilder();
+        if (task.getDetail() != null && !task.getDetail().isEmpty()) {
+            for (Map.Entry<String, String> entry : task.getDetail().entrySet()) {
+                htmlDetails.append("<span lass=\"box\" style=\"color: ").append(entry.getValue()).append("\">").append(entry.getKey()).append("</span>");
+            }
+        }
+        return htmlDetails.toString();
     }
 
     private static String addImage(Task task) {
