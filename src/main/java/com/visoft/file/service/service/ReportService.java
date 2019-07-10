@@ -147,7 +147,7 @@ public class ReportService {
         return name == null || name.equals("");
     }
 
-    private void unzip(HttpServerExchange exchange) throws IOException {
+    public void unzip(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
         System.out.print(reportDto);
