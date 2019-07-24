@@ -2,6 +2,7 @@ package com.visoft.file.service.service.util;
 
 import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.Task;
+import com.visoft.file.service.util.TaskSorter;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import lombok.extern.log4j.Log4j;
@@ -295,6 +296,8 @@ public class PageService {
     }
 
     private static String getHtmlTree(Task mainTask) {
+        TaskSorter.byTaskName(mainTask.getTasks());
+
         String htmlTree = "<ul class=\"nested\">\n";
         for (Task task : mainTask.getTasks()) {
             if (task.getTasks() != null && !task.getTasks().isEmpty()) {
