@@ -8,3 +8,4 @@ dependency-reduced-pom.xml
 /reportOut/
 /pdfTemplates/
 .idea
+*iml

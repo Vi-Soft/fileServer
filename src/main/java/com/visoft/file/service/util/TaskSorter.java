@@ -11,11 +11,15 @@ public class TaskSorter {
 
     public static void byTaskName(List<Task> tasks) {
         tasks.sort((task1, task2) -> {
-            Integer n1 = parseIntegerIfPossible(task1.getName());
-            Integer n2 = parseIntegerIfPossible(task2.getName());
+            Integer i1 = parseIntegerIfPossible(task1.getName());
+            Integer i2 = parseIntegerIfPossible(task2.getName());
 
-            if (n1 != null && n2 != null) {
-                return n1.compareTo(n2);
+            if (i1 != null && i2 != null) {
+                return i1.compareTo(i2);
+            } else if (i1 != null) {
+                return 1;
+            } else if (i2 != null) {
+                return -1;
             }
             return 0;
         });
