@@ -26,6 +26,7 @@ import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
+import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 
 @Log4j
 public class ReportService {
@@ -169,11 +170,12 @@ public class ReportService {
                                 ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
                                         new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName()).toString()));
                                 log.info("finish unzip: " + reportDto.getArchiveName());
-                                new File(Paths.get(rootPath, reportDto.getArchiveName() + getReportExtension()).toString()).delete();
-                                log.info("delete zip: " + reportDto.getArchiveName());
+                                removeFile(reportDto.getArchiveName() + getReportExtension());
                                 log.info("start tree web");
                                 Report fullTree = getFullTree(reportDto);
-                                getRealTask(fullTree.getTask(), reportDto.getTasks());
+                                System.out.println(reportDto.getPaths().size());
+                                getRealTask(fullTree.getTask(), reportDto.getTasks(), reportDto.getPaths());
+                                System.out.println(reportDto.getPaths().size());
                                 saveIndexHtml(fullTree);
                                 log.info("finish tree web");
                                 log.info("start zip: " + reportDto.getArchiveName());
@@ -196,12 +198,10 @@ public class ReportService {
                                 log.error(e.getMessage());
                                 sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
                                 log.error("send error email");
-                            } finally {
-                                log.error("delete zip finally");
-                                File file = new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension());
-                                if (file.exists()) {
-                                    file.delete();
-                                }
+                                removeFile(Paths.get(reportDto.getCompanyName() ,reportDto.getArchiveName()).toString());
+                                removeFile(Paths.get(reportDto.getCompanyName() ,reportDto.getArchiveName() + getReportExtension()).toString());
+                            }finally {
+                                removeFile(reportDto.getArchiveName() + getReportExtension());
                             }
                         }).start();
                         SenderService.send(exchange, OK);
@@ -218,6 +218,12 @@ public class ReportService {
         }
     }
 
+    private void removeFile(String path){
+        deleteQuietly(new File(Paths.get(rootPath, path).toString()));
+        log.info("delete " + path);
+
+    }
+
     private boolean validateToken(String token) {
         log.info("validateToken");
         boolean result = token != null && !token.isEmpty() && token.equals(getToken());
@@ -227,7 +233,6 @@ public class ReportService {
 
 
     private static Report getFullTree(ReportDto reportDto) {
-
         Report report = Report.builder()
                 .projectName(reportDto.getProjectName())
                 .companyName(reportDto.getCompanyName())
@@ -273,25 +278,28 @@ public class ReportService {
         }
     }
 
-    private static void getRealTask(Task task, List<TaskDto> tasks) {
+    private static void getRealTask(Task task, List<TaskDto> tasks, List<String> paths) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
             for (Task taskTask : task.getTasks()) {
                 for (TaskDto taskDto : tasks) {
-                    if (taskTask.getName().equals(taskDto.getId().toString())) {
-                        taskTask.setIcon(taskDto.getIcon());
-                        taskTask.setName(taskDto.getName());
-                        taskTask.setOrderInGroup(taskDto.getOrderInGroup());
-                        taskTask.setColor(taskDto.getColor());
-                        taskTask.setDetail(taskDto.getDetail());
+                    if (taskTask.getName().equals(taskDto.getId().toString())){
+                        if(!paths.contains(taskTask.getPath())){
+                            taskTask.setIcon(taskDto.getIcon());
+                            taskTask.setName(taskDto.getName());
+                            taskTask.setOrderInGroup(taskDto.getOrderInGroup());
+                            taskTask.setColor(taskDto.getColor());
+                            taskTask.setDetail(taskDto.getDetail());
+                        } else {
+                          paths.remove(taskTask.getPath());
+                        }
+
                     }
                 }
-
-                getRealTask(taskTask, tasks);
+                getRealTask(taskTask, tasks, paths);
             }
             sortByParentIdAndOrderInGroup(task.getTasks());
         }
     }
-
 
     private static String validateZip(String archiveName, String companyName) throws IOException {
         if (existsFolder(rootPath + "/" + companyName)) {
@@ -330,9 +338,10 @@ public class ReportService {
                 if (list != null) {
                     for (String s : list) {
                         Task currentTask = new Task(s, null, new ArrayList<>(), 10L, 0, null, null);
+                        currentTask.setPath(Paths.get(path, currentTask.getName()).toString());
+                        task.setTasks(tasks);
                         Task ss = getTreeByFileSystem(currentTask, path + "/" + currentTask.getName(), companyName, projectName);
                         tasks.add(ss);
-                        task.setTasks(tasks);
                     }
                 }
             } else {
