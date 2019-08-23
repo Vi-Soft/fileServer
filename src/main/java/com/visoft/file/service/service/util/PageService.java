@@ -1,7 +1,9 @@
 package com.visoft.file.service.service.util;
 
+import com.visoft.file.service.dto.FormType;
 import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.Task;
+import com.visoft.file.service.service.FormTypeService;
 import com.visoft.file.service.util.TaskSorter;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
@@ -80,7 +82,7 @@ public class PageService {
         exchange.getResponseSender().send(htmlString);
     }
 
-    public static void saveIndexHtml(Report tree) throws FileNotFoundException {
+    public static void saveIndexHtml(Report tree, List<FormType> formTypes) throws FileNotFoundException {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String htmlString = ("<!DOCTYPE html>\n" +
@@ -305,7 +307,7 @@ public class PageService {
                 " <li><span class=\"box\">" +
                 tree.getTask().getName() +
                 "</span>" +
-                getHtmlTree(tree.getTask()) +
+                getHtmlTree(tree.getTask(), formTypes) +
                 "</li>" +
                 "</ul>" +
                 "</div><script>\n" +
@@ -331,7 +333,7 @@ public class PageService {
         }
     }
 
-    private static String getHtmlTree(Task mainTask) {
+    private static String getHtmlTree(Task mainTask, List<FormType> formTypes) {
         TaskSorter.byTaskName(mainTask.getTasks());
 
         String htmlTree = "<ul class=\"nested\">\n";
@@ -348,7 +350,12 @@ public class PageService {
                     String[] split = task.getPath().split("/");
                     String classWithId = "";
                     if (split.length>1){
-                        classWithId=task.getType().getValue()+"-"+split[split.length-2];
+
+                        FormType formType = new FormTypeService().getFormType(formTypes, task.getPath().substring(0, task.getPath().length() - 1 - split[split.length - 1].length()));
+                        if (formType!=null){
+                            classWithId=formType.getType().getValue()+"-"+split[split.length-2];
+                        }
+//                        classWithId=task.getType().getValue()+"-"+split[split.length-2];
                     }
                     htmlTree = htmlTree + "><a class=\""+classWithId+"\" href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
                 } else {
@@ -357,7 +364,7 @@ public class PageService {
                 }
             }
             if (task.getTasks() != null) {
-                htmlTree = htmlTree + getHtmlTree(task);
+                htmlTree = htmlTree + getHtmlTree(task, formTypes);
             }
 
         }

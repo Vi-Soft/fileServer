@@ -174,7 +174,7 @@ public class ReportService {
                                 log.info("start tree web");
                                 Report fullTree = getFullTree(reportDto);
                                 getRealTask(fullTree.getTask(), reportDto.getTasks(), reportDto.getFormTypes());
-                                saveIndexHtml(fullTree);
+                                saveIndexHtml(fullTree, reportDto.getFormTypes());
                                 log.info("finish tree web");
                                 log.info("start zip: " + reportDto.getArchiveName());
                                 System.out.println("start zip" + reportDto.getArchiveName());
@@ -186,7 +186,7 @@ public class ReportService {
                                 log.info("start tree zip");
                                 setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
                                 getDeleteNotWantFiles(fullTree);
-                                saveIndexHtml(fullTree);
+                                saveIndexHtml(fullTree, reportDto.getFormTypes());
                                 log.info("finish tree zip");
                                 FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
                                 log.info("createUser folder db");
@@ -288,9 +288,10 @@ public class ReportService {
                             taskTask.setOrderInGroup(taskDto.getOrderInGroup());
                             taskTask.setColor(taskDto.getColor());
                             taskTask.setDetail(taskDto.getDetail());
-                        } else {
+                        }
+                        else {
                             taskTask.setType(formType.getType());
-                            formTypes.remove(formType);
+//                            formTypes.remove(formType);
                         }
 
                     }

@@ -3,18 +3,17 @@ package com.visoft.file.service.dto;
 import lombok.Data;
 
 import java.nio.file.Paths;
-import java.util.List;
 
-import static com.visoft.file.service.dto.Type.*;
+import static com.visoft.file.service.dto.Type.DEFAULT;
 
 @Data
 public class FormType {
 
-    private Type type= DEFAULT;
+    private Type type = DEFAULT;
 
     private String path;
 
-    public void setPaths(List<String> paths) {
+    public void setPaths(String path) {
         this.path = Paths
                 .get(path)
                 .toString();
