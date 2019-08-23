@@ -1,16 +1,16 @@
 package com.visoft.file.service.service;
 
 import com.networknt.config.Config;
-import com.visoft.file.service.dto.Report;
-import com.visoft.file.service.dto.ReportDto;
-import com.visoft.file.service.dto.Task;
-import com.visoft.file.service.dto.TaskDto;
+import com.visoft.file.service.dto.*;
 import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.extern.log4j.Log4j;
 import org.zeroturnaround.zip.ZipUtil;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -173,9 +173,7 @@ public class ReportService {
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
                                 log.info("start tree web");
                                 Report fullTree = getFullTree(reportDto);
-                                System.out.println(reportDto.getPaths().size());
-                                getRealTask(fullTree.getTask(), reportDto.getTasks(), reportDto.getPaths());
-                                System.out.println(reportDto.getPaths().size());
+                                getRealTask(fullTree.getTask(), reportDto.getTasks(), reportDto.getFormTypes());
                                 saveIndexHtml(fullTree);
                                 log.info("finish tree web");
                                 log.info("start zip: " + reportDto.getArchiveName());
@@ -198,9 +196,9 @@ public class ReportService {
                                 log.error(e.getMessage());
                                 sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
                                 log.error("send error email");
-                                removeFile(Paths.get(reportDto.getCompanyName() ,reportDto.getArchiveName()).toString());
-                                removeFile(Paths.get(reportDto.getCompanyName() ,reportDto.getArchiveName() + getReportExtension()).toString());
-                            }finally {
+                                removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName()).toString());
+                                removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
+                            } finally {
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
                             }
                         }).start();
@@ -218,7 +216,7 @@ public class ReportService {
         }
     }
 
-    private void removeFile(String path){
+    private void removeFile(String path) {
         deleteQuietly(new File(Paths.get(rootPath, path).toString()));
         log.info("delete " + path);
 
@@ -278,24 +276,26 @@ public class ReportService {
         }
     }
 
-    private static void getRealTask(Task task, List<TaskDto> tasks, List<String> paths) {
+    private static void getRealTask(Task task, List<TaskDto> tasks, List<FormType> formTypes) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
             for (Task taskTask : task.getTasks()) {
                 for (TaskDto taskDto : tasks) {
-                    if (taskTask.getName().equals(taskDto.getId().toString())){
-                        if(!paths.contains(taskTask.getPath())){
+                    if (taskTask.getName().equals(taskDto.getId().toString())) {
+                        FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
+                        if (formType == null) {
                             taskTask.setIcon(taskDto.getIcon());
                             taskTask.setName(taskDto.getName());
                             taskTask.setOrderInGroup(taskDto.getOrderInGroup());
                             taskTask.setColor(taskDto.getColor());
                             taskTask.setDetail(taskDto.getDetail());
                         } else {
-                          paths.remove(taskTask.getPath());
+                            taskTask.setType(formType.getType());
+                            formTypes.remove(formType);
                         }
 
                     }
                 }
-                getRealTask(taskTask, tasks, paths);
+                getRealTask(taskTask, tasks, formTypes);
             }
             sortByParentIdAndOrderInGroup(task.getTasks());
         }

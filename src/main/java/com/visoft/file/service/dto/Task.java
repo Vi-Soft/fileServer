@@ -26,6 +26,8 @@ public class Task implements Comparable<Task> {
 
     private String color;
 
+    private Type type = Type.DEFAULT;
+
     private Map<String, String> detail;
 
     public Task(String name, Long id, List<Task> tasks, Long orderInGroup, Integer icon, String color, Map<String, String> detail) {

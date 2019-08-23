@@ -84,7 +84,7 @@ public class PageService {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String htmlString = ("<!DOCTYPE html>\n" +
-                "<html>\n" +
+               "<html>\n" +
                 "<head>\n" +
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
                 "<style>\n" +
@@ -168,11 +168,11 @@ public class PageService {
                 "}\n" +
                 "</style>\n" +
                 "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"jquery.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"highlight.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"scrollTo-min.js\" ></script>\n" +
+                "<script type=\"text/javascript\" src=\"http://62.0.69.195:8180/static/jquery\"></script>\n" +
+                "<script type=\"text/javascript\" src=\"http://62.0.69.195:8180/static/highlight\"></script>\n" +
+                "<script type=\"text/javascript\" src=\"http://62.0.69.195:8180/static/scrollToMin\" ></script>\n" +
                 "<script>\n" +
-                "\n" +
+                "/*\n" +
                 "function Do () {\n" +
                 "var toggler = document.getElementsByClassName(\"box\");\n" +
                 "var i;\n" +
@@ -183,7 +183,32 @@ public class PageService {
                 "//});\n" +
                 "}\n" +
                 "\n" +
-                "}</script>\n" +
+                "}\n" +
+                "*/\n" +
+                "function searchClass(){\n" +
+                "\n" +
+                "\tvar e = document.getElementById(\"DocType\");\n" +
+                "\tvar docTypeVal = e.options[e.selectedIndex].value;\n" +
+                "\n" +
+                "\tvar searchEl = document.getElementById(\"search_text\");\n" +
+                "\tvar searchElVal = searchEl.value;\n" +
+                "\t\n" +
+                "\tvar searchResultDiv = document.getElementById(\"searchResult\");\n" +
+                "\tsearchResultDiv.innerHTML = \"\";\n" +
+                "\n" +
+                "\n" +
+                "\tvar elArr = document.getElementsByClassName(docTypeVal + searchElVal);\n" +
+                "\tvar newElArr = Array.prototype.slice.call(elArr, 0);\n" +
+                "\t\t\n" +
+                "\tArray.prototype.forEach.call(newElArr, function(el) {\n" +
+                "\t\tvar attribute = el.getAttribute(\"href\");\n" +
+                "\t\tif (attribute.toLowerCase().indexOf(\"checklist\") === -1) return;\n" +
+                "\t\tvar breakLine = document.createElement(\"BR\");\n" +
+                "\t\tsearchResultDiv.appendChild(el.cloneNode(true));\n" +
+                "\t\tsearchResultDiv.appendChild(breakLine);\n" +
+                "\t});\n" +
+                "}\n" +
+                "</script>\n" +
                 "<script type=\"text/javascript\">\n" +
                 "jQuery(document).ready(function(){\n" +
                 "\n" +
@@ -202,7 +227,7 @@ public class PageService {
                 "jQuery.scrollTo(\".selectHighlight\", 500, {offset:-150});\n" +
                 "}\n" +
                 "\n" +
-                "$('#search_text').bind('keyup oncnange', function() {\n" +
+                "/*$('#search_text').bind('keyup oncnange', function() {\n" +
                 "$('#text').removeHighlight();\n" +
                 "txt = $('#search_text').val();\n" +
                 "if (txt == '') return;\n" +
@@ -214,8 +239,11 @@ public class PageService {
                 "if ( search_count >= 0 ) scroll_to_word();\n" +
                 "$('#count').html('Total matches: <b>'+count_text+'</b>');\n" +
                 "});\n" +
-                "\n" +
+                "*/\n" +
                 "$('#clear_button').click(function() {\n" +
+                "\tvar searchResultDiv = document.getElementById(\"searchResult\");\n" +
+                "\tsearchResultDiv.innerHTML = \"\";\n" +
+                "\n" +
                 "$('#text').removeHighlight();\n" +
                 "$('#search_text').val('Search');\n" +
                 "$('#count').html('');\n" +
@@ -250,15 +278,23 @@ public class PageService {
                 "\n" +
                 "</script>\n" +
                 "</head>\n" +
-                "<body>\n" +
+                "<body>\n"+
                 "<div id=\"search_block\" style=\"position: inherit; display: block; top: 7px; background-color: #f0f0f0;\" >\n" +
-                "<input id=\"prev_search\" type=\"button\" value=\"<\" />\n" +
+                "\n" +
+                "\t<select id=\"DocType\">\n" +
+                "    <option selected value=\"Checklist-\">Checklist</option>\n" +
+                "    <!--option value=\"NCR-\">NCR</option>\n" +
+                "    <option value=\"RFI-\">RFI</option>\n" +
+                "    <option value=\"POC-\">POC</option -->\n" +
+                "   </select>\n" +
+                "\n" +
                 "<input id=\"search_text\" type=\"text\" value=\"Search\" onblur=\"if (this.value=='') this.value='Search';\" onfocus=\"if (this.value=='Search') this.value='';\" />\n" +
-                "<input id=\"next_search\" type=\"button\" value=\">\" />\n" +
-                "<input type=\"button\" id=\"butt\" onclick=\"Do();\" value=\"Open\"/>\n" +
-                "<input id=\"clear_button\" type=\"button\" value=\"X\" />\n" +
                 "\n" +
-                "\n" +
+                "<input id=\"clear_button\" type=\"button\" value=\"Clean\" />\n" +
+                "<input id=\"searchClass\" type=\"button\" value=\"Search\" onClick=\"searchClass()\"/>\n" +
+                "<div id=\"searchResult\">\n" +
+                "\t\n" +
+                "</div>\n" +
                 "<div id=\"count\" style=\"font-size:10pt;\"></div>\n" +
                 "</div>\n" +
                 "<div id='text'>\n") +
@@ -309,7 +345,12 @@ public class PageService {
             } else {
                 htmlTree = htmlTree + "<li";
                 if (task.getIcon() == 3) {
-                    htmlTree = htmlTree + "><a href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
+                    String[] split = task.getPath().split("/");
+                    String classWithId = "";
+                    if (split.length>1){
+                        classWithId=task.getType().getValue()+"-"+split[split.length-2];
+                    }
+                    htmlTree = htmlTree + "><a class=\""+classWithId+"\" href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
                 } else {
                     htmlTree = addNameColor(htmlTree, task);
                     htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
