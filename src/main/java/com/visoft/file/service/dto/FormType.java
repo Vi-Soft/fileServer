@@ -13,10 +13,9 @@ public class FormType {
 
     private String path;
 
-    public void setPaths(String path) {
+    public void setPath(String path) {
         this.path = Paths
                 .get(path)
                 .toString();
-
     }
 }

@@ -167,26 +167,57 @@ public class ReportService {
                             try {
                                 downloadZip(reportDto);
                                 log.info("start unzip: " + reportDto.getArchiveName());
-                                ZipUtil.unpack(new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
-                                        new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName()).toString()));
+                                ZipUtil.unpack(
+                                        new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
+                                        new File(
+                                                Paths.get(
+                                                        rootPath,
+                                                        reportDto.getCompanyName(),
+                                                        reportDto.getArchiveName()
+                                                ).toString()
+                                        )
+                                );
                                 log.info("finish unzip: " + reportDto.getArchiveName());
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
                                 log.info("start tree web");
                                 Report fullTree = getFullTree(reportDto);
-                                getRealTask(fullTree.getTask(), reportDto.getTasks(), reportDto.getFormTypes());
-                                saveIndexHtml(fullTree, reportDto.getFormTypes());
+                                getRealTask(
+                                        fullTree.getTask(),
+                                        reportDto.getTasks(),
+                                        reportDto.getFormTypes()
+                                );
+                                saveIndexHtml(
+                                        fullTree,
+                                        reportDto.getFormTypes(),
+                                        true
+                                );
                                 log.info("finish tree web");
                                 log.info("start zip: " + reportDto.getArchiveName());
                                 System.out.println("start zip" + reportDto.getArchiveName());
                                 ZipUtil.pack(
-                                        new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName()).toString()),
-                                        new File(Paths.get(rootPath, reportDto.getCompanyName(), reportDto.getArchiveName() + ".zip").toString())
+                                        new File(Paths.get(
+                                                rootPath,
+                                                reportDto.getCompanyName(),
+                                                reportDto.getArchiveName()).toString()
+                                        ),
+                                        new File(Paths.get(
+                                                rootPath,
+                                                reportDto.getCompanyName(),
+                                                reportDto.getArchiveName() + ".zip").toString()
+                                        )
                                 );
                                 log.info("start finish: " + reportDto.getArchiveName());
                                 log.info("start tree zip");
-                                setPathFullPath(fullTree.getTask(), reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                                setPathFullPath(
+                                        fullTree.getTask(),
+                                        reportDto.getCompanyName() + "/" + reportDto.getArchiveName()
+                                );
                                 getDeleteNotWantFiles(fullTree);
-                                saveIndexHtml(fullTree, reportDto.getFormTypes());
+                                saveIndexHtml(
+                                        fullTree,
+                                        reportDto.getFormTypes(),
+                                        false
+                                );
                                 log.info("finish tree zip");
                                 FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
                                 log.info("createUser folder db");
@@ -237,6 +268,7 @@ public class ReportService {
                 .archiveName(reportDto.getArchiveName())
                 .build();
         Task task = new Task(report.getProjectName(), null, new ArrayList<>(), -10000L, 0, null, null);
+        task.setPath(reportDto.getCompanyName());
         List<Task> tasks = new ArrayList<>();
 
         String[] list = new File(rootPath + "/" + report.getCompanyName() + "/" + report.getArchiveName()).list();
@@ -280,20 +312,19 @@ public class ReportService {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
             for (Task taskTask : task.getTasks()) {
                 for (TaskDto taskDto : tasks) {
-                    if (taskTask.getName().equals(taskDto.getId().toString())) {
                         FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
-                        if (formType == null) {
+//                        System.out.println(taskTask.getPath());
+                    if (formType == null) {
+                        if (taskTask.getName().equals(taskDto.getId().toString())) {
                             taskTask.setIcon(taskDto.getIcon());
                             taskTask.setName(taskDto.getName());
                             taskTask.setOrderInGroup(taskDto.getOrderInGroup());
                             taskTask.setColor(taskDto.getColor());
                             taskTask.setDetail(taskDto.getDetail());
                         }
-                        else {
-                            taskTask.setType(formType.getType());
+                    }else {
+                        taskTask.setType(formType.getType());
 //                            formTypes.remove(formType);
-                        }
-
                     }
                 }
                 getRealTask(taskTask, tasks, formTypes);

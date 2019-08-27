@@ -82,7 +82,7 @@ public class PageService {
         exchange.getResponseSender().send(htmlString);
     }
 
-    public static void saveIndexHtml(Report tree, List<FormType> formTypes) throws FileNotFoundException {
+    public static void saveIndexHtml(Report tree, List<FormType> formTypes, boolean forArchive) throws FileNotFoundException {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String htmlString = ("<!DOCTYPE html>\n" +
@@ -307,7 +307,7 @@ public class PageService {
                 " <li><span class=\"box\">" +
                 tree.getTask().getName() +
                 "</span>" +
-                getHtmlTree(tree.getTask(), formTypes) +
+                getHtmlTree(tree.getTask(), formTypes, forArchive, (tree.getCompanyName() + tree.getArchiveName()).length()+2) +
                 "</li>" +
                 "</ul>" +
                 "</div><script>\n" +
@@ -333,7 +333,7 @@ public class PageService {
         }
     }
 
-    private static String getHtmlTree(Task mainTask, List<FormType> formTypes) {
+    private static String getHtmlTree(Task mainTask, List<FormType> formTypes, boolean forArchive,int startPathWith) {
         TaskSorter.byTaskName(mainTask.getTasks());
 
         String htmlTree = "<ul class=\"nested\">\n";
@@ -350,8 +350,37 @@ public class PageService {
                     String[] split = task.getPath().split("/");
                     String classWithId = "";
                     if (split.length>1){
+                        FormType formType;
+                        if(forArchive) {
+                            String path = "/" + task.getPath()
+                                    .substring(
+                                            0,
+                                            task
+                                                    .getPath()
+                                                    .length() - 1 - split[split.length - 1]
+                                                    .length()
+                                    );
+                             formType = new FormTypeService()
+                                    .getFormType(
+                                            formTypes,
+                                            path
+                                    );
+                        }else {
+                            String path = task.getPath()
+                                    .substring(
+                                            0,
+                                            task
+                                                    .getPath()
+                                                    .length() - 1 - split[split.length - 1]
+                                                    .length()
+                                    ).substring(startPathWith);
+                            formType = new FormTypeService()
+                                    .getFormType(
+                                            formTypes,
+                                             path
+                                    );
+                        }
 
-                        FormType formType = new FormTypeService().getFormType(formTypes, task.getPath().substring(0, task.getPath().length() - 1 - split[split.length - 1].length()));
                         if (formType!=null){
                             classWithId=formType.getType().getValue()+"-"+split[split.length-2];
                         }
@@ -364,7 +393,7 @@ public class PageService {
                 }
             }
             if (task.getTasks() != null) {
-                htmlTree = htmlTree + getHtmlTree(task, formTypes);
+                htmlTree = htmlTree + getHtmlTree(task, formTypes, forArchive, startPathWith);
             }
 
         }
