@@ -10,6 +10,7 @@ import io.undertow.util.Headers;
 import lombok.extern.log4j.Log4j;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -82,7 +83,7 @@ public class PageService {
         exchange.getResponseSender().send(htmlString);
     }
 
-    public static void saveIndexHtml(Report tree, List<FormType> formTypes, boolean forArchive) throws FileNotFoundException {
+    public static void saveIndexHtml(Report tree,  Map<String,FormType> formTypes, boolean forArchive) throws FileNotFoundException {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String htmlString = ("<!DOCTYPE html>\n" +
@@ -333,9 +334,8 @@ public class PageService {
         }
     }
 
-    private static String getHtmlTree(Task mainTask, List<FormType> formTypes, boolean forArchive,int startPathWith) {
+    private static String getHtmlTree(Task mainTask,  Map<String,FormType> formTypes, boolean forArchive,int startPathWith) {
         TaskSorter.byTaskName(mainTask.getTasks());
-
         String htmlTree = "<ul class=\"nested\">\n";
         for (Task task : mainTask.getTasks()) {
             if (task.getTasks() != null && !task.getTasks().isEmpty()) {
@@ -352,12 +352,12 @@ public class PageService {
                     if (split.length>1){
                         FormType formType;
                         if(forArchive) {
-                            String path = "/" + task.getPath()
+                            String path = Paths.get("/" + task.getPath()).toString()
                                     .substring(
                                             0,
                                             task
                                                     .getPath()
-                                                    .length() - 1 - split[split.length - 1]
+                                                    .length() - split[split.length - 1]
                                                     .length()
                                     );
                              formType = new FormTypeService()
@@ -366,7 +366,7 @@ public class PageService {
                                             path
                                     );
                         }else {
-                            String path = task.getPath()
+                            String path = Paths.get( task.getPath()).toString()
                                     .substring(
                                             0,
                                             task

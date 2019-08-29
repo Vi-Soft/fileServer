@@ -23,7 +23,7 @@ enableHttps: false
 # Http/2 is enabled by default for better performance and it works with the client module
 enableHttp2: false
 
-# Keystore file name in config folder. KeystorePass is in secret.yml to access it.
+# Keystore file name in config folder. KeystorePass is in secret.yml to adsccess it.
 keystoreName: tls/server.keystore
 
 # Flag that indicate if two way TLS is enabled. Not recommended in docker container.

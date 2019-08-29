@@ -180,15 +180,18 @@ public class ReportService {
                                 log.info("finish unzip: " + reportDto.getArchiveName());
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
                                 log.info("start tree web");
+                                System.out.println(reportDto.getFormTypes().size());
+                                Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
+                                System.out.println("ddddddd" + formTypeMap);
                                 Report fullTree = getFullTree(reportDto);
                                 getRealTask(
                                         fullTree.getTask(),
                                         reportDto.getTasks(),
-                                        reportDto.getFormTypes()
+                                        formTypeMap
                                 );
                                 saveIndexHtml(
                                         fullTree,
-                                        reportDto.getFormTypes(),
+                                        formTypeMap,
                                         true
                                 );
                                 log.info("finish tree web");
@@ -215,7 +218,7 @@ public class ReportService {
                                 getDeleteNotWantFiles(fullTree);
                                 saveIndexHtml(
                                         fullTree,
-                                        reportDto.getFormTypes(),
+                                        formTypeMap,
                                         false
                                 );
                                 log.info("finish tree zip");
@@ -308,12 +311,11 @@ public class ReportService {
         }
     }
 
-    private static void getRealTask(Task task, List<TaskDto> tasks, List<FormType> formTypes) {
+    private static void getRealTask(Task task, List<TaskDto> tasks, Map<String,FormType> formTypes) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
             for (Task taskTask : task.getTasks()) {
                 for (TaskDto taskDto : tasks) {
-                        FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
-//                        System.out.println(taskTask.getPath());
+                    FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {
                         if (taskTask.getName().equals(taskDto.getId().toString())) {
                             taskTask.setIcon(taskDto.getIcon());
@@ -324,7 +326,6 @@ public class ReportService {
                         }
                     }else {
                         taskTask.setType(formType.getType());
-//                            formTypes.remove(formType);
                     }
                 }
                 getRealTask(taskTask, tasks, formTypes);
@@ -380,9 +381,7 @@ public class ReportService {
                 task.setIcon(3);
                 task.setPath(path.substring(1));
             }
-
         }
-
         return task;
     }
 

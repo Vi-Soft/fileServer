@@ -4,6 +4,7 @@ import com.visoft.file.service.Version;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class ReportDto {
@@ -24,5 +25,5 @@ public class ReportDto {
 
     private List<TaskDto> tasks;
 
-    private List<FormType> formTypes;
+    private Set<FormType> formTypes;
 }
