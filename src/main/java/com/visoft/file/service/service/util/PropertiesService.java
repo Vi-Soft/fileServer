@@ -36,12 +36,12 @@ public class PropertiesService {
         return getProperty("token");
     }
 
-    public static String getDownloadZipURL() {
-        return getProperty("download.zip.url");
-    }
-
     public static String getReportExtension() {
         return getProperty("report.extension");
+    }
+
+    public static String getStaticServer() {
+        return getProperty("static.server");
     }
 
     static String getLoginPage() {

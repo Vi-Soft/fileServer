@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
+
 @Log4j
 public class PageService {
 
@@ -63,21 +65,31 @@ public class PageService {
                 sb.append(System.lineSeparator());
                 line = br.readLine();
             }
-            htmlString = sb.toString().replace("r.png", PropertiesService.getServerName() + "/static/r");
-            htmlString = htmlString.replace("g.png", PropertiesService.getServerName() + "/static/g");
-            htmlString = htmlString.replace("highlight.js", PropertiesService.getServerName() + "/static/highlight");
-            htmlString = htmlString.replace("jquery.js", PropertiesService.getServerName() + "/static/jquery");
-            htmlString = htmlString.replace("scrollTo-min.js", PropertiesService.getServerName() + "/static/scrollToMin");
+            htmlString = sb.toString().replace("r.png", getStaticServer()+ "/r.png");
+            htmlString = htmlString.replace("g.png", getStaticServer() + "/g.png");
+            htmlString = htmlString.replace("highlight.js", getStaticServer() + "/highlight.js");
+            htmlString = htmlString.replace("jquery.js", getStaticServer() + "/jquery.js");
+            htmlString = htmlString.replace("scrollTo-min.js", getStaticServer() + "/scrollTo-min.js");
+            htmlString = htmlString.replace("background.jpg", getStaticServer() + "/background.jpg");
+            htmlString = htmlString.replace("imageDownload.png", getStaticServer() + "/imageDownload.png");
+            htmlString = htmlString.replace("imageLogout.png", getStaticServer() + "/imageLogout.png");
         }
         String[] split = htmlString.split("<body>");
         htmlString = split[0] +
                 "<body>\n" +
-                "<form action=\"" + server + "/api/logout\" method=\"post\">\n" +
-                "    <input type=\"submit\" value=\"Logout\" />\n" +
-                "</form>" +
-                "<a href=\"" + PropertiesService.getServerName() + folder + ".zip\">\n" +
-                "\t\t<button>Download</button></p>\n" +
-                "\t</a>" +
+                "<div class=\"wrapper\">\n" +
+                "  <div class=\"header\">\n" +
+                "    <div class=\"exit\">\n" +
+                "      <form action=\""+server+"/api/logout\" method=\"post\">\n" +
+                "        <input type=\"image\" src=\"1.png\" alt=\"Logout\" />\n" +
+                "      </form>\n" +
+                "      </div>\n" +
+                "      <div class=\"logo\">Download Client</div>\n" +
+                "    </div>\n" +
+                "</div>\n" +
+                "<a href=\""+ PropertiesService.getServerName() + folder+"zip\" >\n" +
+                "\t\t<button class=\"btn\"> <h2>Download</h2></button></p>\n" +
+                "\t</a>"+
                 split[1];
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");
         exchange.getResponseSender().send(htmlString);
@@ -91,6 +103,180 @@ public class PageService {
                 "<head>\n" +
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
                 "<style>\n" +
+                "input[type=\"button\"]\n" +
+                "{\n" +
+                "    font-size:22px;\n" +
+                "}\n" +
+                "select\n" +
+                "{\n" +
+                "    font-size:22px;\n" +
+                "}\n" +
+                "p {\n" +
+                "  line-height: 1.5;\n" +
+                "}\n" +
+                "body {\n" +
+                "\t background-image: url(background.jpg);\n" +
+                "\tbackground-attachment: fixed;\n" +
+                "}\n" +
+                ".searchResult{\n" +
+                "\tmargin: 10px;\n" +
+                "\tpadding: 0px 20px;\n" +
+                "\t  background-color: rgba(175, 238, 238, 0.3);;\n" +
+                "  border: 2px solid #008B8B;\n" +
+                "  border-radius: 25px;\n" +
+                "}\n" +
+                "#search_text{\n" +
+                "\n" +
+                "\twidth: 297px;\n" +
+                "\tpadding: 15px 0px 15px 20px;\n" +
+                "\tfont-size: 16px;\n" +
+                "\tfont-family: Montserrat, sans-serif;\n" +
+                "\tborder: 10 none;\n" +
+                "\theight: 52px;\n" +
+                "\tmargin-right: 2;\n" +
+                "\tborder-radius: 7px;\n" +
+                "\tcolor: white;\n" +
+                "\toutline: none;\n" +
+                "\tbackground: grey;\n" +
+                "\tfloat: left;\n" +
+                "\tbox-sizing: border-box;\n" +
+                "\ttransition: all 0.15s;\n" +
+                "}\n" +
+                "\n" +
+                "#search_text:focus {\n" +
+                "\tbackground: #008B8B;\n" +
+                "}\n" +
+                "\n" +
+                ".keyword {\n" +
+                "  max-width: 100%;\n" +
+                "  color: #515151;\n" +
+                "  font-size: 2rem;\n" +
+                "  font-family: \"Playfair Display\", serif;\n" +
+                "  font-weight: 700;\n" +
+                "  letter-spacing: 1px;\n" +
+                "  padding-bottom: 6px;\n" +
+                "  text-align: center;\n" +
+                "  border: 0;\n" +
+                "  border-bottom: 5px solid #FFE399;\n" +
+                "  outline: none;\n" +
+                "}\n" +
+                "@media screen and (max-width: 768px) {\n" +
+                "  .keyword {\n" +
+                "    font-size: 1.5rem;\n" +
+                "  }\n" +
+                "}\n" +
+                "\n" +
+                "::placeholder {\n" +
+                "  color: #515151;\n" +
+                "}\n" +
+                "\n" +
+                ".keyword:focus::placeholder {\n" +
+                "  opacity: 0;\n" +
+                "}\n" +
+                "\n" +
+                "\n" +
+                "/* RESULTS */\n" +
+                ".info {\n" +
+                "  width: 100%;\n" +
+                "  text-align: left;\n" +
+                "  padding: 15px;\n" +
+                "}\n" +
+                "\n" +
+                "\n" +
+                ".fa {\n" +
+                "  color: #FFE399;\n" +
+                "}\n" +
+                "\n" +
+                ".content {\n" +
+                "  padding: 5px 25px;\n" +
+                "}\n" +
+                "\n" +
+                "/* ARTICLE TITLE */\n" +
+                ".title {\n" +
+                "  color: #515151;\n" +
+                "  font-family: \"Playfair Display\", serif;\n" +
+                "  letter-spacing: 1px;\n" +
+                "  text-align: left;\n" +
+                "  font-size: 1.2rem;\n" +
+                "  font-weight: 700;\n" +
+                "}\n" +
+                "\n" +
+                "h2 {\n" +
+                "  display: inline-block;\n" +
+                "  padding: 0 5px 5px 0;\n" +
+                "  border-bottom: 3px solid #FFE399;\n" +
+                "}\n" +
+                "\n" +
+                "/* ARTICLE LINKS */\n" +
+                "a, a:hover, a:visited, a:focus {\n" +
+                "  color: #515151;\n" +
+                "  text-decoration: none;\n" +
+                "}\n" +
+                "\n" +
+                "a.more, a.more:hover, a.more:visited, a.more:focus {\n" +
+                "  color: #606060;\n" +
+                "}\n" +
+                "\n" +
+                "a.more:hover {\n" +
+                "  color: #FFE399;\n" +
+                "}\n" +
+                "\n" +
+                ".btn {\n" +
+                "\tmargin-bottom:10px;\n" +
+                "  display: inline-block;\n" +
+                "  text-align: center;\n" +
+                "  text-decoration: none;\n" +
+                "  margin: 2px 0;\n" +
+                "  border: solid 1px transparent;\n" +
+                "  border-radius: 4px;\n" +
+                "  padding: 0.5em 1em;\n" +
+                "  color: #ffffff;\n" +
+                "  background-color: #008B8B;\n" +
+                "}\n" +
+                ".btn:active {\n" +
+                "  transform: translateY(1px);\n" +
+                "  filter: saturate(150%);\n" +
+                "}\n" +
+                ".btn:hover,\n" +
+                ".btn:focus {\n" +
+                "  color: #008B8B;\n" +
+                "  border-color: currentColor;\n" +
+                "  background-color: white;\n" +
+                "}\n" +
+                ".wrapper {\n" +
+                "    display: flex;\n" +
+                "    font-size: 2.2em;\n" +
+                "  }\n" +
+                ".header {\n" +
+                "text-align: center;\n" +
+                "    border-radius: 25px;\n" +
+                "    width: 90%;\n" +
+                "    padding: 20px 15px;\n" +
+                "    z-index: 99;\n" +
+                "    display: flex;\n" +
+                "    justify-content: space-between;\n" +
+                "  }\n" +
+                "  .exit {\n" +
+                "    height: 40px;\n" +
+                "    width: 40px;\n" +
+                "    transform: scale(-1, 1);\n" +
+                "    cursor: pointer;\n" +
+                "  }\n" +
+                "  .logo {\n" +
+                "    margin: 0;\n" +
+                "    color: #696969;\n" +
+                "  }\n" +
+                "  #footer{\n" +
+                "    position: fixed;  Фиксированное положение \n" +
+                "    left: 0; bottom: 0;  \n" +
+                "    width: 90%; /* Ширина слоя */\n" +
+                "  text-align: center;\n" +
+                "  font-size: 20px;\n" +
+                "      z-index: 99;                \n" +
+                "    padding: 20px 15px;\n" +
+                "\n" +
+                "   \n" +
+                "  }\n" +
                 "ul, #myUL {\n" +
                 "list-style-type: none;\n" +
                 "}\n" +
@@ -171,23 +357,11 @@ public class PageService {
                 "}\n" +
                 "</style>\n" +
                 "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"http://62.0.69.195:8180/static/jquery\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"http://62.0.69.195:8180/static/highlight\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"http://62.0.69.195:8180/static/scrollToMin\" ></script>\n" +
+                "<script type=\"text/javascript\" src=\""+getStaticServer()+"/forServer/jquery\"></script>\n" +
+                "<script type=\"text/javascript\" src=\""+getStaticServer()+"/forServer/highlight\"></script>\n" +
+                "<script type=\"text/javascript\" src=\""+getStaticServer()+"/forServer/scrollToMin\" ></script>\n" +
                 "<script>\n" +
-                "/*\n" +
-                "function Do () {\n" +
-                "var toggler = document.getElementsByClassName(\"box\");\n" +
-                "var i;\n" +
-                "for (i = 0; i < toggler.length; i++) {\n" +
-                "//toggler[i].addEventListener(\"click\", function() {\n" +
-                "toggler[i].parentElement.querySelector(\".nested\").classList.toggle(\"active\");\n" +
-                "toggler[i].classList.toggle(\"check-box\");\n" +
-                "//});\n" +
-                "}\n" +
                 "\n" +
-                "}\n" +
-                "*/\n" +
                 "function searchClass(){\n" +
                 "\n" +
                 "\tvar e = document.getElementById(\"DocType\");\n" +
@@ -202,15 +376,18 @@ public class PageService {
                 "\n" +
                 "\tvar elArr = document.getElementsByClassName(docTypeVal + searchElVal);\n" +
                 "\tvar newElArr = Array.prototype.slice.call(elArr, 0);\n" +
-                "\t\t\n" +
                 "\tArray.prototype.forEach.call(newElArr, function(el) {\n" +
                 "\t\tvar attribute = el.getAttribute(\"href\");\n" +
                 "\t\tif (attribute.toLowerCase().indexOf(\"checklist\") === -1) return;\n" +
                 "\t\tvar breakLine = document.createElement(\"BR\");\n" +
                 "\t\tsearchResultDiv.appendChild(el.cloneNode(true));\n" +
                 "\t\tsearchResultDiv.appendChild(breakLine);\n" +
+                "\n" +
                 "\t});\n" +
                 "}\n" +
+                "\n" +
+                "\n" +
+                "\n" +
                 "</script>\n" +
                 "<script type=\"text/javascript\">\n" +
                 "jQuery(document).ready(function(){\n" +
@@ -221,28 +398,9 @@ public class PageService {
                 "var srch_numb = 0;\n" +
                 "\n" +
                 "function scroll_to_word(){\n" +
-                "// $('#text .selectHighlight').click(() => {\n" +
-                "// $('html, body').animate({\n" +
-                "// scrollTop: $('.selectHighlight').offset().top\n" +
-                "// }, 200);\n" +
-                "// });\n" +
                 "var pos = $('#text .selectHighlight').animate();\n" +
                 "jQuery.scrollTo(\".selectHighlight\", 500, {offset:-150});\n" +
                 "}\n" +
-                "\n" +
-                "/*$('#search_text').bind('keyup oncnange', function() {\n" +
-                "$('#text').removeHighlight();\n" +
-                "txt = $('#search_text').val();\n" +
-                "if (txt == '') return;\n" +
-                "$('#text').highlight(txt);\n" +
-                "search_count = $('#text span.highlight').size() - 1;\n" +
-                "count_text = search_count + 1;\n" +
-                "search_number = 0;\n" +
-                "$('#text').selectHighlight(search_number);\n" +
-                "if ( search_count >= 0 ) scroll_to_word();\n" +
-                "$('#count').html('Total matches: <b>'+count_text+'</b>');\n" +
-                "});\n" +
-                "*/\n" +
                 "$('#clear_button').click(function() {\n" +
                 "\tvar searchResultDiv = document.getElementById(\"searchResult\");\n" +
                 "\tsearchResultDiv.innerHTML = \"\";\n" +
@@ -282,20 +440,23 @@ public class PageService {
                 "</script>\n" +
                 "</head>\n" +
                 "<body>\n"+
-                "<div id=\"search_block\" style=\"position: inherit; display: block; top: 7px; background-color: #f0f0f0;\" >\n" +
-                "\n" +
-                "\t<select id=\"DocType\">\n" +
+                "<div class=\"search\">\n" +
+                "\t\t<div class=\"searchbar\">\n" +
+                "\t\t\t<select class=\"btn\" id=\"DocType\">\n" +
                 "    <option selected value=\"Checklist-\">Checklist</option>\n" +
                 "    <!--option value=\"NCR-\">NCR</option>\n" +
                 "    <option value=\"RFI-\">RFI</option>\n" +
                 "    <option value=\"POC-\">POC</option -->\n" +
                 "   </select>\n" +
+                "\t\t\t<input id=\"search_text\" type=\"text\" value=\"Search\" onblur=\"if (this.value=='') this.value='Search';\" onfocus=\"if (this.value=='Search') this.value='';\" />\n" +
+                "\t\t\t<input class=\"btn\" id=\"searchClass\" type=\"button\" value=\"Search\" onClick=\"searchClass()\" />\n" +
+                "\t\t\t<input class=\"btn\" id=\"clear_button\" type=\"button\" value=\"Clean\" />\n" +
+                "\t\t\t</div>\n" +
+                "\t</div>\n" +
                 "\n" +
-                "<input id=\"search_text\" type=\"text\" value=\"Search\" onblur=\"if (this.value=='') this.value='Search';\" onfocus=\"if (this.value=='Search') this.value='';\" />\n" +
-                "\n" +
-                "<input id=\"clear_button\" type=\"button\" value=\"Clean\" />\n" +
-                "<input id=\"searchClass\" type=\"button\" value=\"Search\" onClick=\"searchClass()\"/>\n" +
-                "<div id=\"searchResult\">\n" +
+                "</div>\n" +
+                "<div>\n" +
+                "<div id=\"searchResult\" class=\"searchResult\">\n" +
                 "\t\n" +
                 "</div>\n" +
                 "<div id=\"count\" style=\"font-size:10pt;\"></div>\n" +
@@ -384,7 +545,6 @@ public class PageService {
                         if (formType!=null){
                             classWithId=formType.getType().getValue()+"-"+split[split.length-2];
                         }
-//                        classWithId=task.getType().getValue()+"-"+split[split.length-2];
                     }
                     htmlTree = htmlTree + "><a class=\""+classWithId+"\" href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
                 } else {
@@ -443,6 +603,7 @@ public class PageService {
         copyFileToProjectFolder("file/highlight.js", path + "/highlight.js");
         copyFileToProjectFolder("file/jquery.js", path + "/jquery.js");
         copyFileToProjectFolder("file/scrollTo-min.js", path + "/scrollTo-min.js");
+        copyFileToProjectFolder("file/background.jpg", path + "/background.jpg");
     }
 
     private static void copyFileToProjectFolder(String pathFrom, String pathTo) {
