@@ -44,14 +44,18 @@ public class PageService {
                 .append("    <input type=\"submit\" value=\"Logout\" />\n")
                 .append("</form>");
         for (Folder folder : folders) {
-            htmlString.append("<p><a href=\"")
+            htmlString.append("<a href=\"")
                     .append(folder.getFolder()).append("\">")
-                    .append(getFolderName(folder.getFolder()))
-                    .append(" ")
-                    .append(folder.getProjectName())
-                    .append(" ")
-                    .append(folder.getTaskName())
-                    .append("</a></p>\n");
+                   .append("<table>\n")
+                   .append("<tr>\n")
+                    .append("<td>").append(getFolderName(folder.getFolder())).append("</td>\n")
+                    .append("<td>&nbsp;/&nbsp;</td>\n")
+                    .append("<td>").append(folder.getProjectName()).append("</td>\n")
+                    .append("<td>&nbsp;/&nbsp;</td>\n")
+                    .append("<td>").append(folder.getTaskName()).append("</td>\n")
+                    .append("</tr>\n")
+                    .append("</table>\n")
+                    .append("</a>\n");
         }
         htmlString.append("</body>\n" +
                 "</html>\n");
