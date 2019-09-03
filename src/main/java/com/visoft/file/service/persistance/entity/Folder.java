@@ -12,19 +12,34 @@ public class Folder {
 
     private String folder;
 
+    private String projectName;
+
+    private String taskName;
+
     @BsonCreator
     public Folder(
             @BsonProperty(GeneralConst.ID) ObjectId id,
-            @BsonProperty(FolderConst.FOLDER) String folder
+            @BsonProperty(FolderConst.FOLDER) String folder,
+            @BsonProperty(FolderConst.PROJECT_NAME) String projectName,
+            @BsonProperty(FolderConst.TASK_NAME) String taskName
     ) {
         this.id = id;
         this.folder = folder;
+        this.projectName = projectName;
+        this.taskName = taskName;
     }
 
-    public Folder(@BsonProperty(FolderConst.FOLDER) String folder) {
+    public Folder(
+            String folder,
+            String projectName,
+            String taskName
+
+    ) {
         this(
                 ObjectId.get(),
-                folder
-                );
+                folder,
+                projectName,
+                taskName
+        );
     }
 }

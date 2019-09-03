@@ -3,6 +3,7 @@ package com.visoft.file.service.service.util;
 import com.visoft.file.service.dto.FormType;
 import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.Task;
+import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.FormTypeService;
 import com.visoft.file.service.util.TaskSorter;
 import io.undertow.server.HttpServerExchange;
@@ -11,6 +12,7 @@ import lombok.extern.log4j.Log4j;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,18 +38,22 @@ public class PageService {
         exchange.getResponseSender().send(htmlString);
     }
 
-    public static void getMainUserHtml(HttpServerExchange exchange, List<String> folders) {
+    public static void getMainUserHtml(HttpServerExchange exchange, List<Folder> folders) {
         StringBuilder htmlString = new StringBuilder();
         htmlString.append("<!DOCTYPE HTML>\n" + "<html>\n" + " <head>\n" + "  <meta charset=\"utf-8\">\n" + "  <title>Root</title>\n" + " </head>\n" + " <body>\n" + "<form action=\"")
                 .append(server).append("/api/logout\" method=\"post\">\n")
                 .append("    <input type=\"submit\" value=\"Logout\" />\n")
                 .append("</form>");
-        for (String folder : folders) {
+        for (Folder folder : folders) {
             htmlString.append("<p><a href=\"")
-                    .append(folder).append("\">")
-                    .append(getFolderName(folder)).append("</a></p>\n");
+                    .append(folder.getFolder()).append("\">")
+                    .append(getFolderName(folder.getFolder()))
+                    .append(" ")
+                    .append(folder.getProjectName())
+                    .append(" ")
+                    .append(folder.getTaskName())
+                    .append("</a></p>\n");
         }
-
         htmlString.append("</body>\n" +
                 "</html>\n");
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");

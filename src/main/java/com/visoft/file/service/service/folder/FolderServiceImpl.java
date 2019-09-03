@@ -30,8 +30,18 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     }
 
     @Override
-    public void create(String folder) {
-        super.create(new Folder(folder));
+    public void create(
+            String folder,
+            String projectName,
+            String taskName
+    ) {
+        create(
+                new Folder(
+                        folder,
+                        projectName,
+                        taskName
+                )
+        );
     }
 
     @Override

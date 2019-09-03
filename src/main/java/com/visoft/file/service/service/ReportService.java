@@ -2,6 +2,7 @@ package com.visoft.file.service.service;
 
 import com.networknt.config.Config;
 import com.visoft.file.service.dto.*;
+import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.extern.log4j.Log4j;
@@ -222,7 +223,15 @@ public class ReportService {
                                         false
                                 );
                                 log.info("finish tree zip");
-                                FOLDER_SERVICE.create("/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName());
+                                FOLDER_SERVICE.create(
+                                        new Folder(
+                                                "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
+                                                reportDto.getProjectName(),
+                                                getMainTaskName(reportDto)
+
+                                        )
+
+                                );
                                 log.info("createUser folder db");
                                 sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
                                 log.info("send email success ");
@@ -248,6 +257,15 @@ public class ReportService {
             log.warn(RETURN + BAD_REQUEST);
             SenderService.send(exchange, BAD_REQUEST);
         }
+    }
+
+    private String getMainTaskName(ReportDto dto){
+        for (TaskDto task : dto.getTasks()) {
+            if (task.getParentId()==-1){
+                return task.getName();
+            }
+        }
+        return null;
     }
 
     private void removeFile(String path) {

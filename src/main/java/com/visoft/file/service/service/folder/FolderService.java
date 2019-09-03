@@ -17,7 +17,11 @@ public interface FolderService extends AbstractService<Folder> {
      *
      * @param folder folder
      */
-    void create(String folder);
+    void create(
+            String folder,
+            String projectName,
+            String taskName
+    );
 
     /**
      * Search by id. If folder not found send status code {@link com.visoft.file.service.service.ErrorConst#NOT_FOUND NOT_FOUND},
