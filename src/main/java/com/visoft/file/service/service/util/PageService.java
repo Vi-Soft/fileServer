@@ -1,9 +1,11 @@
 package com.visoft.file.service.service.util;
 
+import com.visoft.file.service.dto.AttachmentDocument;
 import com.visoft.file.service.dto.FormType;
 import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.Task;
 import com.visoft.file.service.persistance.entity.Folder;
+import com.visoft.file.service.service.AttachmentDocumentService;
 import com.visoft.file.service.service.FormTypeService;
 import com.visoft.file.service.util.TaskSorter;
 import io.undertow.server.HttpServerExchange;
@@ -46,8 +48,8 @@ public class PageService {
         for (Folder folder : folders) {
             htmlString.append("<a href=\"")
                     .append(folder.getFolder()).append("\">")
-                   .append("<table>\n")
-                   .append("<tr>\n")
+                    .append("<table>\n")
+                    .append("<tr>\n")
                     .append("<td>").append(getFolderName(folder.getFolder())).append("</td>\n")
                     .append("<td>&nbsp;/&nbsp;</td>\n")
                     .append("<td>").append(folder.getProjectName()).append("</td>\n")
@@ -104,7 +106,12 @@ public class PageService {
         exchange.getResponseSender().send(htmlString);
     }
 
-    public static void saveIndexHtml(Report tree, Map<String, FormType> formTypes, boolean forArchive) throws FileNotFoundException {
+    public static void saveIndexHtml(
+            Report tree,
+            Map<String, FormType> formTypes,
+            Map<String, AttachmentDocument> attachmentDocumentMap,
+            boolean forArchive
+    ) throws FileNotFoundException {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String htmlString = ("<!DOCTYPE html>\n" +
@@ -509,7 +516,7 @@ public class PageService {
                 " <li><span class=\"box\">" +
                 tree.getTask().getName() +
                 "</span>" +
-                getHtmlTree(tree.getTask(), formTypes, forArchive, (tree.getCompanyName() + tree.getArchiveName()).length() + 2) +
+                getHtmlTree(tree.getTask(), formTypes, attachmentDocumentMap, forArchive, (tree.getCompanyName() + tree.getArchiveName()).length() + 2) +
                 "</li>" +
                 "</ul>" +
                 "</div><script>\n" +
@@ -535,7 +542,13 @@ public class PageService {
         }
     }
 
-    private static String getHtmlTree(Task mainTask, Map<String, FormType> formTypes, boolean forArchive, int startPathWith) {
+    private static String getHtmlTree(
+            Task mainTask,
+            Map<String, FormType> formTypes,
+            Map<String, AttachmentDocument> attachmentDocumentMap,
+            boolean forArchive,
+            int startPathWith
+    ) {
         TaskSorter.byTaskName(mainTask.getTasks());
         String htmlTree = "<ul class=\"nested\">\n";
         for (Task task : mainTask.getTasks()) {
@@ -550,10 +563,11 @@ public class PageService {
                 if (task.getIcon() == 3) {
                     String[] split = task.getPath().split("/");
                     String classWithId = "";
+                    String path = null;
                     if (split.length > 1) {
                         FormType formType;
                         if (forArchive) {
-                            String path = Paths.get("/" + task.getPath()).toString()
+                             path = Paths.get("/" + task.getPath()).toString()
                                     .substring(
                                             0,
                                             task
@@ -567,7 +581,7 @@ public class PageService {
                                             path
                                     );
                         } else {
-                            String path = Paths.get(task.getPath()).toString()
+                             path = Paths.get(task.getPath()).toString()
                                     .substring(
                                             0,
                                             task
@@ -586,14 +600,33 @@ public class PageService {
                             classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
                         }
                     }
-                    htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
+                    AttachmentDocument attachmentDocument = new AttachmentDocumentService().getAttachmentDocument(attachmentDocumentMap, path);
+                    if (attachmentDocument==null){
+                        htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
+                                + task.getPath()
+                                + "\" target=\"_blank\" path=\"-\" type=\"-\" description=\"-\" certificate=\"-\" comment=\"-\" uploadDate=\"-\" fileName=\"-\">"
+                                + task.getName()
+                                + "</a></li>\n";
+                    }else {
+                        htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
+                                + task.getPath()
+                                + "\" target=\"_blank\" path=\""+attachmentDocument.getPath()
+                                +"\" type=\""+attachmentDocument.getType()
+                                +"\" description=\""+attachmentDocument.getDescription()
+                                +"\" certificate=\""+attachmentDocument.getCertificate()
+                                +"\" comment=\""+attachmentDocument.getComment()
+                                +"\" uploadDate=\""+attachmentDocument.getUploadDate()
+                                +"\" fileName=\""+attachmentDocument.getFileName()
+                                +"\">" + task.getName() + "</a></li>\n";
+                    }
+
                 } else {
                     htmlTree = addNameColor(htmlTree, task);
                     htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
                 }
             }
             if (task.getTasks() != null) {
-                htmlTree = htmlTree + getHtmlTree(task, formTypes, forArchive, startPathWith);
+                htmlTree = htmlTree + getHtmlTree(task, formTypes, attachmentDocumentMap, forArchive, startPathWith);
             }
 
         }

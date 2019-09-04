@@ -183,6 +183,7 @@ public class ReportService {
                                 log.info("start tree web");
                                 System.out.println(reportDto.getFormTypes().size());
                                 Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
+                                Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
                                 System.out.println("ddddddd" + formTypeMap);
                                 Report fullTree = getFullTree(reportDto);
                                 getRealTask(
@@ -193,6 +194,7 @@ public class ReportService {
                                 saveIndexHtml(
                                         fullTree,
                                         formTypeMap,
+                                        attachmentDocumentMap,
                                         true
                                 );
                                 log.info("finish tree web");
@@ -220,6 +222,7 @@ public class ReportService {
                                 saveIndexHtml(
                                         fullTree,
                                         formTypeMap,
+                                        attachmentDocumentMap,
                                         false
                                 );
                                 log.info("finish tree zip");

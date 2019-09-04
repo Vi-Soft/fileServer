@@ -3,6 +3,7 @@ package com.visoft.file.service.dto;
 import com.visoft.file.service.Version;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,5 +26,7 @@ public class ReportDto {
 
     private List<TaskDto> tasks;
 
-    private Set<FormType> formTypes;
+    private Set<FormType> formTypes = new HashSet<>();
+
+    private Set<AttachmentDocument> attachmentDocuments = new HashSet<>();
 }
