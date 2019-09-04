@@ -373,9 +373,6 @@ public class PageService {
                 "}\n" +
                 "</style>\n" +
                 "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"" + getStaticServer() + "/jquery.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"" + getStaticServer() + "/highlight.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"" + getStaticServer() + "/scrollToMin.js\" ></script>\n" +
                 "<script>\n" +
                 "\n" +
                 "function searchClass(){\n" +
@@ -673,9 +670,9 @@ public class PageService {
     private static void copyFilesToProjectFolder(String path) {
         copyFileToProjectFolder("file/g.png", path + "/g.png");
         copyFileToProjectFolder("file/r.png", path + "/r.png");
-        copyFileToProjectFolder("file/highlight.js", path + "/highlight.js");
-        copyFileToProjectFolder("file/jquery.js", path + "/jquery.js");
-        copyFileToProjectFolder("file/scrollTo-min.js", path + "/scrollTo-min.js");
+//        copyFileToProjectFolder("file/highlight.js", path + "/highlight.js");
+//        copyFileToProjectFolder("file/jquery.js", path + "/jquery.js");
+//        copyFileToProjectFolder("file/scrollTo-min.js", path + "/scrollTo-min.js");
         copyFileToProjectFolder("file/background.jpg", path + "/background.jpg");
     }
 
