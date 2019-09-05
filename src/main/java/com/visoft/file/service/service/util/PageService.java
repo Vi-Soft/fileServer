@@ -13,6 +13,7 @@ import io.undertow.util.Headers;
 import lombok.extern.log4j.Log4j;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +30,25 @@ public class PageService {
 
     private static String server = PropertiesService.getServerName();
 
+    public static void main(String[] args) {
+        String replace = getLoginRedirectPage()
+                .replace(
+                        "replace=\"\"",
+                        "url=\"" + loginHtml + "\""
+                );
+        System.out.println(replace);
+
+    }
+
     public static void redirectToLoginPage(HttpServerExchange exchange) {
-        String htmlString = "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "<meta http-equiv=\"refresh\" content=\"0; url=" + loginHtml + "\"/>\n" +
-                "</head>\n" +
-                "</html>";
-        exchange.getResponseSender().send(htmlString);
+        exchange
+                .getResponseSender()
+                .send(getLoginRedirectPage()
+                        .replace(
+                                "replace=\"\"",
+                                "url=\"" + loginHtml + "\""
+                        )
+                );
     }
 
     public static void getMainUserHtml(HttpServerExchange exchange, List<Folder> folders) {
@@ -78,9 +90,9 @@ public class PageService {
             }
             htmlString = sb.toString().replace("r.png", getStaticServer() + "/r.png");
             htmlString = htmlString.replace("g.png", getStaticServer() + "/g.png");
-            htmlString = htmlString.replace("highlight.js", getStaticServer() + "/highlight.js");
-            htmlString = htmlString.replace("jquery.js", getStaticServer() + "/jquery.js");
-            htmlString = htmlString.replace("scrollTo-min.js", getStaticServer() + "/scrollTo-min.js");
+//            htmlString = htmlString.replace("highlight.js", getStaticServer() + "/highlight.js");
+//            htmlString = htmlString.replace("jquery.js", getStaticServer() + "/jquery.js");
+//            htmlString = htmlString.replace("scrollTo-min.js", getStaticServer() + "/scrollTo-min.js");
             htmlString = htmlString.replace("background.jpg", getStaticServer() + "/background.jpg");
             htmlString = htmlString.replace("imageDownload.png", getStaticServer() + "/imageDownload.png");
             htmlString = htmlString.replace("imageLogout.png", getStaticServer() + "/imageLogout.png");
@@ -564,7 +576,7 @@ public class PageService {
                     if (split.length > 1) {
                         FormType formType;
                         if (forArchive) {
-                             path = Paths.get("/" + task.getPath()).toString()
+                            path = Paths.get("/" + task.getPath()).toString()
                                     .substring(
                                             0,
                                             task
@@ -578,7 +590,7 @@ public class PageService {
                                             path
                                     );
                         } else {
-                             path = Paths.get(task.getPath()).toString()
+                            path = Paths.get(task.getPath()).toString()
                                     .substring(
                                             0,
                                             task
@@ -598,23 +610,23 @@ public class PageService {
                         }
                     }
                     AttachmentDocument attachmentDocument = new AttachmentDocumentService().getAttachmentDocument(attachmentDocumentMap, path);
-                    if (attachmentDocument==null){
+                    if (attachmentDocument == null) {
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
                                 + task.getPath()
                                 + "\" target=\"_blank\" path=\"-\" type=\"-\" description=\"-\" certificate=\"-\" comment=\"-\" uploadDate=\"-\" fileName=\"-\">"
                                 + task.getName()
                                 + "</a></li>\n";
-                    }else {
+                    } else {
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
                                 + task.getPath()
-                                + "\" target=\"_blank\" path=\""+attachmentDocument.getPath()
-                                +"\" type=\""+attachmentDocument.getType()
-                                +"\" description=\""+attachmentDocument.getDescription()
-                                +"\" certificate=\""+attachmentDocument.getCertificate()
-                                +"\" comment=\""+attachmentDocument.getComment()
-                                +"\" uploadDate=\""+attachmentDocument.getUploadDate()
-                                +"\" fileName=\""+attachmentDocument.getFileName()
-                                +"\">" + task.getName() + "</a></li>\n";
+                                + "\" target=\"_blank\" path=\"" + attachmentDocument.getPath()
+                                + "\" type=\"" + attachmentDocument.getType()
+                                + "\" description=\"" + attachmentDocument.getDescription()
+                                + "\" certificate=\"" + attachmentDocument.getCertificate()
+                                + "\" comment=\"" + attachmentDocument.getComment()
+                                + "\" uploadDate=\"" + attachmentDocument.getUploadDate()
+                                + "\" fileName=\"" + attachmentDocument.getFileName()
+                                + "\">" + task.getName() + "</a></li>\n";
                     }
 
                 } else {
@@ -694,4 +706,30 @@ public class PageService {
         String[] split = path.split("/");
         return split[split.length - 1];
     }
+
+    private static String getLoginRedirectPage() {
+        return convertHtmlToString("html/loginRedirectPage.html");
+    }
+
+    private static String convertHtmlToString(String file) {
+        InputStream resourceAsStream = PageService.class.getClassLoader().getResourceAsStream(file);
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            Objects.requireNonNull(resourceAsStream),
+                            StandardCharsets.UTF_8
+                    )
+            );
+            String str;
+            while ((str = in.readLine()) != null) {
+                contentBuilder.append(str);
+            }
+            in.close();
+        } catch (IOException e) {
+            return null;
+        }
+        return contentBuilder.toString();
+    }
+
 }
