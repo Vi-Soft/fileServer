@@ -30,6 +30,8 @@ public class PageService {
 
     private static String server = PropertiesService.getServerName();
 
+    private static String staticServer = PropertiesService.getStaticServer();
+
     public static void redirectToLoginPage(HttpServerExchange exchange) {
         exchange
                 .getResponseSender()
@@ -72,11 +74,20 @@ public class PageService {
                 getRootPage()
                         .replace(
                                 "replaceServer=\"\"",
-                                "href=\"" + getStaticServer() + "/root.css" + "\""
-                        ).replace(
-                        "<replace/>",
-                        htmlString.toString()
-                )
+                                "href=\"" + staticServer + "/root.css" + "\""
+                        )
+                        .replace(
+                                "src=\"\"",
+                                "src=\""+staticServer+"/imageLogout.png\""
+                        )
+                        .replace(
+                                "action=\"\"",
+                                "action=\""+server+"/api/logout\""
+                        )
+                        .replace(
+                                "<replace/>",
+                                htmlString.toString()
+                        )
         );
     }
 
@@ -104,13 +115,13 @@ public class PageService {
                 "  <div class=\"header\">\n" +
                 "    <div class=\"exit\">\n" +
                 "      <form action=\"" + server + "/api/logout\" method=\"post\">\n" +
-                "        <input type=\"image\" src=\"" + getStaticServer() + "/imageLogout.png\" alt=\"Logout\" />\n" +
+                "        <input type=\"image\" src=\"" + staticServer + "/imageLogout.png\" alt=\"Logout\" />\n" +
                 "      </form>\n" +
                 "      </div>\n" +
                 "      <div class=\"logo\">Download Client</div>\n" +
                 "    </div>\n" +
                 "</div>\n" +
-                "<a href=\"" + PropertiesService.getServerName() + folder + ".zip\" >\n" +
+                "<a href=\"" + server + folder + ".zip\" >\n" +
                 "\t\t<button class=\"btn\"> <h2>Download</h2></button></p>\n" +
                 "\t</a>" +
                 split[1];
@@ -732,5 +743,4 @@ public class PageService {
         }
         return contentBuilder.toString();
     }
-
 }
