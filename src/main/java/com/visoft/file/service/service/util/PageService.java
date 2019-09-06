@@ -30,51 +30,54 @@ public class PageService {
 
     private static String server = PropertiesService.getServerName();
 
-    public static void main(String[] args) {
-        String replace = getLoginRedirectPage()
-                .replace(
-                        "replace=\"\"",
-                        "url=\"" + loginHtml + "\""
-                );
-        System.out.println(replace);
-
-    }
-
     public static void redirectToLoginPage(HttpServerExchange exchange) {
         exchange
                 .getResponseSender()
-                .send(getLoginRedirectPage()
-                        .replace(
-                                "replace=\"\"",
-                                "url=\"" + loginHtml + "\""
-                        )
+                .send(
+                        getLoginRedirectPage()
+                                .replace(
+                                        "content=\"\"",
+                                        "content=\"0; url=" + loginHtml + "\""
+                                )
                 );
     }
 
     public static void getMainUserHtml(HttpServerExchange exchange, List<Folder> folders) {
         StringBuilder htmlString = new StringBuilder();
-        htmlString.append("<!DOCTYPE HTML>\n" + "<html>\n" + " <head>\n" + "  <meta charset=\"utf-8\">\n" + "  <title>Root</title>\n" + " </head>\n" + " <body>\n" + "<form action=\"")
-                .append(server).append("/api/logout\" method=\"post\">\n")
-                .append("    <input type=\"submit\" value=\"Logout\" />\n")
-                .append("</form>");
         for (Folder folder : folders) {
-            htmlString.append("<a href=\"")
-                    .append(folder.getFolder()).append("\">")
-                    .append("<table>\n")
-                    .append("<tr>\n")
-                    .append("<td>").append(getFolderName(folder.getFolder())).append("</td>\n")
-                    .append("<td>&nbsp;/&nbsp;</td>\n")
-                    .append("<td>").append(folder.getProjectName()).append("</td>\n")
-                    .append("<td>&nbsp;/&nbsp;</td>\n")
-                    .append("<td>").append(folder.getTaskName()).append("</td>\n")
-                    .append("</tr>\n")
-                    .append("</table>\n")
-                    .append("</a>\n");
+            htmlString
+                    .append("<div>\n")
+                    .append("    <a href=\"")
+                    .append(folder.getFolder())
+                    .append("\">\n")
+                    .append("        <table class=\"btn\">\n")
+                    .append("            <tr>\n")
+                    .append("                <td>")
+                    .append(getFolderName(folder.getFolder()))
+                    .append("</td>\n")
+                    .append("                <td>&nbsp;/&nbsp;</td>\n")
+                    .append("                <td>")
+                    .append(folder.getProjectName())
+                    .append("</td>\n").append("                <td>&nbsp;/&nbsp;</td>\n")
+                    .append("                <td>")
+                    .append(folder.getTaskName())
+                    .append("</td>\n")
+                    .append("            </tr>\n")
+                    .append("        </table>\n")
+                    .append("    </a>\n")
+                    .append("</div>");
         }
-        htmlString.append("</body>\n" +
-                "</html>\n");
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");
-        exchange.getResponseSender().send(htmlString.toString());
+        exchange.getResponseSender().send(
+                getRootPage()
+                        .replace(
+                                "replaceServer=\"\"",
+                                "href=\"" + getStaticServer() + "/root.css" + "\""
+                        ).replace(
+                        "<replace/>",
+                        htmlString.toString()
+                )
+        );
     }
 
     public static void getFolderUserHtml(HttpServerExchange exchange, String folder) throws IOException {
@@ -90,9 +93,6 @@ public class PageService {
             }
             htmlString = sb.toString().replace("r.png", getStaticServer() + "/r.png");
             htmlString = htmlString.replace("g.png", getStaticServer() + "/g.png");
-//            htmlString = htmlString.replace("highlight.js", getStaticServer() + "/highlight.js");
-//            htmlString = htmlString.replace("jquery.js", getStaticServer() + "/jquery.js");
-//            htmlString = htmlString.replace("scrollTo-min.js", getStaticServer() + "/scrollTo-min.js");
             htmlString = htmlString.replace("background.jpg", getStaticServer() + "/background.jpg");
             htmlString = htmlString.replace("imageDownload.png", getStaticServer() + "/imageDownload.png");
             htmlString = htmlString.replace("imageLogout.png", getStaticServer() + "/imageLogout.png");
@@ -682,9 +682,6 @@ public class PageService {
     private static void copyFilesToProjectFolder(String path) {
         copyFileToProjectFolder("file/g.png", path + "/g.png");
         copyFileToProjectFolder("file/r.png", path + "/r.png");
-//        copyFileToProjectFolder("file/highlight.js", path + "/highlight.js");
-//        copyFileToProjectFolder("file/jquery.js", path + "/jquery.js");
-//        copyFileToProjectFolder("file/scrollTo-min.js", path + "/scrollTo-min.js");
         copyFileToProjectFolder("file/background.jpg", path + "/background.jpg");
     }
 
@@ -708,7 +705,11 @@ public class PageService {
     }
 
     private static String getLoginRedirectPage() {
-        return convertHtmlToString("html/loginRedirectPage.html");
+        return convertHtmlToString("front/html/loginRedirectPage.html");
+    }
+
+    private static String getRootPage() {
+        return convertHtmlToString("front/html/root.html");
     }
 
     private static String convertHtmlToString(String file) {

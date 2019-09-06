@@ -29,7 +29,7 @@ public class GeneralHandlerProvider implements HandlerProvider {
                 resourceHandler
                         .setDirectoryListingEnabled(false)
                         .setMimeMappings(MimeMappings.builder(true)
-                                .addMapping("html", "text/html;charset=utf-8")
+                                .addMapping("front/html", "text/html;charset=utf-8")
                                 .build()
                         )
         );
