@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Log4j
 public class PageService {
@@ -138,7 +140,7 @@ public class PageService {
             Map<String, FormType> formTypes,
             Map<String, AttachmentDocument> attachmentDocumentMap,
             boolean forArchive
-    ) throws FileNotFoundException {
+    ) {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String treeHtml = getTreePage()
@@ -160,9 +162,11 @@ public class PageService {
         log.info("finish saving html");
     }
 
-    private static void saveIndexHtml(String indexHtmlBody, String path) throws FileNotFoundException {
+    private static void saveIndexHtml(String indexHtmlBody, String path){
         try (PrintWriter out = new PrintWriter(path + "/index.html")) {
             out.println(indexHtmlBody);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -299,13 +303,13 @@ public class PageService {
         copyFileToProjectFolder("file/r.png", path + "/r.png");
         copyFileToProjectFolder("file/background.jpg", path + "/background.jpg");
         copyFileToProjectFolder("front/css/tree.css", path + "/tree.css");
-        copyFileToProjectFolder("front/main.js", path + "/main.js");
-        copyFileToProjectFolder("front/toggler.js", path + "/toggler.js");
+        copyFileToProjectFolder("front/js/main.js", path + "/main.js");
+        copyFileToProjectFolder("front/js/toggler.js", path + "/toggler.js");
     }
 
     private static void copyFileToProjectFolder(String pathFrom, String pathTo) {
         try {
-            Files.copy(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream(pathFrom)), Paths.get(pathTo));
+            Files.copy(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream(pathFrom)), Paths.get(pathTo), REPLACE_EXISTING);
         } catch (IOException e) {
             log.warn(e.getMessage());
             e.printStackTrace();

@@ -181,10 +181,8 @@ public class ReportService {
                                 log.info("finish unzip: " + reportDto.getArchiveName());
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
                                 log.info("start tree web");
-                                System.out.println(reportDto.getFormTypes().size());
                                 Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
                                 Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
-                                System.out.println("ddddddd" + formTypeMap);
                                 Report fullTree = getFullTree(reportDto);
                                 getRealTask(
                                         fullTree.getTask(),
