@@ -260,9 +260,9 @@ public class ReportService {
         }
     }
 
-    private String getMainTaskName(ReportDto dto){
+    private String getMainTaskName(ReportDto dto) {
         for (TaskDto task : dto.getTasks()) {
-            if (task.getParentId()==-1){
+            if (task.getParentId() == -1) {
                 return task.getName();
             }
         }
@@ -330,7 +330,7 @@ public class ReportService {
         }
     }
 
-    private static void getRealTask(Task task, List<TaskDto> tasks, Map<String,FormType> formTypes) {
+    private static void getRealTask(Task task, List<TaskDto> tasks, Map<String, FormType> formTypes) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
             for (Task taskTask : task.getTasks()) {
                 for (TaskDto taskDto : tasks) {
@@ -343,7 +343,7 @@ public class ReportService {
                             taskTask.setColor(taskDto.getColor());
                             taskTask.setDetail(taskDto.getDetail());
                         }
-                    }else {
+                    } else {
                         taskTask.setType(formType.getType());
                     }
                 }
