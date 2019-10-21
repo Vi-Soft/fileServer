@@ -7,19 +7,19 @@ import java.nio.file.Paths;
 @Data
 public class AttachmentDocument {
 
-    private String path;
+    private String path = "-";
 
-    private String type;
+    private String type = "-";
 
-    private String description;
+    private String description = "-";
 
-    private String certificate;
+    private String certificate = "-";
 
-    private String comment;
+    private String comment = "-";
 
-    private String uploadDate;
+    private String uploadDate = "-";
 
-    private String fileName;
+    private String fileName = "-";
 
     public void setPath(String path) {
         this.path = path == null || path.isEmpty()

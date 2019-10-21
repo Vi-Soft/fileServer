@@ -14,7 +14,6 @@ import lombok.extern.log4j.Log4j;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -228,7 +227,18 @@ public class PageService {
                             classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
                         }
                     }
-                    AttachmentDocument attachmentDocument = new AttachmentDocumentService().getAttachmentDocument(attachmentDocumentMap, path);
+                    AttachmentDocument attachmentDocument = null;
+                    if(path!=null){
+                        attachmentDocument =
+                                new AttachmentDocumentService()
+                                        .getAttachmentDocument(
+                                                attachmentDocumentMap,
+                                                Paths.get(
+                                                        path,
+                                                        task.getName()
+                                                ).toString()
+                                        );
+                    }
                     if (attachmentDocument == null) {
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
                                 + task.getPath()
