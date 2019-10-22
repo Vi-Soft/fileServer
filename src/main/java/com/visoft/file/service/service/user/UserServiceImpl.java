@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.visoft.file.service.persistance.entity.Role.ADMIN;
@@ -160,7 +161,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         send(
                 exchange,
                 toJson(
-                        getIds(findAll())
+                        findAll()
+                        .parallelStream()
+                        .map(UserOutcomeDto::new)
+                        .collect(Collectors.toList())
                 )
         );
     }

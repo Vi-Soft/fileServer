@@ -14,6 +14,7 @@ import org.bson.types.ObjectId;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
@@ -105,9 +106,12 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         send(
                 exchange,
                 toJson(
-                        getIdsFromFolders(
-                                findAll()
-                        )
+//                        getIdsFromFolders(
+                        findAll()
+                                .parallelStream()
+                                .map(FolderOutcomeDto::new)
+                                .collect(Collectors.toList())
+//                        )
                 )
         );
     }

@@ -1,8 +1,7 @@
 package com.visoft.file.service.dto;
 
 import lombok.Data;
-
-import java.nio.file.Paths;
+import org.apache.commons.io.FilenameUtils;
 
 import static com.visoft.file.service.dto.Type.DEFAULT;
 
@@ -11,11 +10,9 @@ public class FormType {
 
     private Type type = DEFAULT;
 
-    private String path;
+    private String path = "-";
 
     public void setPath(String path) {
-        this.path = Paths
-                .get(path)
-                .toString();
+        this.path = FilenameUtils.separatorsToSystem(path);
     }
 }

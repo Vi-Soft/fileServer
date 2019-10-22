@@ -6,6 +6,8 @@ import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
@@ -146,8 +148,6 @@ public class ReportService {
     public void unzip(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
-        System.out.print(reportDto);
-        log.info("report body:\n" + reportDto);
         if (reportDto != null) {
             if (validateToken(reportDto.getCustomToken())) {
                 String validateReportDtoResult = validateReportDto(reportDto);
@@ -197,7 +197,7 @@ public class ReportService {
                                 );
                                 log.info("finish tree web");
                                 log.info("start zip: " + reportDto.getArchiveName());
-                                System.out.println("start zip" + reportDto.getArchiveName());
+                                System.out.println("start zip: " + reportDto.getArchiveName());
                                 ZipUtil.pack(
                                         new File(Paths.get(
                                                 rootPath,

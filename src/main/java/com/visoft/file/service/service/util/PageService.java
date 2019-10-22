@@ -161,7 +161,7 @@ public class PageService {
         log.info("finish saving html");
     }
 
-    private static void saveIndexHtml(String indexHtmlBody, String path){
+    private static void saveIndexHtml(String indexHtmlBody, String path) {
         try (PrintWriter out = new PrintWriter(path + "/index.html")) {
             out.println(indexHtmlBody);
         } catch (FileNotFoundException e) {
@@ -222,13 +222,14 @@ public class PageService {
                                             path
                                     );
                         }
-
                         if (formType != null) {
                             classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
+                        } else {
+                            log.warn("Not formType path: " + path);
                         }
                     }
                     AttachmentDocument attachmentDocument = null;
-                    if(path!=null){
+                    if (path != null) {
                         attachmentDocument =
                                 new AttachmentDocumentService()
                                         .getAttachmentDocument(
@@ -240,15 +241,19 @@ public class PageService {
                                         );
                     }
                     if (attachmentDocument == null) {
+                        log.warn("Not found attachment document path: " + Paths.get(
+                                path,
+                                task.getName()
+                        ).toString());
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
                                 + task.getPath()
-                                + "\" target=\"_blank\" path=\"-\" type=\"-\" description=\"-\" certificate=\"-\" comment=\"-\" uploadDate=\"-\" fileName=\"-\">"
+                                + "\" target=\"_blank\" type=\"1\" description=\"1\" certificate=\"1\" comment=\"1\" uploadDate=\"1\" fileName=\"1\">"
                                 + task.getName()
                                 + "</a></li>\n";
                     } else {
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
                                 + task.getPath()
-                                + "\" target=\"_blank\" path=\"" + attachmentDocument.getPath()
+                                + "\" target=\"_blank\""
                                 + "\" type=\"" + attachmentDocument.getType()
                                 + "\" description=\"" + attachmentDocument.getDescription()
                                 + "\" certificate=\"" + attachmentDocument.getCertificate()

@@ -1,13 +1,14 @@
 package com.visoft.file.service.dto;
 
 import lombok.Data;
+import org.apache.commons.io.FilenameUtils;
 
 import java.nio.file.Paths;
 
 @Data
 public class AttachmentDocument {
 
-    private String path = "-";
+    private String path;
 
     private String type= "-";
 
@@ -21,67 +22,9 @@ public class AttachmentDocument {
 
     private String fileName= "-";
 
-//    public String getPath() {
-//        return path == null || path.isEmpty()
-//                ? "-"
-//                : Paths
-//                .get(path)
-//                .toString();
-//    }
-//
-//    public String getType() {
-//        return type == null || type.isEmpty() ? "-" : type;
-//    }
-//
-//    public String getDescription() {
-//        return description == null || description.isEmpty() ? "-" : description;
-//    }
-//
-//    public String getCertificate() {
-//        return certificate == null || certificate.isEmpty() ? "-" : certificate;
-//    }
-//
-//    public String getComment() {
-//        return comment == null || comment.isEmpty() ? "-" : comment;
-//    }
-//
-//    public String getUploadDate() {
-//        return uploadDate == null || uploadDate.isEmpty() ? "-" : uploadDate;
-//    }
-//
-//    public String getFileName() {
-//        return fileName == null || fileName.isEmpty() ? "-" : fileName;
-//    }
-
     public void setPath(String path) {
         this.path = path == null || path.isEmpty()
                 ? "-"
-                : Paths
-                .get(path)
-                .toString();
+                : FilenameUtils.separatorsToSystem(path);
     }
-
-//    public void setType(String type) {
-//        this.type = type == null || type.isEmpty() ? "-" : type;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description == null || description.isEmpty() ? "-" : description;
-//    }
-//
-//    public void setCertificate(String certificate) {
-//        this.certificate = certificate;
-//    }
-//
-//    public void setComment(String comment) {
-//        this.comment = comment == null || comment.isEmpty() ? "-" : comment;
-//    }
-//
-//    public void setUploadDate(String uploadDate) {
-//        this.uploadDate = uploadDate == null || uploadDate.isEmpty() ? "-" : uploadDate;
-//    }
-//
-//    public void setFileName(String fileName) {
-//        this.fileName = fileName == null || fileName.isEmpty() ? "-" : fileName;
-//    }
 }

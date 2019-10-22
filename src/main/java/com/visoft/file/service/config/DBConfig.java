@@ -19,7 +19,7 @@ public class DBConfig {
     /**
      * Get connection to mongo database
      */
-    private final static MongoClient mongoClient = MongoClients.create("mongodb://10.10.10.15");
+    private final static MongoClient mongoClient = MongoClients.create();
 
     /**
      * Get instance mongo database
