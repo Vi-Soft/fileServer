@@ -29,4 +29,6 @@ public class ReportDto {
     private Set<FormType> formTypes = new HashSet<>();
 
     private Set<AttachmentDocument> attachmentDocuments = new HashSet<>();
+
+    private Set<CommonLogBook> commonLogBooks = new HashSet<>();
 }

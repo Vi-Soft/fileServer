@@ -1,6 +1,7 @@
 package com.visoft.file.service.service;
 
 import com.networknt.config.Config;
+import com.visoft.file.service.Version;
 import com.visoft.file.service.dto.*;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.util.SenderService;
@@ -183,11 +184,14 @@ public class ReportService {
                                 log.info("start tree web");
                                 Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
                                 Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
+                                Map<String, CommonLogBook> commonLogBookMap = reportDto.getCommonLogBooks().parallelStream().collect(Collectors.toMap(CommonLogBook::getFullPath, a -> a));
                                 Report fullTree = getFullTree(reportDto);
                                 getRealTask(
                                         fullTree.getTask(),
                                         reportDto.getTasks(),
-                                        formTypeMap
+                                        formTypeMap,
+                                        commonLogBookMap,
+                                        reportDto.getVersion()
                                 );
                                 saveIndexHtml(
                                         fullTree,
@@ -330,9 +334,21 @@ public class ReportService {
         }
     }
 
-    private static void getRealTask(Task task, List<TaskDto> tasks, Map<String, FormType> formTypes) {
+    private static void getRealTask(
+            Task task,
+            List<TaskDto> tasks,
+            Map<String, FormType> formTypes,
+            Map<String, CommonLogBook> commonLogBookMap,
+            Version version) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
             for (Task taskTask : task.getTasks()) {
+                if (version == Version.RU) {
+                    CommonLogBook commonLogBook = new CommonLogBookService().getCommonLogBook(commonLogBookMap, taskTask.getPath());
+                    if (commonLogBook != null) {
+                        taskTask.setName(commonLogBook.getFullName());
+                        taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
+                    }
+                }
                 for (TaskDto taskDto : tasks) {
                     FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {
@@ -347,7 +363,7 @@ public class ReportService {
                         taskTask.setType(formType.getType());
                     }
                 }
-                getRealTask(taskTask, tasks, formTypes);
+                getRealTask(taskTask, tasks, formTypes,commonLogBookMap,version);
             }
             sortByParentIdAndOrderInGroup(task.getTasks());
         }

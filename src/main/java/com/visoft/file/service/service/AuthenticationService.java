@@ -56,12 +56,10 @@ public class AuthenticationService {
                         );
                         exchange.setResponseCookie(new CookieImpl("token", token.getToken()).setPath("/"));
                         send(exchange, JsonService.toJson(tokenOutcomeDto));
-
                     }
                 }
             }
         }
-
     }
 
     private static LoginDto getRequestBody(HttpServerExchange exchange) {

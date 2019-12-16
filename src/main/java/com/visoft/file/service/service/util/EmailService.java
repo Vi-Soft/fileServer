@@ -29,7 +29,7 @@ public class EmailService {
             email.setFrom(getEmailLogin());
             email.setSubject(getEmailSubject());
             email.setMsg(new String(emailMessage.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-            email.addTo(getEmailTo());
+//            email.addTo(getEmailTo());
             email.addTo(userEmail);
             email.send();
         } catch (Exception e) {

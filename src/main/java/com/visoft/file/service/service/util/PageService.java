@@ -1,9 +1,6 @@
 package com.visoft.file.service.service.util;
 
-import com.visoft.file.service.dto.AttachmentDocument;
-import com.visoft.file.service.dto.FormType;
-import com.visoft.file.service.dto.Report;
-import com.visoft.file.service.dto.Task;
+import com.visoft.file.service.dto.*;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.AttachmentDocumentService;
 import com.visoft.file.service.service.FormTypeService;
