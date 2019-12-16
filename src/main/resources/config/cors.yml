@@ -2,7 +2,7 @@ description: Cors Http Handler
 enabled: true
 allowedOrigins:
   #  - http://localhost:4200
-  #  - http://localhost:3000
+  - http://localhost:3000
   - http://62.0.69.195
   - http://62.0.69.195:8082
   - http://62.0.69.195:8090
