@@ -8,7 +8,7 @@ public interface UserService extends AbstractService<User> {
 
     void findAll(HttpServerExchange exchange);
 
-    void createAdmin(HttpServerExchange exchange);
+//    void createAdmin(UserCreateDto dto);
 
     void delete(HttpServerExchange exchange);
 
@@ -21,4 +21,6 @@ public interface UserService extends AbstractService<User> {
     User findByLoginAndPassword(String login, String password);
 
     void recovery(HttpServerExchange exchange);
+
+    boolean isExistsByLogin(String login);
 }

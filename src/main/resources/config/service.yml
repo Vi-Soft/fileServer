@@ -19,3 +19,5 @@ singletons:
 #  - com.networknt.cors.CorsHttpHandler:
   - com.visoft.file.service.web.cors.CorsHttpHandler
   - com.visoft.file.service.web.security.SecurityHandler
+- com.visoft.file.service.startup.AdminCreator:
+    - com.visoft.file.service.startup.AdminCreator

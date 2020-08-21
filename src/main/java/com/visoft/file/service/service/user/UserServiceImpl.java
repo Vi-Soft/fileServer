@@ -24,7 +24,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.*;
-import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.persistance.entity.UserConst.DELETED;
 import static com.visoft.file.service.persistance.entity.UserConst._ID;
@@ -94,14 +93,14 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         );
     }
 
-    @Override
-    public void createAdmin(HttpServerExchange exchange) {
-        create(
-                getCreateUserRequestBody(exchange),
-                exchange,
-                ADMIN
-        );
-    }
+//    @Override
+//    public void createAdmin(HttpServerExchange exchange) {
+//        create(
+//                getCreateUserRequestBody(exchange),
+//                exchange,
+//                ADMIN
+//        );
+//    }
 
     private void create(UserCreateDto dto, HttpServerExchange exchange, Role role) {
         if (!validate(dto)) {
@@ -178,6 +177,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         return super.getObject(filter);
     }
 
+    @Override
+    public boolean isExistsByLogin(String login) {
+        return isExists(eq(UserConst.LOGIN, login));
+    }
+
     private UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
@@ -250,10 +254,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             }
         }
         return true;
-    }
-
-    private boolean isExistsByLogin(String login) {
-        return isExists(eq(UserConst.LOGIN, login));
     }
 
     private boolean isExistsByLogin(String login, ObjectId id) {
