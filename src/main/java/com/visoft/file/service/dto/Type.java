@@ -17,7 +17,10 @@ public enum Type {
     CONSTRUCTION_DOCUMENTS("Construction_Documents"),
     ADDITIONAL_DOCS("Additional_Documents"),
     DRAWINGS_IL("Drawings"),
-    DEFAULT("Default");
+    DEFAULT("Default"),
+    LAB_ORDER("Lab_Order"),
+    SURVEYING_ORDER("Surveying_Order"),
+    CAR_PAR_OBS("CAR_PAR_OBS");
 
     private final String value;
 
