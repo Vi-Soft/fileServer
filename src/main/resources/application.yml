@@ -1,0 +1,51 @@
+server:
+  port: 8180
+spring:
+  application:
+    name: Vi-Soft File Server
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: fileServer
+      auto-index-creation: false
+  mail:
+    username: corpemail.23234535@gmail.com
+    password: test12!!!45
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: true
+    protocol: smtp
+
+jwt:
+  secret-key: jwtkey0987654321
+  exp:
+    hours: 3
+
+
+application:
+  root:
+    path: /home/visrvadmin/dev/fileServer
+  server:
+    domain: http://62.0.69.195:8180
+  login:
+    html:
+      url: http://62.0.69.195/login.html
+  report:
+    extension: .zip
+  download:
+    zip:
+      url: http://10.10.10.13:8050/downloadDocs/ArchiveService?archiveName=
+  token: E64E1FEF85D2915ABE0740C46F0D26EC9114383AC5A8BCC736B270F565661DE1E64E1FEF85D2915ABE0740C46F0D26EC59
+  email:
+    to: ligalauz12@gmail.com
+    subject: Visoft File Server
+    error:
+      message: Не удалось создать отчет
+    success:
+      message: Отчет создан

@@ -1,26 +1,17 @@
 package com.visoft.file.service.service.user;
 
-import com.visoft.file.service.persistance.entity.User;
-import com.visoft.file.service.service.abstractService.AbstractService;
-import io.undertow.server.HttpServerExchange;
+import com.visoft.file.service.persistence.entity.user.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends AbstractService<User> {
+import java.util.Optional;
 
-    void findAll(HttpServerExchange exchange);
+public interface UserService extends UserDetailsService {
 
-//    void createAdmin(UserCreateDto dto);
-
-    void delete(HttpServerExchange exchange);
-
-    void update(HttpServerExchange exchange);
-
-    void findById(HttpServerExchange exchange);
-
-    void createUser(HttpServerExchange exchange);
-
-    User findByLoginAndPassword(String login, String password);
-
-    void recovery(HttpServerExchange exchange);
+    Optional<User> findById(String id);
 
     boolean isExistsByLogin(String login);
+
+    User create(User user);
+
+    Optional<User> findByLogin(String login);
 }

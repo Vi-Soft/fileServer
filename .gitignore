@@ -1,11 +1,38 @@
-/target/
-.project
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+gradlew
+gradlew.bat
+
+### STS ###
+.apt_generated
 .classpath
-.settings/
-dependency-reduced-pom.xml
-/log/
-/docFileOut/
-/reportOut/
-/pdfTemplates/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
 .idea
-file_server.iml
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+/gradlew
+/gradle/wrapper/

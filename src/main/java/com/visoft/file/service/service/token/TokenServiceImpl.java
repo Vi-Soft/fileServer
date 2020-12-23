@@ -1,49 +1,96 @@
 package com.visoft.file.service.service.token;
 
-import com.visoft.file.service.persistance.entity.Token;
-import com.visoft.file.service.persistance.entity.TokenConst;
-import com.visoft.file.service.persistance.repository.Repositories;
-import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
+import com.visoft.file.service.configuration.TokenHandler;
+import com.visoft.file.service.persistence.entity.Token;
+import com.visoft.file.service.persistence.entity.user.User;
+import com.visoft.file.service.persistence.repository.TokenRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
-import static com.mongodb.client.model.Filters.eq;
+@RequiredArgsConstructor
+@Service
+public class TokenServiceImpl implements TokenService {
 
-public class TokenServiceImpl extends AbstractServiceImpl<Token> implements TokenService {
+    private final TokenRepository tokenRepository;
+    private final TokenHandler tokenHandler;
+    @Value("${jwt.exp.hours}")
+    private Long tokenExpirationTime;
 
-    public TokenServiceImpl() {
-        super(Repositories.TOKEN_REPOSITORY);
+    @Override
+    public Optional<Token> findByToken(String token) {
+        return tokenRepository.findByToken(token);
     }
 
     @Override
-    public Token findByToken(String token) {
-        Bson filter = eq(TokenConst.TOKEN, token);
-        return super.getObject(filter);
+    public Optional<Token> findByUser(User user) {
+        return tokenRepository.findByUserId(user.getId());
     }
 
     @Override
-    public Token findByUserId(ObjectId userId) {
-        Bson filter = eq(TokenConst.USER_ID, userId);
-        return super.getObject(filter);
+    public Token save(Token token) {
+        return tokenRepository.save(token);
     }
 
     @Override
-    public void addExpiration(ObjectId id) {
-        update(
-                id,
-                TokenConst.EXPIRATION,
-                Instant.now().plusSeconds(10800L)
+    public long delete(Token token) {
+        tokenRepository.delete(token);
+        return 1L;
+    }
+
+    @Override
+    public long deleteByUser(User user) {
+        tokenRepository.deleteByUserId(user.getId());
+        return 1L;
+    }
+
+    @Override
+    public long delete(String id) {
+        tokenRepository.deleteById(id);
+        return 1L;
+    }
+
+    @Override
+    public void deleteTokenByUserId(String userId) {
+        tokenRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public long deleteToken(Token token) {
+        return Optional.ofNullable(token)
+                .map(Token::getId)
+                .flatMap(this::findById)
+                .map(Token::getId)
+                .map(this::delete)
+                .orElse(0L);
+    }
+
+    @Override
+    public Token createToken(User user) {
+        final Token token = new Token(
+                makeExpirationPoint(),
+                tokenHandler.generateAccessToken(user), user.getId()
         );
+
+        return create(token);
     }
 
     @Override
-    public void setExpirationNow(ObjectId id) {
-        update(
-                id,
-                TokenConst.EXPIRATION,
-                Instant.now()
-        );
+    public Token create(Token token) {
+        return tokenRepository.save(token);
+    }
+
+    private Optional<Token> findById(String id) {
+        return tokenRepository.findById(id);
+    }
+
+    @Override
+    public Instant makeExpirationPoint() {
+        return Instant.now()
+                .plus(tokenExpirationTime, ChronoUnit.HOURS);
     }
 }

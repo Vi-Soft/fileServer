@@ -1,16 +1,33 @@
 package com.visoft.file.service.service.token;
 
-import com.visoft.file.service.persistance.entity.Token;
-import com.visoft.file.service.service.abstractService.AbstractService;
-import org.bson.types.ObjectId;
 
-public interface TokenService extends AbstractService<Token> {
+import com.visoft.file.service.persistence.entity.Token;
+import com.visoft.file.service.persistence.entity.user.User;
 
-    Token findByToken(String token);
+import java.time.Instant;
+import java.util.Optional;
 
-    Token findByUserId(ObjectId userId);
+public interface TokenService {
 
-    void addExpiration(ObjectId id);
+    Optional<Token> findByToken(String token);
 
-    void setExpirationNow(ObjectId id);
+    Optional<Token> findByUser(User user);
+
+    Token save(Token token);
+
+    long delete(Token token);
+
+    long deleteByUser(User user);
+
+    long delete(String id);
+
+    void deleteTokenByUserId(String userId);
+
+    long deleteToken(Token token);
+
+    Token createToken(User user);
+
+    Token create(Token token);
+
+    Instant makeExpirationPoint();
 }

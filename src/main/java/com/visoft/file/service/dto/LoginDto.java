@@ -1,11 +1,17 @@
 package com.visoft.file.service.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import javax.validation.constraints.NotEmpty;
+
+@Getter
+@Setter
 public class LoginDto {
 
+    @NotEmpty
     private String login;
 
+    @NotEmpty
     private String password;
 }
