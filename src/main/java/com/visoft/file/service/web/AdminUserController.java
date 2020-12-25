@@ -20,25 +20,25 @@ public class AdminUserController {
     }
 
     @GetMapping("/findAll")
-    ResponseEntity<List<UserOutcomeDto>> findAllUsers() {
+    public ResponseEntity<List<UserOutcomeDto>> findAllUsers() {
         return null;
     }
 
     @PostMapping("/create")
-    ResponseEntity<UserOutcomeDto> createUser(UserCreateDto userCreateDto) {
+    public ResponseEntity<UserOutcomeDto> createUser(UserCreateDto userCreateDto) {
         return null;
     }
 
     @PutMapping("/update")
-    ResponseEntity<UserOutcomeDto> updateUser(UserUpdateDto userUpdateDto) {
+    public ResponseEntity<UserOutcomeDto> updateUser(UserUpdateDto userUpdateDto) {
         return null;
     }
 
     @PostMapping("/recovery/{id}")
-    void recoveryUser(@PathVariable String id) {
+    public void recoveryUser(@PathVariable String id) {
     }
 
     @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable String id) {
+    public void deleteUser(@PathVariable String id) {
     }
 }

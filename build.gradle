@@ -15,7 +15,7 @@ allprojects {
 compileJava {
     options.compilerArgs = [
             '-Amapstruct.defaultComponentModel=spring',
-            '-Amapstruct.unmappedTargetPolicy=IGNORE'
+            //'-Amapstruct.unmappedTargetPolicy=IGNORE'
     ]
 }
 
