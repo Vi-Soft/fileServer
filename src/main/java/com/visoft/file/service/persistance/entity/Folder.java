@@ -12,6 +12,8 @@ public class Folder {
 
     private String folder;
 
+    private String mutualFolder;
+
     private String projectName;
 
     private String taskName;
@@ -20,17 +22,20 @@ public class Folder {
     public Folder(
             @BsonProperty(GeneralConst.ID) ObjectId id,
             @BsonProperty(FolderConst.FOLDER) String folder,
+            @BsonProperty(FolderConst.MUTUAL_FOLDER) String mutualFolder,
             @BsonProperty(FolderConst.PROJECT_NAME) String projectName,
             @BsonProperty(FolderConst.TASK_NAME) String taskName
     ) {
         this.id = id;
         this.folder = folder;
+        this.mutualFolder = mutualFolder;
         this.projectName = projectName;
         this.taskName = taskName;
     }
 
     public Folder(
             String folder,
+            String mutualFolder,
             String projectName,
             String taskName
 
@@ -38,6 +43,7 @@ public class Folder {
         this(
                 ObjectId.get(),
                 folder,
+                mutualFolder,
                 projectName,
                 taskName
         );

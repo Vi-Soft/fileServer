@@ -9,9 +9,9 @@ public class TaskDto {
 
     private String name;
 
-    private Long id;
+    private String id;
 
-    private Long parentId;
+    private String parentId;
 
     private Long orderInGroup;
 

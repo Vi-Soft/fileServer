@@ -6,9 +6,8 @@ import com.visoft.file.service.dto.*;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
+import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
@@ -35,8 +34,11 @@ import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 @Log4j
 public class ReportService {
 
-    private static String rootPath = getRootPath();
+    private static final String rootPath = getRootPath();
 
+    private static final Map<Long, MultiExport> exportPool = new HashMap<>();
+
+    @Synchronized
     private static ReportDto getRequestBody(HttpServerExchange exchange) {
         log.info("getRequestBody");
         ReportDto reportDto;
@@ -45,7 +47,7 @@ public class ReportService {
         String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
         try {
             reportDto = Config.getInstance().getMapper().readValue(s, ReportDto.class);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.warn(e.getMessage());
             return null;
         }
@@ -70,27 +72,27 @@ public class ReportService {
             return validateArchiveNameResult;
         }
         int parentIdNullCount = 0;
-        Set<Long> ids = new HashSet<>();
+        Set<String> ids = new HashSet<>();
         for (TaskDto task : dto.getTasks()) {
             String name = task.getName();
-            Long id = task.getId();
-            Long parentId = task.getParentId();
+            String id = task.getId();
+            String parentId = task.getParentId();
             Long orderInGroup = task.getOrderInGroup();
             Integer icon = task.getIcon();
-            if (name == null || name.equals("")) {
+            if (name == null || name.isEmpty()) {
                 log.warn(TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
-            if (id == null || id < 1) {
+            if (id == null || id.isEmpty()) {
                 log.warn(TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             ids.add(id);
-            if (parentId == null || parentId == 0 || parentId < -1) {
+            if (parentId == null || parentId.isEmpty()) {
                 log.warn(PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
-            if (task.getParentId() == -1) {
+            if (task.getParentId().equals("-1")) {
                 parentIdNullCount++;
             }
             if (orderInGroup == null) {
@@ -146,9 +148,10 @@ public class ReportService {
         return name == null || name.equals("");
     }
 
-    public void unzip(HttpServerExchange exchange) throws IOException {
+    public void unzip(HttpServerExchange exchange) throws IOException{
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
+
         if (reportDto != null) {
             if (validateToken(reportDto.getCustomToken())) {
                 String validateReportDtoResult = validateReportDto(reportDto);
@@ -168,19 +171,22 @@ public class ReportService {
                         new Thread(() -> {
                             try {
                                 downloadZip(reportDto);
+
                                 log.info("start unzip: " + reportDto.getArchiveName());
-                                ZipUtil.unpack(
-                                        new File(rootPath + "/" + reportDto.getArchiveName() + getReportExtension()),
-                                        new File(
-                                                Paths.get(
-                                                        rootPath,
-                                                        reportDto.getCompanyName(),
-                                                        reportDto.getArchiveName()
-                                                ).toString()
-                                        )
-                                );
+                                String path = rootPath + "/" + reportDto.getArchiveName() + getReportExtension();
+                                String archivePath = Paths.get(
+                                        rootPath,
+                                        reportDto.getCompanyName(),
+                                        reportDto.getArchiveName()
+                                ).toString();
+
+                                zipUnpack(path, archivePath);
+
+                                addToMutualArchive(reportDto, path, reportDto.getArchiveName());
                                 log.info("finish unzip: " + reportDto.getArchiveName());
+
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
+
                                 log.info("start tree web");
                                 Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
                                 Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
@@ -200,21 +206,14 @@ public class ReportService {
                                         true
                                 );
                                 log.info("finish tree web");
+
                                 log.info("start zip: " + reportDto.getArchiveName());
-                                System.out.println("start zip: " + reportDto.getArchiveName());
-                                ZipUtil.pack(
-                                        new File(Paths.get(
-                                                rootPath,
-                                                reportDto.getCompanyName(),
-                                                reportDto.getArchiveName()).toString()
-                                        ),
-                                        new File(Paths.get(
-                                                rootPath,
-                                                reportDto.getCompanyName(),
-                                                reportDto.getArchiveName() + ".zip").toString()
-                                        )
-                                );
-                                log.info("start finish: " + reportDto.getArchiveName());
+                                zipPack(archivePath, Paths.get(
+                                        rootPath,
+                                        reportDto.getCompanyName(),
+                                        reportDto.getArchiveName() + ".zip").toString());
+                                log.info("finish zip: " + reportDto.getArchiveName());
+
                                 log.info("start tree zip");
                                 setPathFullPath(
                                         fullTree.getTask(),
@@ -228,9 +227,11 @@ public class ReportService {
                                         false
                                 );
                                 log.info("finish tree zip");
+
                                 FOLDER_SERVICE.create(
                                         new Folder(
                                                 "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
+                                                exportPool.containsKey(reportDto.getTimestamp())? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
                                                 reportDto.getProjectName(),
                                                 getMainTaskName(reportDto)
 
@@ -262,11 +263,73 @@ public class ReportService {
             log.warn(RETURN + BAD_REQUEST);
             SenderService.send(exchange, BAD_REQUEST);
         }
+
+    }
+
+    @Synchronized
+    private void addToMutualArchive(ReportDto reportDto, String path, String archiveName) {
+        if (reportDto.getCount() > 1) {
+            log.info("start unzip to mutual folder");
+            String fullMutualPath = Paths.get(
+                    rootPath,
+                    reportDto.getCompanyName(),
+                    String.valueOf(reportDto.getTimestamp())
+            ).toString();
+
+            zipUnpack(
+                    path,
+                    Paths.get(fullMutualPath,
+                            archiveName).toString()
+            );
+            log.info("finish unzip to mutual folder");
+            if (!exportPool.containsKey(reportDto.getTimestamp())) {
+                exportPool.put(reportDto.getTimestamp(), MultiExport.builder()
+                        .size(reportDto.getCount())
+                        .mutualPath(
+                                "/" +
+                                reportDto.getCompanyName() +
+                                "/" +
+                                reportDto.getTimestamp()
+                        )
+                        .count(1)
+                        .paths(new ArrayList<>(Collections.singletonList(path)))
+                        .build());
+            } else {
+                MultiExport multiExport = exportPool.get(reportDto.getTimestamp());
+                multiExport.getPaths().add(path);
+                multiExport.setCount(multiExport.getCount() + 1);
+
+                if (multiExport.getCount() == multiExport.getSize()) {
+                    log.info("start zip mutual folder");
+                    zipPack(
+                            fullMutualPath,
+                            fullMutualPath + ".zip"
+                    );
+                    log.info("finish zip mutual folder");
+                }
+
+            }
+
+        }
+    }
+
+    private void zipPack (String pathFrom, String pathTo) {
+        ZipUtil.pack(
+                new File(pathFrom),
+                new File(pathTo)
+        );
+    }
+
+    private void zipUnpack (String pathFrom, String pathTo) {
+        ZipUtil.unpack(
+                new File(pathFrom),
+                new File(pathTo)
+        );
     }
 
     private String getMainTaskName(ReportDto dto) {
         for (TaskDto task : dto.getTasks()) {
-            if (task.getParentId() == -1) {
+            if (task.getParentId().equals("-1")) {
                 return task.getName();
             }
         }
@@ -352,7 +415,7 @@ public class ReportService {
                 for (TaskDto taskDto : tasks) {
                     FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {
-                        if (taskTask.getName().equals(taskDto.getId().toString())) {
+                        if (taskTask.getName().equals(taskDto.getId())) {
                             taskTask.setIcon(taskDto.getIcon());
                             taskTask.setName(taskDto.getName());
                             taskTask.setOrderInGroup(taskDto.getOrderInGroup());

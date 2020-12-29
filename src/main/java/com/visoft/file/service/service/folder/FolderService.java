@@ -19,6 +19,7 @@ public interface FolderService extends AbstractService<Folder> {
      */
     void create(
             String folder,
+            String mutualFolder,
             String projectName,
             String taskName
     );
@@ -55,6 +56,13 @@ public interface FolderService extends AbstractService<Folder> {
      * @param exchange http exchange
      */
     void findAll(HttpServerExchange exchange);
+
+    /**
+     * find folder by name
+     *
+     * @param folder folder path
+     */
+    Folder findByFolder(String folder);
 
     /**
      * Convert {@link Folder#getId() id} to String

@@ -9,4 +9,6 @@ public interface FolderConst extends GeneralConst {
     String PROJECT_NAME = "projectName";
 
     String TASK_NAME = "taskName";
+
+    String MUTUAL_FOLDER = "mutualFolder";
 }

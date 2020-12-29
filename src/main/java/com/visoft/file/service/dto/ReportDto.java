@@ -24,6 +24,10 @@ public class ReportDto {
 
     private String archiveName;
 
+    private int count;
+
+    private long timestamp;
+
     private List<TaskDto> tasks;
 
     private Set<FormType> formTypes = new HashSet<>();
