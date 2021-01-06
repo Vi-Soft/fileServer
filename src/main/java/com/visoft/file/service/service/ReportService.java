@@ -182,51 +182,13 @@ public class ReportService {
 
                                 zipUnpack(path, archivePath);
 
-                                addToMutualArchive(reportDto, path, reportDto.getArchiveName());
                                 log.info("finish unzip: " + reportDto.getArchiveName());
+
+                                addToMutualArchive(reportDto, path, reportDto.getArchiveName());
 
                                 removeFile(reportDto.getArchiveName() + getReportExtension());
 
-                                log.info("start tree web");
-                                Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
-                                Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
-                                Map<String, CommonLogBook> commonLogBookMap = reportDto.getCommonLogBooks().parallelStream().collect(Collectors.toMap(CommonLogBook::getFullPath, a -> a));
-                                Report fullTree = getFullTree(reportDto);
-                                getRealTask(
-                                        fullTree.getTask(),
-                                        reportDto.getTasks(),
-                                        formTypeMap,
-                                        commonLogBookMap,
-                                        reportDto.getVersion()
-                                );
-                                saveIndexHtml(
-                                        fullTree,
-                                        formTypeMap,
-                                        attachmentDocumentMap,
-                                        true
-                                );
-                                log.info("finish tree web");
-
-                                log.info("start zip: " + reportDto.getArchiveName());
-                                zipPack(archivePath, Paths.get(
-                                        rootPath,
-                                        reportDto.getCompanyName(),
-                                        reportDto.getArchiveName() + ".zip").toString());
-                                log.info("finish zip: " + reportDto.getArchiveName());
-
-                                log.info("start tree zip");
-                                setPathFullPath(
-                                        fullTree.getTask(),
-                                        reportDto.getCompanyName() + "/" + reportDto.getArchiveName()
-                                );
-                                getDeleteNotWantFiles(fullTree);
-                                saveIndexHtml(
-                                        fullTree,
-                                        formTypeMap,
-                                        attachmentDocumentMap,
-                                        false
-                                );
-                                log.info("finish tree zip");
+                                buildTree(reportDto);
 
                                 FOLDER_SERVICE.create(
                                         new Folder(
@@ -238,6 +200,7 @@ public class ReportService {
                                         )
 
                                 );
+
                                 log.info("createUser folder db");
                                 sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
                                 log.info("send email success ");
@@ -264,6 +227,56 @@ public class ReportService {
             SenderService.send(exchange, BAD_REQUEST);
         }
 
+    }
+
+    private void buildTree(ReportDto reportDto) {
+        log.info("start tree web");
+
+        String archivePath = Paths.get(
+                rootPath,
+                reportDto.getCompanyName(),
+                reportDto.getArchiveName()
+        ).toString();
+
+        Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
+        Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
+        Map<String, CommonLogBook> commonLogBookMap = reportDto.getCommonLogBooks().parallelStream().collect(Collectors.toMap(CommonLogBook::getFullPath, a -> a));
+        Report fullTree = getFullTree(reportDto);
+        getRealTask(
+                fullTree.getTask(),
+                reportDto.getTasks(),
+                formTypeMap,
+                commonLogBookMap,
+                reportDto.getVersion()
+        );
+        saveIndexHtml(
+                fullTree,
+                formTypeMap,
+                attachmentDocumentMap,
+                true
+        );
+        log.info("finish tree web");
+
+        log.info("start zip: " + reportDto.getArchiveName());
+        zipPack(archivePath, Paths.get(
+                rootPath,
+                reportDto.getCompanyName(),
+                reportDto.getArchiveName() + ".zip").toString());
+        log.info("finish zip: " + reportDto.getArchiveName());
+
+        log.info("start tree zip");
+        setPathFullPath(
+                fullTree.getTask(),
+                reportDto.getCompanyName() + "/" + reportDto.getArchiveName()
+        );
+        getDeleteNotWantFiles(fullTree);
+        saveIndexHtml(
+                fullTree,
+                formTypeMap,
+                attachmentDocumentMap,
+                false
+        );
+        log.info("finish tree zip");
     }
 
     @Synchronized

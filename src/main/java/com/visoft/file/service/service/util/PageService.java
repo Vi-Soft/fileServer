@@ -272,7 +272,6 @@ public class PageService {
                                 + "\" fileName=\"" + attachmentDocument.getFileName()
                                 + "\">" + task.getName() + "</a></li>\n";
                     }
-
                 } else {
                     htmlTree = addNameColor(htmlTree, task);
                     htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
