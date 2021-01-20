@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>i-Soft</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+  <link media="all" rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- import header template -->
+    <header id="header">
+     <!-- <a href="#" class="nav-opener"><span></span></a> -->
+     <div class="container ">
+         <div class="logo">
+           <a href="#">
+             <img src="img/logo.png" alt=""/>
+           </a>
+         </div>
+         <nav id="nav">
+           <ul class="menu">
+             <li><a href="#"><b>Project:</b> S.C. Western Segmen...  </a></li>
+             <li><a href="#"><i class="icon-new-document"></i>Builder elements</a></li>
+             <li><a href="#"><i class="icon-Project-Details"></i>Administration menu</a></li>
+             <!-- add class active for dropdown -->
+             <li class="profile-menu-block ">
+               <a href="#"><span class="foto-profile"><img src="img/foto-profile-1.png" alt="img description"></span>Company or user name</a>
+               <ul class="profile-menu">
+                 <li><a href="#">Profile</a></li>
+                 <li><a href="#">Terms and subscription</a></li>
+                 <li><a href="#">Log out</a></li>
+               </ul>
+             </li>
+           </ul>
+         </nav>
+     </div>
+   </header>
+
+    <div class="container main-container">
+    <!-- import header template -->
+      <aside id="sidebar">
+       
+        <ul class="sidebar-list-menu">
+          <li>
+            <strong class="title">Info space</strong>
+            <ul class="sidebar-menu">
+              <li><a href="#"><i class="icon-Dashboard"></i>Dashboard</a></li>
+              <li><a href="#"><i class="icon-Project-Details"></i>Project Details</a></li>
+            </ul>
+          </li>
+          <li>
+            <strong class="title">Project space</strong>
+            <ul class="sidebar-menu">
+              <li><a href="#"><i class="icon-Project-tree"></i>Project tree</a></li>
+              <li><a href="#"><i class="icon-settings"></i>Project tasks</a><span class="counter">12</span></li>
+              <li><a href="#"> <i class="icon-Checklists"></i>Checklists</a></li>
+              <li><a href="#"><i class="icon-Labs"></i>Labs </a></li>
+              <li><a href="#"><i class="icon-art-and-design"></i> Layering works</a></li>
+            </ul>
+          </li>
+          <li>
+            <strong class="title">Documentation</strong>
+            <ul class="sidebar-menu">
+              <li><a href="#"><i class="icon-Reports"></i>Reports</a></li>
+              <!-- add class 'dropdown-active' for show drop -->
+              <li class="dropdown dropdown-active">
+                <a href="#"><i class="icon-Document"></i>Document of progress</a>
+                 <ul class="drop">
+                  <li><a href="#">Version 1</a></li>
+                  <li><a href="#">Version 2</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon-folder"></i>Infon documentation</a></li>
+            </ul>
+          </li>
+          <li>
+            <strong class="title">Communication</strong>
+            <ul class="sidebar-menu">
+              <!-- add class 'active' in active link -->
+              <li class="active"><a href="#"><i class="icon-Preliminary-control"></i>Preliminary control</a></li>
+              <li><a href="#"><i class="icon-Contacts"></i>Contacts</a></li>
+              <li><a href="#"><i class="icon-Companies"></i>Companies and doc</a></li>
+            </ul>
+          </li>
+          <li >
+            <strong class="title">Custom levels menu</strong>
+            <ul class="sidebar-menu">
+              <li class="dropdown">
+               <a href="#"> <i class="icon-Document"></i>New doc ABC</a>
+                <ul class="drop">
+                  <li><a href="#">Version 1</a></li>
+                  <li><a href="#">Version 2</a></li>
+                </ul>
+              </li>
+              <li><a href="#"><i class="icon-Document"></i>New doc MTP</a></li>
+            </ul>
+          </li>
+        </ul>
+      </aside>
+        <main id="main" role="main">
+          <div class="head-page">
+            <a href="#" class="btn"><i class="icon-plus-arround-full"></i>Invite a new user</a>
+            <h1>Contacts</h1>
+          </div>
+
+          <ul class="tab-btn-group tab-btn-group-border">
+            <!-- add class activ in active LI -->
+            <li  class="active"><a href="#">Active <span class="counter">(393)</span></a></li>
+            <li><a href="#">Waiting for approval</a></li>
+            <li><a href="#">Not active</a></li>
+          </ul>
+
+          <!-- add class activ in visible TAB-HOLDER -->
+          <div class="tab-holder active">
+            <form action="#" class="top-form">
+                <!-- add class active in click .select for show dpordown-->
+                <div class="select ">
+                  <span class="value">Role: <strong>First</strong></span>
+                  <ul class="option-list">
+                    <li> First</li>
+                    <li> 2asdasd</li>
+                    <li> 3asdasd</li>
+                  </ul>
+                </div>
+  
+                <div class="input-holder pull-right">
+                  <input type="search" name=""  placeholder="Search">
+                  <button type="submit" class="icon-search"></button>
+                </div>
+            </form>
+
+            <div class="table-wrapper table-list-style">
+              <table>
+                <tr>
+                  <th></th>
+                  <th>First name</th>
+                  <th>Middle name</th> 
+                  <th>Last name</th>
+                  <th>Role</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                  <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                  <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                  <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                  <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                  <tr>
+                      <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                      <td><span>Mikhail</span></td>
+                      <td><span>Molchanov</span></td>
+                      <td><span>Molchanov</span></td>
+                      <td><span>Designer</span></td>
+                      <td><span class="icon-mail">user@gmail.com</span></td>
+                      <td><span class="icon-Phone">063325698</span></td>
+                      <td><span><a href="#" class="icon-pencil"></a><a href="#" class="icon-cancel"></a></span></td>
+                  </tr>
+
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 2 -->
+          <div class="tab-holder ">
+            <form action="#" class="top-form">
+                <!-- add class active in click .select-->
+                <div class="select ">
+                  <span class="value">Role: <strong></strong></span>
+                  <ul class="option-list">
+                    <li> First</li>
+                    <li> 2asdasd</li>
+                    <li> 3asdasd</li>
+                  </ul>
+                </div>
+
+
+                <div class="input-holder pull-right">
+                  <input type="search" name=""  placeholder="Search">
+                  <button type="submit" class="icon-search"></button>
+                </div>
+            </form>
+
+            <div class="table-wrapper table-list-style">
+              <table>
+                <tr>
+                  <th>Role</th>
+                  <th></th>
+                  <th></th> 
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th><a href="#" class="green-text">Request all</a></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                 <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                   <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                   <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                   <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                   <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                   <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+                   <tr>
+                  <td><span>Global admin</span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><span></span></td>
+                  <td><a href="#" class="green-text">Request</a></td>
+                  <td><span><a href="#" class="icon-cancel"></a></span></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 3 -->
+          <div class="tab-holder">
+
+            <form action="#" class="top-form">
+                <!-- add class active in click .select-->
+                <div class="select ">
+                  <span class="value">Role: <strong>First</strong></span>
+                  <ul class="option-list">
+                    <li> First</li>
+                    <li> 2asdasd</li>
+                    <li> 3asdasd</li>
+                  </ul>
+                </div>
+  
+                <div class="input-holder pull-right">
+                  <input type="search" name="" id="" placeholder="Search">
+                  <button type="submit" class="icon-search"></button>
+                </div>
+            </form>
+
+
+            <div class="table-wrapper table-list-style">
+              <table>
+                <tr>
+                  <th></th>
+                  <th>First name</th>
+                  <th>Middle name</th> 
+                  <th>Last name</th>
+                  <th>Role</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a></span></td>
+                </tr>
+                <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-2.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a></span></td>
+                </tr>
+                 <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a></span></td>
+                </tr>
+                 <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a></span></td>
+                </tr>
+                 <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-2.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a></span></td>
+                </tr>
+                 <tr>
+                  <td><span class="foto-user"><img src="img/foto-user-1.png" alt="img description"></span></td>
+                  <td><span>Mikhail</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Molchanov</span></td>
+                  <td><span>Designer</span></td>
+                  <td><span class="icon-mail">user@gmail.com</span></td>
+                  <td><span class="icon-Phone">063325698</span></td>
+                  <td><span><a href="#" class="icon-pencil"></a></span></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="pagination">
+            <div class="page pull-left">Page 01</div>
+
+            <ul class="page-link-list">
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li>...</li>
+              <li><a href="#">5</a></li>
+            </ul>
+
+            <form action="#" class="show-page pull-right">Show  
+              <div class="show-counter ">
+                <button type="submit" class="icon-arrow-right"></button>
+                <input type="text" value="05">
+              </div>
+            </form>
+          </div>
+
+        </main>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
