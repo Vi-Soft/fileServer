@@ -21,16 +21,15 @@ public class EmailService {
 
     private static void send(String emailMessage, String userEmail) {
         Email email = new SimpleEmail();
-        email.setHostName("smtp.googlemail.com");
-        email.setSmtpPort(465);
+        email.setSmtpPort(587);
+        email.setHostName("mail.yugan-eng.com");
         email.setAuthenticator(new DefaultAuthenticator(getEmailLogin(), getEmailPassword()));
-        email.setSSLOnConnect(true);
         try {
             email.setFrom(getEmailLogin());
             email.setSubject(getEmailSubject());
             email.setMsg(new String(emailMessage.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-//            email.addTo(getEmailTo());
             email.addTo(userEmail);
+            email.setStartTLSEnabled(true);
             email.send();
         } catch (Exception e) {
             e.printStackTrace();

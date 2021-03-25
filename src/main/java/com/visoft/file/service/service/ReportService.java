@@ -49,7 +49,15 @@ public class ReportService {
             reportDto = Config.getInstance().getMapper().readValue(s, ReportDto.class);
         } catch (Exception e) {
             log.warn(e.getMessage());
-            return null;
+            reportDto = new ReportDto();
+            try {
+                reportDto.setEmail(Config.getInstance().getMapper().readValue(s, EmailReportDto.class).getEmail());
+                reportDto.setErrorMassage(e.getMessage());
+                return reportDto;
+            } catch (IOException ioException) {
+                log.warn(ioException.getMessage());
+                return null;
+            }
         }
         log.info(RETURN + reportDto);
         return reportDto;
@@ -153,74 +161,80 @@ public class ReportService {
         ReportDto reportDto = getRequestBody(exchange);
 
         if (reportDto != null) {
-            if (validateToken(reportDto.getCustomToken())) {
-                String validateReportDtoResult = validateReportDto(reportDto);
-                if (validateReportDtoResult != null) {
-                    SenderService.send(exchange, BAD_REQUEST);
-                    log.warn("not correct report dto: " + validateReportDtoResult);
-                } else {
-                    sortByParentIdAndOrderInGroup(reportDto);
-                    log.info("sort report dto");
-                    String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
-                    log.info("validate zip");
-                    if (validateZipResult != null) {
+            if (reportDto.getArchiveName() != null) {
+                if (validateToken(reportDto.getCustomToken())) {
+                    String validateReportDtoResult = validateReportDto(reportDto);
+                    if (validateReportDtoResult != null) {
                         SenderService.send(exchange, BAD_REQUEST);
-                        SenderService.send(exchange, validateZipResult);
-                        log.warn("not correct zip: " + validateZipResult);
+                        log.warn("not correct report dto: " + validateReportDtoResult);
                     } else {
-                        new Thread(() -> {
-                            try {
-                                downloadZip(reportDto);
+                        sortByParentIdAndOrderInGroup(reportDto);
+                        log.info("sort report dto");
+                        String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
+                        log.info("validate zip");
+                        if (validateZipResult != null) {
+                            SenderService.send(exchange, BAD_REQUEST);
+                            SenderService.send(exchange, validateZipResult);
+                            log.warn("not correct zip: " + validateZipResult);
+                        } else {
+                            new Thread(() -> {
+                                try {
+                                    downloadZip(reportDto);
 
-                                log.info("start unzip: " + reportDto.getArchiveName());
-                                String path = rootPath + "/" + reportDto.getArchiveName() + getReportExtension();
-                                String archivePath = Paths.get(
-                                        rootPath,
-                                        reportDto.getCompanyName(),
-                                        reportDto.getArchiveName()
-                                ).toString();
+                                    log.info("start unzip: " + reportDto.getArchiveName());
+                                    String path = rootPath + "/" + reportDto.getArchiveName() + getReportExtension();
+                                    String archivePath = Paths.get(
+                                            rootPath,
+                                            reportDto.getCompanyName(),
+                                            reportDto.getArchiveName()
+                                    ).toString();
 
-                                zipUnpack(path, archivePath);
+                                    zipUnpack(path, archivePath);
 
-                                log.info("finish unzip: " + reportDto.getArchiveName());
+                                    log.info("finish unzip: " + reportDto.getArchiveName());
 
-                                addToMutualArchive(reportDto, path, reportDto.getArchiveName());
+                                    addToMutualArchive(reportDto, path, reportDto.getArchiveName());
 
-                                removeFile(reportDto.getArchiveName() + getReportExtension());
+                                    removeFile(reportDto.getArchiveName() + getReportExtension());
 
-                                buildTree(reportDto);
+                                    buildTree(reportDto);
 
-                                FOLDER_SERVICE.create(
-                                        new Folder(
-                                                "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
-                                                exportPool.containsKey(reportDto.getTimestamp())? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
-                                                reportDto.getProjectName(),
-                                                getMainTaskName(reportDto)
+                                    FOLDER_SERVICE.create(
+                                            new Folder(
+                                                    "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
+                                                    exportPool.containsKey(reportDto.getTimestamp())? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
+                                                    reportDto.getProjectName(),
+                                                    getMainTaskName(reportDto)
 
-                                        )
+                                            )
 
-                                );
-
-                                log.info("createUser folder db");
-                                sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
-                                log.info("send email success ");
-                            } catch (Exception e) {
-                                log.error(e.getMessage());
-                                sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
-                                log.error("send error email");
-                                removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName()).toString());
-                                removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
-                            } finally {
-                                removeFile(reportDto.getArchiveName() + getReportExtension());
-                            }
-                        }).start();
-                        SenderService.send(exchange, OK);
-                        log.info("send OK");
+                                    );
+                                    log.info("createUser folder db");
+                                    sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
+                                    log.info("send email success ");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    log.error(e.getMessage());
+                                    sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
+                                    log.error("send error email");
+                                    removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName()).toString());
+                                    removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
+                                } finally {
+                                    removeFile(reportDto.getArchiveName() + getReportExtension());
+                                }
+                            }).start();
+                            SenderService.send(exchange, OK);
+                            log.info("send OK");
+                        }
                     }
+                } else {
+                    log.warn(RETURN + FORBIDDEN);
+                    SenderService.send(exchange, FORBIDDEN);
                 }
             } else {
-                log.warn(RETURN + FORBIDDEN);
-                SenderService.send(exchange, FORBIDDEN);
+                log.warn(RETURN + BAD_REQUEST);
+                sendError(reportDto.getArchiveName() + "\n" + reportDto.getErrorMassage(), reportDto.getEmail());
+                SenderService.send(exchange, BAD_REQUEST);
             }
         } else {
             log.warn(RETURN + BAD_REQUEST);

@@ -1,5 +1,6 @@
 package com.visoft.file.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.visoft.file.service.Version;
 import lombok.Data;
 
@@ -35,4 +36,7 @@ public class ReportDto {
     private Set<AttachmentDocument> attachmentDocuments = new HashSet<>();
 
     private Set<CommonLogBook> commonLogBooks = new HashSet<>();
+
+    @JsonIgnore
+    private String errorMassage;
 }
