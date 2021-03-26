@@ -123,7 +123,7 @@ public class PageService {
     }
 
     private static String getHtmlWithHeader(String htmlString, String folder) {
-        String mutualFolder = FOLDER_SERVICE.findByFolder(folder).getMutualFolder();
+        Folder byFolder = FOLDER_SERVICE.findByFolder(folder);
 
         String[] split = htmlString.split("<body>");
         return split[0] +
@@ -141,8 +141,8 @@ public class PageService {
                 "<a href=\"" + server + folder + ".zip\" >\n" +
                 "\t\t<button class=\"btn\"> <h2>Download</h2></button></p>\n" +
                 "\t</a>" +
-                (mutualFolder != null?
-                "<a href=\"" + server + mutualFolder + ".zip\" >\n" +
+                (byFolder != null?
+                "<a href=\"" + server + byFolder.getMutualFolder() + ".zip\" >\n" +
                 "\t\t<button class=\"btn\"> <h2>Download All</h2></button></p>\n" +
                 "\t</a>"
                 : "") +
