@@ -32,6 +32,8 @@ public class PageService {
 
     private static final String staticServer = PropertiesService.getStaticServer();
 
+    private static final String STATIC_IP_FLAG = "#static_ip";
+
     public static void redirectToLoginPage(HttpServerExchange exchange) {
         exchange
                 .getResponseSender()
@@ -141,7 +143,7 @@ public class PageService {
                 "<a href=\"" + server + folder + ".zip\" >\n" +
                 "\t\t<button class=\"btn\"> <h2>Download</h2></button></p>\n" +
                 "\t</a>" +
-                (byFolder != null?
+                (byFolder != null && byFolder.getMutualFolder() != null?
                 "<a href=\"" + server + byFolder.getMutualFolder() + ".zip\" >\n" +
                 "\t\t<button class=\"btn\"> <h2>Download All</h2></button></p>\n" +
                 "\t</a>"
@@ -369,6 +371,8 @@ public class PageService {
             );
             String str;
             while ((str = in.readLine()) != null) {
+                if (str.contains(STATIC_IP_FLAG))
+                    str = str.replaceAll(STATIC_IP_FLAG, getStaticServer());
                 contentBuilder.append(str);
             }
             in.close();
