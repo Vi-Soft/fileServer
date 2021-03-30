@@ -125,6 +125,7 @@ public class PageService {
     }
 
     private static String getHtmlWithHeader(String htmlString, String folder) {
+        folder = folder.charAt(folder.length() - 1) == '/'? folder.substring(0, folder.length() - 1) : folder;
         Folder byFolder = FOLDER_SERVICE.findByFolder(folder);
 
         String[] split = htmlString.split("<body>");
