@@ -12,11 +12,11 @@ import static com.visoft.file.service.service.util.PropertiesService.*;
 public class EmailService {
 
     public static void sendError(String reportName, String email) {
-        send(getEmailErrorMessage() + " " + reportName, email);
+        send(getEmailErrorMessage() + ": " + reportName, email);
     }
 
     public static void sendSuccess(String reportName, String email) {
-        send(getEmailSuccessMessage() + " " + reportName, email);
+        send(getEmailSuccessMessage() + ": " + reportName + "\nYou can see your download here: " + getServerName() , email);
     }
 
     private static void send(String emailMessage, String userEmail) {

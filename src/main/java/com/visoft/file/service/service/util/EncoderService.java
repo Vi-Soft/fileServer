@@ -1,22 +1,15 @@
 package com.visoft.file.service.service.util;
 
-import org.apache.commons.codec.binary.Hex;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class EncoderService {
+    private final static BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public static String getEncode(String value){
-        byte[] bytesOfValue = value.getBytes(StandardCharsets.UTF_8);
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        byte[] encodeValue = md.digest(bytesOfValue);
-        return new String(Hex.encodeHex(encodeValue));
+        return bCryptPasswordEncoder.encode(value);
+    }
+
+    public static boolean isPasswordsMatch(String password, String encodedPassword) {
+        return bCryptPasswordEncoder.matches(password, encodedPassword);
     }
 }

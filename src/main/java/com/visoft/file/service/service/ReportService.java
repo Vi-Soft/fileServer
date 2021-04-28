@@ -4,6 +4,8 @@ import com.networknt.config.Config;
 import com.visoft.file.service.Version;
 import com.visoft.file.service.dto.*;
 import com.visoft.file.service.persistance.entity.Folder;
+import com.visoft.file.service.persistance.entity.Role;
+import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.Synchronized;
@@ -24,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
+import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
@@ -199,17 +202,34 @@ public class ReportService {
 
                                     buildTree(reportDto);
 
-                                    FOLDER_SERVICE.create(
-                                            new Folder(
-                                                    "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
-                                                    exportPool.containsKey(reportDto.getTimestamp())? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
-                                                    reportDto.getProjectName(),
-                                                    getMainTaskName(reportDto)
-
-                                            )
-
+                                    Folder folder = new Folder(
+                                            "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
+                                            exportPool.containsKey(reportDto.getTimestamp())? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
+                                            reportDto.getProjectName(),
+                                            getMainTaskName(reportDto)
                                     );
-                                    log.info("createUser folder db");
+
+                                    FOLDER_SERVICE.create(folder);
+                                    log.info("created folder db");
+
+                                    if (reportDto.getPassword() != null) {
+                                        User user = USER_SERVICE.findByLogin(reportDto.getEmail());
+                                        if (user == null) {
+                                            user = new User(
+                                                    reportDto.getEmail(),
+                                                    reportDto.getPassword(),
+                                                    Role.USER,
+                                                    Collections.singletonList(folder.getId())
+                                            );
+                                            USER_SERVICE.create(user);
+                                        } else {
+                                            user.getFolders().add(folder.getId());
+                                            user.setPassword(reportDto.getPassword());
+                                            USER_SERVICE.update(user, user.getId());
+                                        }
+
+                                        log.info("calculated user");
+                                    }
                                     sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
                                     log.info("send email success ");
                                 } catch (Exception e) {

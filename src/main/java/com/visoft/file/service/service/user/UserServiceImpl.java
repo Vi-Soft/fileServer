@@ -30,6 +30,7 @@ import static com.visoft.file.service.persistance.entity.UserConst._ID;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
+import static com.visoft.file.service.service.util.EncoderService.isPasswordsMatch;
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
@@ -172,8 +173,18 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public User findByLoginAndPassword(String login, String password) {
         Bson filter = and(
                 eq(DELETED, false),
-                eq(UserConst.LOGIN, login),
-                eq(UserConst.PASSWORD, getEncode(password)));
+                eq(UserConst.LOGIN, login));
+        User user = super.getObject(filter);
+        if (!isPasswordsMatch(password, user.getPassword()))
+            return null;
+        return user;
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        Bson filter = and(
+                eq(DELETED, false),
+                eq(UserConst.LOGIN, login));
         return super.getObject(filter);
     }
 

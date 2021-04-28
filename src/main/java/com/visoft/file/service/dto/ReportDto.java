@@ -29,6 +29,8 @@ public class ReportDto {
 
     private long timestamp;
 
+    private String password;
+
     private List<TaskDto> tasks;
 
     private Set<FormType> formTypes = new HashSet<>();

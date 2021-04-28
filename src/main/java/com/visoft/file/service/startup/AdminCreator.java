@@ -21,14 +21,15 @@ public class AdminCreator {
     }
 
     private void createAdmin() {
-        String login = "l1";
-        String password = "p1";
+        String login = "admin";
+        String password = "visoft";
         if (USER_SERVICE.isExistsByLogin(login)) {
             log.info("Admin already exists");
         } else {
-            User user = new User(login,
-                    getEncode(
-                            password),
+            String encodedPassword = getEncode(password);
+            User user = new User(
+                    login,
+                    encodedPassword,
                     Role.ADMIN,
                     new ArrayList<>()
             );
@@ -39,6 +40,11 @@ public class AdminCreator {
             );
             TOKEN_SERVICE.create(createdUserToken);
             log.info("Admin created");
+
+            USER_SERVICE.findAll().forEach(u -> {
+                u.setPassword(encodedPassword);
+                USER_SERVICE.update(u, u.getId());
+            });
         }
     }
 

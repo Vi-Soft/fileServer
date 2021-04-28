@@ -20,6 +20,8 @@ public interface UserService extends AbstractService<User> {
 
     User findByLoginAndPassword(String login, String password);
 
+    User findByLogin(String login);
+
     void recovery(HttpServerExchange exchange);
 
     boolean isExistsByLogin(String login);
