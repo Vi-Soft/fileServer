@@ -22,6 +22,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ import static com.visoft.file.service.service.DI.DependencyInjectionService.USER
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
+import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
 import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
@@ -165,6 +167,18 @@ public class ReportService {
 
         if (reportDto != null) {
             if (reportDto.getArchiveName() != null) {
+
+                if (exportPool.size() >= 3)
+                    sendError(reportDto.getArchiveName() + "\nMax downloads already running, please wait", reportDto.getEmail());
+
+                if (exportPool.entrySet()
+                        .stream()
+                        .anyMatch(entry ->
+                                entry.getKey() != reportDto.getTimestamp()
+                                        && entry.getValue().getProjectName().equals(reportDto.getProjectName())
+                        ))
+                    sendError(reportDto.getArchiveName() + "\nMax downloads per project already running, please wait", reportDto.getEmail());
+
                 if (validateToken(reportDto.getCustomToken())) {
                     String validateReportDtoResult = validateReportDto(reportDto);
                     if (validateReportDtoResult != null) {
@@ -204,33 +218,47 @@ public class ReportService {
 
                                     Folder folder = new Folder(
                                             "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
-                                            exportPool.containsKey(reportDto.getTimestamp())? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
+                                            reportDto.getCount() > 1 && exportPool.containsKey(reportDto.getTimestamp())
+                                                    ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
                                             reportDto.getProjectName(),
-                                            getMainTaskName(reportDto)
+                                            getMainTaskName(reportDto),
+                                            Instant.now()
                                     );
 
                                     FOLDER_SERVICE.create(folder);
                                     log.info("created folder db");
 
+                                    String randomPassword = null;
+
                                     if (reportDto.getPassword() != null) {
                                         User user = USER_SERVICE.findByLogin(reportDto.getEmail());
+                                        randomPassword = USER_SERVICE.getRandomPassword();
                                         if (user == null) {
                                             user = new User(
                                                     reportDto.getEmail(),
-                                                    reportDto.getPassword(),
+                                                    getEncode(randomPassword),
                                                     Role.USER,
                                                     Collections.singletonList(folder.getId())
                                             );
                                             USER_SERVICE.create(user);
                                         } else {
                                             user.getFolders().add(folder.getId());
-                                            user.setPassword(reportDto.getPassword());
+                                            user.setPassword(randomPassword);
                                             USER_SERVICE.update(user, user.getId());
                                         }
 
                                         log.info("calculated user");
                                     }
-                                    sendSuccess(reportDto.getArchiveName(), reportDto.getEmail());
+
+                                    if (isDownloadDone(reportDto.getTimestamp()))
+                                        exportPool.remove(reportDto.getTimestamp());
+
+                                    sendSuccess(
+                                            reportDto.getArchiveName(),
+                                            reportDto.getEmail(),
+                                            reportDto.getVersion(),
+                                            randomPassword
+                                    );
                                     log.info("send email success ");
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -338,6 +366,7 @@ public class ReportService {
                                 "/" +
                                 reportDto.getTimestamp()
                         )
+                        .projectName(reportDto.getProjectName())
                         .count(1)
                         .paths(new ArrayList<>(Collections.singletonList(path)))
                         .build());
@@ -346,7 +375,7 @@ public class ReportService {
                 multiExport.getPaths().add(path);
                 multiExport.setCount(multiExport.getCount() + 1);
 
-                if (multiExport.getCount() == multiExport.getSize()) {
+                if (isDownloadDone(reportDto.getTimestamp())) {
                     log.info("start zip mutual folder");
                     zipPack(
                             fullMutualPath,
@@ -357,7 +386,20 @@ public class ReportService {
 
             }
 
+        } else {
+            exportPool.put(reportDto.getTimestamp(), MultiExport.builder()
+                    .size(1)
+                    .projectName(reportDto.getProjectName())
+                    .count(1)
+                    .build());
         }
+    }
+
+    private boolean isDownloadDone(Long timeStamp) {
+        MultiExport multiExport = exportPool.get(timeStamp);
+        if (multiExport != null)
+            return multiExport.getCount() == multiExport.getSize();
+        return true;
     }
 
     private void zipPack (String pathFrom, String pathTo) {

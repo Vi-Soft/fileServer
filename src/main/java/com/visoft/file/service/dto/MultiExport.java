@@ -13,5 +13,6 @@ public class MultiExport {
     private int count;
     private int size;
     private String mutualPath;
+    private String projectName;
     private List<String> paths;
 }

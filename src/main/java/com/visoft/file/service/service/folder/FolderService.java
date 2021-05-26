@@ -5,6 +5,7 @@ import com.visoft.file.service.service.abstractService.AbstractService;
 import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -21,7 +22,8 @@ public interface FolderService extends AbstractService<Folder> {
             String folder,
             String mutualFolder,
             String projectName,
-            String taskName
+            String taskName,
+            Instant data
     );
 
     /**

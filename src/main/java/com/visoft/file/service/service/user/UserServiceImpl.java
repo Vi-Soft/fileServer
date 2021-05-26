@@ -17,11 +17,11 @@ import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.visoft.file.service.persistance.entity.Role.USER;
@@ -265,6 +265,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             }
         }
         return true;
+    }
+
+    public String getRandomPassword() {
+        return Arrays.toString(
+                new Random().ints(5, 0, 10).toArray()
+        ).replaceAll("\\[|]|,|\\s", "");
     }
 
     private boolean isExistsByLogin(String login, ObjectId id) {

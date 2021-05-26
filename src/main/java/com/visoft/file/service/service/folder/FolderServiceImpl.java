@@ -13,6 +13,7 @@ import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,14 +39,16 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
             String folder,
             String mutualFolder,
             String projectName,
-            String taskName
+            String taskName,
+            Instant data
     ) {
         create(
                 new Folder(
                         folder,
                         mutualFolder,
                         projectName,
-                        taskName
+                        taskName,
+                        data
                 )
         );
     }

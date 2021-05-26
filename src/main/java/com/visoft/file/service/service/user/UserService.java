@@ -24,5 +24,7 @@ public interface UserService extends AbstractService<User> {
 
     void recovery(HttpServerExchange exchange);
 
+    String getRandomPassword();
+
     boolean isExistsByLogin(String login);
 }
