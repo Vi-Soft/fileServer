@@ -12,9 +12,14 @@ import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.CookieImpl;
 import lombok.extern.log4j.Log4j;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Scanner;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
@@ -59,6 +64,16 @@ public class AuthenticationService {
                     }
                 }
             }
+        }
+    }
+
+    public static void getApplicationVersion(HttpServerExchange exchange) {
+        try {
+            MavenXpp3Reader reader = new MavenXpp3Reader();
+            Model model = reader.read(new FileReader("pom.xml"));
+            send(exchange, Optional.ofNullable(model.getVersion()).orElse("undefined"));
+        } catch (IOException | XmlPullParserException e) {
+            e.printStackTrace();
         }
     }
 
