@@ -5,11 +5,13 @@ import com.visoft.file.service.Version;
 import com.visoft.file.service.dto.*;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.Role;
+import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
+import org.bson.types.ObjectId;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
@@ -26,12 +28,12 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
-import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
+import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
+import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
 import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
@@ -241,9 +243,14 @@ public class ReportService {
                                                     Collections.singletonList(folder.getId())
                                             );
                                             USER_SERVICE.create(user);
+                                            Token createdUserToken = new Token(
+                                                    generate(ObjectId.get()),
+                                                    user.getId()
+                                            );
+                                            TOKEN_SERVICE.create(createdUserToken);
                                         } else {
                                             user.getFolders().add(folder.getId());
-                                            user.setPassword(randomPassword);
+                                            user.setPassword(getEncode(randomPassword));
                                             USER_SERVICE.update(user, user.getId());
                                         }
 
