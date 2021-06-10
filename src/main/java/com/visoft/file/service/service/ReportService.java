@@ -236,25 +236,34 @@ public class ReportService {
                                         User user = USER_SERVICE.findByLogin(reportDto.getEmail());
                                         randomPassword = USER_SERVICE.getRandomPassword();
                                         if (user == null) {
+
                                             user = new User(
                                                     reportDto.getEmail(),
                                                     getEncode(randomPassword),
                                                     Role.USER,
                                                     Collections.singletonList(folder.getId())
                                             );
+                                            log.info("creating new user. user:" + user + " password: " + randomPassword);
+
                                             USER_SERVICE.create(user);
                                             Token createdUserToken = new Token(
                                                     generate(ObjectId.get()),
                                                     user.getId()
                                             );
+
+                                            log.info("create token");
                                             TOKEN_SERVICE.create(createdUserToken);
+                                            log.info("token created " + createdUserToken);
                                         } else {
+                                            log.info("change password to " + randomPassword);
                                             user.getFolders().add(folder.getId());
                                             user.setPassword(getEncode(randomPassword));
                                             USER_SERVICE.update(user, user.getId());
                                         }
 
                                         log.info("calculated user");
+                                    } else {
+                                        log.info("reportDto.getPassword: " + reportDto.getPassword());
                                     }
 
                                     if (isDownloadDone(reportDto.getTimestamp()))

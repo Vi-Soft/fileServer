@@ -37,22 +37,26 @@ public class AuthenticationService {
     }
 
     public static void login(HttpServerExchange exchange) {
-        log.warn("log");
+        log.warn("login");
         LoginDto loginDto = getRequestBody(exchange);
         if (loginDto == null) {
             exchange.setStatusCode(BAD_REQUEST);
+            log.warn("login: loginDto null");
         } else {
             String validateResult = validate(loginDto);
             if (validateResult != null) {
                 exchange.setStatusCode(BAD_REQUEST);
+                log.warn("login: not valid " + loginDto);
             } else {
                 User user = USER_SERVICE.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
                 if (user == null) {
                     exchange.setStatusCode(UNAUTHORIZED);
+                    log.warn("login: user is null " + loginDto.getLogin() + " " + loginDto.getPassword());
                 } else {
                     Token token = DependencyInjectionService.TOKEN_SERVICE.findByUserId(user.getId());
                     if (token == null) {
                         exchange.setStatusCode(UNAUTHORIZED);
+                        log.warn("login: token not found " + user.getId());
                     } else {
                         DependencyInjectionService.TOKEN_SERVICE.addExpiration(token.getId());
                         TokenOutcomeDto tokenOutcomeDto = new TokenOutcomeDto(
