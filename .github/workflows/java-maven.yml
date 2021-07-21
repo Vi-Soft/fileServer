@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ devops ]
+    branches: [ master ]
   pull_request:
-    branches: '*'
+    branches: [ master ]
 
 jobs:
   build:
@@ -39,5 +39,5 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build with Maven
+      - name: Test with Maven
         run: mvn --batch-mode clean test 
