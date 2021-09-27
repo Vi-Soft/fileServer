@@ -17,11 +17,8 @@ import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.visoft.file.service.persistance.entity.Role.USER;

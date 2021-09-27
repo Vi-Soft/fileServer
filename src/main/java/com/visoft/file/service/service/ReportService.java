@@ -163,7 +163,7 @@ public class ReportService {
         return name == null || name.equals("");
     }
 
-    public void unzip(HttpServerExchange exchange) throws IOException{
+    public void unzip(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
 
@@ -259,8 +259,11 @@ public class ReportService {
                                             user.getFolders().add(folder.getId());
                                             user.setPassword(getEncode(randomPassword));
                                             USER_SERVICE.update(user, user.getId());
+                                            Token token = TOKEN_SERVICE.findByUserId(user.getId());
+                                            token.setToken(generate(ObjectId.get()));
+                                            token.setExpiration(Instant.now().plusSeconds(10800L));
+                                            TOKEN_SERVICE.update(token, token.getId());
                                         }
-
                                         log.info("calculated user");
                                     } else {
                                         log.info("reportDto.getPassword: " + reportDto.getPassword());
@@ -378,9 +381,9 @@ public class ReportService {
                         .size(reportDto.getCount())
                         .mutualPath(
                                 "/" +
-                                reportDto.getCompanyName() +
-                                "/" +
-                                reportDto.getTimestamp()
+                                        reportDto.getCompanyName() +
+                                        "/" +
+                                        reportDto.getTimestamp()
                         )
                         .projectName(reportDto.getProjectName())
                         .count(1)
@@ -418,14 +421,14 @@ public class ReportService {
         return true;
     }
 
-    private void zipPack (String pathFrom, String pathTo) {
+    private void zipPack(String pathFrom, String pathTo) {
         ZipUtil.pack(
                 new File(pathFrom),
                 new File(pathTo)
         );
     }
 
-    private void zipUnpack (String pathFrom, String pathTo) {
+    private void zipUnpack(String pathFrom, String pathTo) {
         ZipUtil.unpack(
                 new File(pathFrom),
                 new File(pathTo)
@@ -531,7 +534,7 @@ public class ReportService {
                         taskTask.setType(formType.getType());
                     }
                 }
-                getRealTask(taskTask, tasks, formTypes,commonLogBookMap,version);
+                getRealTask(taskTask, tasks, formTypes, commonLogBookMap, version);
             }
             sortByParentIdAndOrderInGroup(task.getTasks());
         }
