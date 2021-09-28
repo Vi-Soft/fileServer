@@ -270,7 +270,6 @@ public class ReportService {
                                                 token.setExpiration(Instant.now().plusSeconds(10800L));
                                                 TOKEN_SERVICE.update(token, token.getId());
                                             }
-
                                         }
                                         log.info("calculated user");
                                     } else {
