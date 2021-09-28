@@ -260,9 +260,17 @@ public class ReportService {
                                             user.setPassword(getEncode(randomPassword));
                                             USER_SERVICE.update(user, user.getId());
                                             Token token = TOKEN_SERVICE.findByUserId(user.getId());
-                                            token.setToken(generate(ObjectId.get()));
-                                            token.setExpiration(Instant.now().plusSeconds(10800L));
-                                            TOKEN_SERVICE.update(token, token.getId());
+                                            if (token == null) {
+                                                TOKEN_SERVICE.create(new Token(
+                                                        generate(ObjectId.get()),
+                                                        user.getId())
+                                                );
+                                            } else {
+                                                token.setToken(generate(ObjectId.get()));
+                                                token.setExpiration(Instant.now().plusSeconds(10800L));
+                                                TOKEN_SERVICE.update(token, token.getId());
+                                            }
+
                                         }
                                         log.info("calculated user");
                                     } else {
