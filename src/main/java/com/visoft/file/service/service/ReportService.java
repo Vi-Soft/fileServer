@@ -163,23 +163,149 @@ public class ReportService {
         return name == null || name.equals("");
     }
 
-    public void unzip(HttpServerExchange exchange) throws IOException{
+    private static Report getFullTree(ReportDto reportDto) {
+        Report report = Report.builder()
+                .projectName(reportDto.getProjectName())
+                .companyName(reportDto.getCompanyName())
+                .archiveName(reportDto.getArchiveName())
+                .build();
+        Task task = new Task(report.getProjectName(), null, new ArrayList<>(), -10000L, 0, null, null);
+        task.setPath(reportDto.getCompanyName());
+        List<Task> tasks = new ArrayList<>();
+
+        String[] list = new File(rootPath + "/" + report.getCompanyName() + "/" + report.getArchiveName()).list();
+        if (list != null && list.length != 0) {
+            for (String s : list) {
+                Task currentTask = new Task(s, null, new ArrayList<>(), 100000L, 0, null, null);
+                tasks.add(new ReportService().getTreeByFileSystem(currentTask, "/" + currentTask.getName(), "/" + report.getCompanyName(), "/" + report.getArchiveName()));
+
+            }
+        }
+        task.setTasks(tasks);
+        report.setTask(task);
+        return report;
+    }
+
+    private static void getDeleteNotWantFiles(Report report) {
+        List<Task> deletedTask = new ArrayList<>();
+        for (Task task : report.getTask().getTasks()) {
+            String taskName = task.getName();
+            if (taskName.equals("index.html")
+                    || taskName.equals("g.png")
+                    || taskName.equals("r.png")) {
+                deletedTask.add(task);
+            }
+        }
+        report.getTask().getTasks().removeAll(deletedTask);
+    }
+
+    private static void setPathFullPath(Task task, String path) {
+        if (task.getTasks() != null && !task.getTasks().isEmpty()) {
+            for (Task taskTask : task.getTasks()) {
+                if (taskTask.getIcon() == 3) {
+                    taskTask.setPath("/" + path + "/" + taskTask.getPath());
+                }
+                setPathFullPath(taskTask, path);
+            }
+        }
+    }
+
+    private static void getRealTask(
+            Task task,
+            List<TaskDto> tasks,
+            Map<String, FormType> formTypes,
+            Map<String, CommonLogBook> commonLogBookMap,
+            Version version) {
+        if (task.getTasks() != null && !task.getTasks().isEmpty()) {
+            for (Task taskTask : task.getTasks()) {
+                if (version == Version.RU) {
+                    CommonLogBook commonLogBook = new CommonLogBookService().getCommonLogBook(commonLogBookMap, taskTask.getPath());
+                    if (commonLogBook != null) {
+                        taskTask.setName(commonLogBook.getFullName());
+                        taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
+                    }
+                }
+                for (TaskDto taskDto : tasks) {
+                    FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
+                    if (formType == null) {
+                        if (taskTask.getName().equals(taskDto.getId())) {
+                            taskTask.setIcon(taskDto.getIcon());
+                            taskTask.setName(taskDto.getName());
+                            taskTask.setOrderInGroup(taskDto.getOrderInGroup());
+                            taskTask.setColor(taskDto.getColor());
+                            taskTask.setDetail(taskDto.getDetail());
+                        }
+                    } else {
+                        taskTask.setType(formType.getType());
+                    }
+                }
+                getRealTask(taskTask, tasks, formTypes, commonLogBookMap, version);
+            }
+            sortByParentIdAndOrderInGroup(task.getTasks());
+        }
+    }
+
+    private static String validateZip(String archiveName, String companyName) throws IOException {
+        if (existsFolder(rootPath + "/" + companyName)) {
+            List<Path> subfolder = Files.walk(Paths.get(rootPath + "/" + companyName), 1)
+                    .filter(Files::isDirectory)
+                    .collect(Collectors.toList());
+            for (Path path : subfolder) {
+                if (path.getFileName().toString().equals(archiveName)) {
+                    return ALREADY_UNZIP;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void sortByParentIdAndOrderInGroup(List<Task> tasks) {
+        tasks.sort(Comparator
+                .comparing(Task::getOrderInGroup)
+        );
+    }
+
+    private static void sortByParentIdAndOrderInGroup(ReportDto reportDto) {
+        reportDto.getTasks().sort(Comparator
+                .comparing(TaskDto::getParentId)
+                .thenComparing(TaskDto::getOrderInGroup)
+        );
+    }
+
+    private static void downloadZip(ReportDto reportDto) throws IOException {
+        String fileName = reportDto.getArchiveName();
+        log.info("start download: " + fileName);
+        System.out.println("start down " + fileName);
+        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName + "&customToken=" + getToken());
+        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
+        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        log.info("finish download: " + fileName);
+    }
+
+    private static boolean existsFolder(String path) {
+        return new File(path).exists();
+    }
+
+    public void unzip(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
 
         if (reportDto != null) {
             if (reportDto.getArchiveName() != null) {
 
-                if (exportPool.size() >= 3)
-                    sendError(reportDto.getArchiveName() + "\nMax downloads already running, please wait", reportDto.getEmail());
+                if (reportDto.getTimestamp() != 0) {
+                    if (exportPool.size() >= 3)
+                        sendError(reportDto.getArchiveName() + "\nMax downloads already running, please wait", reportDto.getEmail());
 
-                if (exportPool.entrySet()
-                        .stream()
-                        .anyMatch(entry ->
-                                entry.getKey() != reportDto.getTimestamp()
-                                        && entry.getValue().getProjectName().equals(reportDto.getProjectName())
-                        ))
-                    sendError(reportDto.getArchiveName() + "\nMax downloads per project already running, please wait", reportDto.getEmail());
+                    if (exportPool.entrySet()
+                            .stream()
+                            .anyMatch(entry ->
+                                    entry.getKey() != reportDto.getTimestamp()
+                                            && entry.getValue().getProjectName().equals(reportDto.getProjectName())
+                            ))
+                        sendError(reportDto.getArchiveName() + "\nMax downloads per project already running, please wait", reportDto.getEmail());
+                }
 
                 if (validateToken(reportDto.getCustomToken())) {
                     String validateReportDtoResult = validateReportDto(reportDto);
@@ -378,9 +504,9 @@ public class ReportService {
                         .size(reportDto.getCount())
                         .mutualPath(
                                 "/" +
-                                reportDto.getCompanyName() +
-                                "/" +
-                                reportDto.getTimestamp()
+                                        reportDto.getCompanyName() +
+                                        "/" +
+                                        reportDto.getTimestamp()
                         )
                         .projectName(reportDto.getProjectName())
                         .count(1)
@@ -418,14 +544,14 @@ public class ReportService {
         return true;
     }
 
-    private void zipPack (String pathFrom, String pathTo) {
+    private void zipPack(String pathFrom, String pathTo) {
         ZipUtil.pack(
                 new File(pathFrom),
                 new File(pathTo)
         );
     }
 
-    private void zipUnpack (String pathFrom, String pathTo) {
+    private void zipUnpack(String pathFrom, String pathTo) {
         ZipUtil.unpack(
                 new File(pathFrom),
                 new File(pathTo)
@@ -454,117 +580,6 @@ public class ReportService {
         return result;
     }
 
-
-    private static Report getFullTree(ReportDto reportDto) {
-        Report report = Report.builder()
-                .projectName(reportDto.getProjectName())
-                .companyName(reportDto.getCompanyName())
-                .archiveName(reportDto.getArchiveName())
-                .build();
-        Task task = new Task(report.getProjectName(), null, new ArrayList<>(), -10000L, 0, null, null);
-        task.setPath(reportDto.getCompanyName());
-        List<Task> tasks = new ArrayList<>();
-
-        String[] list = new File(rootPath + "/" + report.getCompanyName() + "/" + report.getArchiveName()).list();
-        if (list != null && list.length != 0) {
-            for (String s : list) {
-                Task currentTask = new Task(s, null, new ArrayList<>(), 100000L, 0, null, null);
-                tasks.add(new ReportService().getTreeByFileSystem(currentTask, "/" + currentTask.getName(), "/" + report.getCompanyName(), "/" + report.getArchiveName()));
-
-            }
-        }
-        task.setTasks(tasks);
-        report.setTask(task);
-        return report;
-    }
-
-    private static void getDeleteNotWantFiles(Report report) {
-        List<Task> deletedTask = new ArrayList<>();
-        for (Task task : report.getTask().getTasks()) {
-            String taskName = task.getName();
-            if (taskName.equals("index.html")
-                    || taskName.equals("g.png")
-                    || taskName.equals("r.png")) {
-                deletedTask.add(task);
-            }
-        }
-        report.getTask().getTasks().removeAll(deletedTask);
-    }
-
-    private static void setPathFullPath(Task task, String path) {
-        if (task.getTasks() != null && !task.getTasks().isEmpty()) {
-            for (Task taskTask : task.getTasks()) {
-                if (taskTask.getIcon() == 3) {
-                    taskTask.setPath("/" + path + "/" + taskTask.getPath());
-                }
-                setPathFullPath(taskTask, path);
-            }
-        }
-    }
-
-    private static void getRealTask(
-            Task task,
-            List<TaskDto> tasks,
-            Map<String, FormType> formTypes,
-            Map<String, CommonLogBook> commonLogBookMap,
-            Version version) {
-        if (task.getTasks() != null && !task.getTasks().isEmpty()) {
-            for (Task taskTask : task.getTasks()) {
-                if (version == Version.RU) {
-                    CommonLogBook commonLogBook = new CommonLogBookService().getCommonLogBook(commonLogBookMap, taskTask.getPath());
-                    if (commonLogBook != null) {
-                        taskTask.setName(commonLogBook.getFullName());
-                        taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
-                    }
-                }
-                for (TaskDto taskDto : tasks) {
-                    FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
-                    if (formType == null) {
-                        if (taskTask.getName().equals(taskDto.getId())) {
-                            taskTask.setIcon(taskDto.getIcon());
-                            taskTask.setName(taskDto.getName());
-                            taskTask.setOrderInGroup(taskDto.getOrderInGroup());
-                            taskTask.setColor(taskDto.getColor());
-                            taskTask.setDetail(taskDto.getDetail());
-                        }
-                    } else {
-                        taskTask.setType(formType.getType());
-                    }
-                }
-                getRealTask(taskTask, tasks, formTypes,commonLogBookMap,version);
-            }
-            sortByParentIdAndOrderInGroup(task.getTasks());
-        }
-    }
-
-    private static String validateZip(String archiveName, String companyName) throws IOException {
-        if (existsFolder(rootPath + "/" + companyName)) {
-            List<Path> subfolder = Files.walk(Paths.get(rootPath + "/" + companyName), 1)
-                    .filter(Files::isDirectory)
-                    .collect(Collectors.toList());
-            for (Path path : subfolder) {
-                if (path.getFileName().toString().equals(archiveName)) {
-                    return ALREADY_UNZIP;
-                }
-            }
-        }
-        return null;
-    }
-
-    private static void sortByParentIdAndOrderInGroup(List<Task> tasks) {
-        tasks.sort(Comparator
-                .comparing(Task::getOrderInGroup)
-        );
-    }
-
-
-    private static void sortByParentIdAndOrderInGroup(ReportDto reportDto) {
-        reportDto.getTasks().sort(Comparator
-                .comparing(TaskDto::getParentId)
-                .thenComparing(TaskDto::getOrderInGroup)
-        );
-    }
-
     private Task getTreeByFileSystem(Task task, String path, String companyName, String projectName) {
         String fullPath = rootPath + companyName + projectName + path;
         if (task != null) {
@@ -586,21 +601,6 @@ public class ReportService {
             }
         }
         return task;
-    }
-
-    private static void downloadZip(ReportDto reportDto) throws IOException {
-        String fileName = reportDto.getArchiveName();
-        log.info("start download: " + fileName);
-        System.out.println("start down " + fileName);
-        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName + "&customToken=" + getToken());
-        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        log.info("finish download: " + fileName);
-    }
-
-    private static boolean existsFolder(String path) {
-        return new File(path).exists();
     }
 
 
