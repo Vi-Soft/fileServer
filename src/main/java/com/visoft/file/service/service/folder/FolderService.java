@@ -5,6 +5,7 @@ import com.visoft.file.service.service.abstractService.AbstractService;
 import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -17,7 +18,13 @@ public interface FolderService extends AbstractService<Folder> {
      *
      * @param folder folder
      */
-    void create(String folder);
+    void create(
+            String folder,
+            String mutualFolder,
+            String projectName,
+            String taskName,
+            Instant data
+    );
 
     /**
      * Search by id. If folder not found send status code {@link com.visoft.file.service.service.ErrorConst#NOT_FOUND NOT_FOUND},
@@ -51,6 +58,13 @@ public interface FolderService extends AbstractService<Folder> {
      * @param exchange http exchange
      */
     void findAll(HttpServerExchange exchange);
+
+    /**
+     * find folder by name
+     *
+     * @param folder folder path
+     */
+    Folder findByFolder(String folder);
 
     /**
      * Convert {@link Folder#getId() id} to String

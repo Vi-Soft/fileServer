@@ -64,10 +64,10 @@ public class FileResourceHandler extends ResourceHandler {
         if (user.getRole().equals(ADMIN)) {
             return true;
         }
-        List<String> folders = getFolders(user);
-        if (folders != null && !folders.isEmpty()) {
-            for (String folder : getFolders(user)) {
-                if (requestURI.startsWith(folder)) {
+        List<Folder> folders = getFolders(user);
+        if (!folders.isEmpty()) {
+            for (Folder folder : getFolders(user)) {
+                if (requestURI.startsWith(folder.getFolder())) {
                     return true;
                 }
             }
@@ -91,31 +91,24 @@ public class FileResourceHandler extends ResourceHandler {
         return requestURI;
     }
 
-    private List<String> getFolders(User user) {
-        List<String> folders = new ArrayList<>();
+    private List<Folder> getFolders(User user) {
+        List<Folder> folders = new ArrayList<>();
         if (user.getRole().equals(USER)) {
             List<ObjectId> userFolders = user.getFolders();
             if (userFolders != null) {
                 for (ObjectId id : userFolders) {
                     Folder folderInDB = FOLDER_SERVICE.findById(id);
                     if (folderInDB != null) {
-                        folders.add(folderInDB.getFolder());
+                        folders.add(folderInDB);
                     }
                 }
             }
         } else {
             List<Folder> all = FOLDER_SERVICE.findAll();
             if (all != null) {
-                for (Folder folder : all) {
-                    folders.add(folder.getFolder());
-                }
+                folders.addAll(all);
             }
         }
         return folders;
-    }
-
-    private int getURLWithoutDownloadFile(String requestURI) {
-        String[] split = requestURI.split("/");
-        return requestURI.length() - split[split.length - 1].length() - 1;
     }
 }

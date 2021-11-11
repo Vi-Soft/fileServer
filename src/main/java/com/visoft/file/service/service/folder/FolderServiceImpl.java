@@ -5,6 +5,7 @@ import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.GeneralConst;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
+import com.visoft.file.service.persistance.repository.FolderRepository;
 import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import com.visoft.file.service.service.util.FileSystemService;
@@ -12,8 +13,10 @@ import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
@@ -29,9 +32,25 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         super(Repositories.FOLDER_REPOSITORY);
     }
 
+    private final FolderRepository directFolderRepository = Repositories.DIRECT_FOLDER_REPOSITORY;
+
     @Override
-    public void create(String folder) {
-        super.create(new Folder(folder));
+    public void create(
+            String folder,
+            String mutualFolder,
+            String projectName,
+            String taskName,
+            Instant data
+    ) {
+        create(
+                new Folder(
+                        folder,
+                        mutualFolder,
+                        projectName,
+                        taskName,
+                        data
+                )
+        );
     }
 
     @Override
@@ -95,11 +114,19 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
         send(
                 exchange,
                 toJson(
-                        getIdsFromFolders(
-                                findAll()
-                        )
+//                        getIdsFromFolders(
+                        findAll()
+                                .parallelStream()
+                                .map(FolderOutcomeDto::new)
+                                .collect(Collectors.toList())
+//                        )
                 )
         );
+    }
+
+    @Override
+    public Folder findByFolder(String folder) {
+        return directFolderRepository.findByFolder(folder);
     }
 
     @Override

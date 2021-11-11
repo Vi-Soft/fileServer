@@ -10,13 +10,14 @@ import io.undertow.server.handlers.form.FormParserFactory;
 import io.undertow.server.handlers.form.MultiPartParserDefinition;
 
 import static io.undertow.util.Methods.POST;
+import static io.undertow.util.Methods.GET;
 
 public class RouterHandlerProvider implements HandlerProvider {
 
-    //    private HttpHandler unzip = new ReportService().unzip();
     private HttpHandler unzip = e -> new ReportService().unzip(e);
     private HttpHandler login = AuthenticationService::login;
     private HttpHandler logout = AuthenticationService::logout;
+    private HttpHandler version = AuthenticationService::getApplicationVersion;
 
     private EagerFormParsingHandler getEagerFormParsingHandler() {
         return new EagerFormParsingHandler(FormParserFactory.builder()
@@ -34,6 +35,9 @@ public class RouterHandlerProvider implements HandlerProvider {
                                 .setNext(login))
                 .add(POST, "/unzip",
                         getEagerFormParsingHandler()
-                                .setNext(unzip));
+                                .setNext(unzip))
+                .add(GET, "/version",
+                        getEagerFormParsingHandler()
+                                .setNext(version));
     }
 }

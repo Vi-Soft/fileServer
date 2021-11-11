@@ -17,19 +17,20 @@ import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.mongodb.client.model.Filters.*;
-import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.persistance.entity.UserConst.DELETED;
 import static com.visoft.file.service.persistance.entity.UserConst._ID;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
+import static com.visoft.file.service.service.util.EncoderService.isPasswordsMatch;
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
@@ -93,14 +94,14 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         );
     }
 
-    @Override
-    public void createAdmin(HttpServerExchange exchange) {
-        create(
-                getCreateUserRequestBody(exchange),
-                exchange,
-                ADMIN
-        );
-    }
+//    @Override
+//    public void createAdmin(HttpServerExchange exchange) {
+//        create(
+//                getCreateUserRequestBody(exchange),
+//                exchange,
+//                ADMIN
+//        );
+//    }
 
     private void create(UserCreateDto dto, HttpServerExchange exchange, Role role) {
         if (!validate(dto)) {
@@ -160,7 +161,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         send(
                 exchange,
                 toJson(
-                        getIds(findAll())
+                        findAll()
+                        .parallelStream()
+                        .map(UserOutcomeDto::new)
+                        .collect(Collectors.toList())
                 )
         );
     }
@@ -169,9 +173,24 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public User findByLoginAndPassword(String login, String password) {
         Bson filter = and(
                 eq(DELETED, false),
-                eq(UserConst.LOGIN, login),
-                eq(UserConst.PASSWORD, getEncode(password)));
+                eq(UserConst.LOGIN, login));
+        User user = super.getObject(filter);
+        if (!isPasswordsMatch(password, user.getPassword()))
+            return null;
+        return user;
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        Bson filter = and(
+                eq(DELETED, false),
+                eq(UserConst.LOGIN, login));
         return super.getObject(filter);
+    }
+
+    @Override
+    public boolean isExistsByLogin(String login) {
+        return isExists(eq(UserConst.LOGIN, login));
     }
 
     private UserCreateDto getCreateUserRequestBody(HttpServerExchange exchange) {
@@ -248,8 +267,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         return true;
     }
 
-    private boolean isExistsByLogin(String login) {
-        return isExists(eq(UserConst.LOGIN, login));
+    public String getRandomPassword() {
+        return Arrays.toString(
+                new Random().ints(5, 0, 10).toArray()
+        ).replaceAll("\\[|]|,|\\s", "");
     }
 
     private boolean isExistsByLogin(String login, ObjectId id) {

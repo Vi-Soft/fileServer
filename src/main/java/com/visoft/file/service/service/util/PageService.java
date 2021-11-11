@@ -1,54 +1,106 @@
 package com.visoft.file.service.service.util;
 
-import com.visoft.file.service.dto.Report;
-import com.visoft.file.service.dto.Task;
+import com.visoft.file.service.dto.*;
+import com.visoft.file.service.persistance.entity.Folder;
+import com.visoft.file.service.service.AttachmentDocumentService;
+import com.visoft.file.service.service.FormTypeService;
+import com.visoft.file.service.util.TaskSorter;
+import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import lombok.extern.log4j.Log4j;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+
+import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Log4j
 public class PageService {
 
-    private static String rootPath = PropertiesService.getRootPath();
+    private static final String rootPath = PropertiesService.getRootPath();
 
-    private static String loginHtml = PropertiesService.getLoginPage();
+    private static final String loginHtml = PropertiesService.getLoginPage();
 
-    private static String server = PropertiesService.getServerName();
+    private static final String server = PropertiesService.getServerName();
+
+    private static final String staticServer = PropertiesService.getStaticServer();
+
+    private static final String STATIC_IP_FLAG = "#static_ip";
 
     public static void redirectToLoginPage(HttpServerExchange exchange) {
-        String htmlString = "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "<meta http-equiv=\"refresh\" content=\"0; url=" + loginHtml + "\"/>\n" +
-                "</head>\n" +
-                "</html>";
-        exchange.getResponseSender().send(htmlString);
+        exchange
+                .getResponseSender()
+                .send(
+                        getLoginRedirectPage()
+                                .replace(
+                                        "content=\"\"",
+                                        "content=\"0; url=" + loginHtml + "\""
+                                )
+                );
     }
 
-    public static void getMainUserHtml(HttpServerExchange exchange, List<String> folders) {
+    public static void getMainUserHtml(HttpServerExchange exchange, List<Folder> folders) {
         StringBuilder htmlString = new StringBuilder();
-        htmlString.append("<!DOCTYPE HTML>\n" + "<html>\n" + " <head>\n" + "  <meta charset=\"utf-8\">\n" + "  <title>Root</title>\n" + " </head>\n" + " <body>\n" + "<form action=\"")
-                .append(server).append("/api/logout\" method=\"post\">\n")
-                .append("    <input type=\"submit\" value=\"Logout\" />\n")
-                .append("</form>");
-        for (String folder : folders) {
-            htmlString.append("<p><a href=\"")
-                    .append(folder).append("\">")
-                    .append(getFolderName(folder)).append("</a></p>\n");
+        for (Folder folder : folders) {
+            htmlString
+                    .append("<div>\n")
+                    .append("    <a href=\"")
+                    .append(folder.getFolder())
+                    .append("\">\n")
+                    .append("        <table class=\"btn\">\n")
+                    .append("            <tr>\n")
+                    .append("                <td>")
+                    .append(getFolderName(folder.getFolder()))
+                    .append("</td>\n")
+                    .append("                <td>&nbsp;/&nbsp;</td>\n")
+                    .append("                <td>")
+                    .append(folder.getProjectName())
+                    .append("</td>\n").append("                <td>&nbsp;/&nbsp;</td>\n")
+                    .append("                <td>")
+                    .append(folder.getTaskName())
+                    .append("</td>\n")
+                    .append("            </tr>\n")
+                    .append("        </table>\n")
+                    .append("    </a>\n")
+                    .append("</div>");
         }
-
-        htmlString.append("</body>\n" +
-                "</html>\n");
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");
-        exchange.getResponseSender().send(htmlString.toString());
+        exchange.getResponseSender().send(
+                getRootPage()
+                        .replace(
+                                "replaceServer=\"\"",
+                                "href=\"" + staticServer + "/root.css" + "\""
+                        )
+                        .replace(
+                                "src=\"\"",
+                                "src=\"" + staticServer + "/imageLogout.png\""
+                        )
+                        .replace(
+                                "action=\"\"",
+                                "action=\"" + server + "/api/logout\""
+                        )
+                        .replace(
+                                "<replace/>",
+                                htmlString.toString()
+                        )
+        );
     }
 
     public static void getFolderUserHtml(HttpServerExchange exchange, String folder) throws IOException {
-        String htmlString;
+        String htmlString = getHtmlWithProperties(folder);
+
+        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");
+        exchange.getResponseSender().send(htmlString);
+    }
+
+    private static String getHtmlWithProperties(String folder) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(rootPath + folder + "/index.html"))) {
 
             StringBuilder sb = new StringBuilder();
@@ -58,261 +110,178 @@ public class PageService {
                 sb.append(System.lineSeparator());
                 line = br.readLine();
             }
-            htmlString = sb.toString().replace("r.png", PropertiesService.getServerName() + "/static/r");
-            htmlString = htmlString.replace("g.png", PropertiesService.getServerName() + "/static/g");
-            htmlString = htmlString.replace("highlight.js", PropertiesService.getServerName() + "/static/highlight");
-            htmlString = htmlString.replace("jquery.js", PropertiesService.getServerName() + "/static/jquery");
-            htmlString = htmlString.replace("scrollTo-min.js", PropertiesService.getServerName() + "/static/scrollToMin");
+            String htmlString = sb.toString()
+                    .replace("r.png", getStaticServer() + "/r.png")
+                    .replace("g.png", getStaticServer() + "/g.png")
+                    .replace("background.jpg", getStaticServer() + "/background.jpg")
+                    .replace("imageDownload.png", getStaticServer() + "/imageDownload.png")
+                    .replace("imageLogout.png", getStaticServer() + "/imageLogout.png")
+                    .replace("tree.css", getStaticServer() + "/tree.css")
+                    .replace("main.js", getStaticServer() + "/main.js")
+                    .replace("toggler.js", getStaticServer() + "/toggler.js");
+
+            return getHtmlWithHeader(htmlString, folder);
         }
-        String[] split = htmlString.split("<body>");
-        htmlString = split[0] +
-                "<body>\n" +
-                "<form action=\"" + server + "/api/logout\" method=\"post\">\n" +
-                "    <input type=\"submit\" value=\"Logout\" />\n" +
-                "</form>" +
-                "<a href=\"" + PropertiesService.getServerName() + folder + ".zip\">\n" +
-                "\t\t<button>Download</button></p>\n" +
-                "\t</a>" +
-                split[1];
-        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html; charset=UTF-8");
-        exchange.getResponseSender().send(htmlString);
     }
 
-    public static void saveIndexHtml(Report tree) throws FileNotFoundException {
+    private static String getHtmlWithHeader(String htmlString, String folder) {
+        folder = folder.charAt(folder.length() - 1) == '/'? folder.substring(0, folder.length() - 1) : folder;
+        Folder byFolder = FOLDER_SERVICE.findByFolder(folder);
+
+        String[] split = htmlString.split("<body>");
+        return split[0] +
+                "<body>\n" +
+                "<div class=\"wrapper\">\n" +
+                "  <div class=\"header\">\n" +
+                "    <div class=\"exit\">\n" +
+                "      <form action=\"" + server + "/api/logout\" method=\"post\">\n" +
+                "        <input type=\"image\" src=\"" + staticServer + "/imageLogout.png\" alt=\"Logout\" />\n" +
+                "      </form>\n" +
+                "      </div>\n" +
+                "      <div class=\"logo\">Download Client</div>\n" +
+                "    </div>\n" +
+                "</div>\n" +
+                "<a href=\"" + server + folder + ".zip\" >\n" +
+                "\t\t<button class=\"btn\"> <h2>Download</h2></button></p>\n" +
+                "\t</a>" +
+                (byFolder != null && byFolder.getMutualFolder() != null?
+                "<a href=\"" + server + byFolder.getMutualFolder() + ".zip\" >\n" +
+                "\t\t<button class=\"btn\"> <h2>Download All</h2></button></p>\n" +
+                "\t</a>"
+                : "") +
+                split[1];
+    }
+
+    public static void saveIndexHtml(
+            Report tree,
+            Map<String, FormType> formTypes,
+            Map<String, AttachmentDocument> attachmentDocumentMap,
+            boolean forArchive
+    ) {
         log.info("start saving html");
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
-        String htmlString = ("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "<style>\n" +
-                "ul, #myUL {\n" +
-                "list-style-type: none;\n" +
-                "}\n" +
-                "#text{\n" +
-                "margin:0 23% 0;\n" +
-                "}\n" +
-                ".highlight {\n" +
-                "background-color: rgba(255, 255, 153, 0.404);\n" +
-                "}\n" +
-                ".selectHighlight {\n" +
-                "background-color:rgba(255, 225, 0, 0.479); \n" +
-                "background-color:rgba(255, 225, 0, 0.479); \n" +
-                "-moz-border-radius: 2px; / FF1+ / \n" +
-                "-webkit-border-radius: 1px; / Saf3-4 / \n" +
-                "border-radius: 1 px; / Opera 10.5, IE 9, Saf5, Chrome / \n" +
-                "-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); / FF3.5+ / \n" +
-                "-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); / Saf3.0+, Chrome / \n" +
-                "box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); / Opera 10.5+, IE 9.0 / \n" +
-                "/ padding:0px 0px; /\n" +
-                "margin:0 0px;\n" +
-                "color:#ff0000;\n" +
-                "}\n" +
-                ".finded{\n" +
-                "color:white;background: #8A8A7B;\n" +
-                "}\n" +
-                "#red{\n" +
-                "color: red\n" +
-                "}\n" +
-                "\n" +
-                "#grey{\n" +
-                "color: grey\n" +
-                "}#gold{\n" +
-                "color: gold\n" +
-                "}#myUL {\n" +
-                "margin: 0;\n" +
-                "padding: 0;\n" +
-                "}\n" +
-                "\n" +
-                ".box, .paperclip {\n" +
-                "cursor: pointer;\n" +
-                "-webkit-user-select: none; / Safari 3.1+ /\n" +
-                "-moz-user-select: none; / Firefox 2+ /\n" +
-                "-ms-user-select: none; / IE 10+ /\n" +
-                "user-select: none;\n" +
-                "}\n" +
-                ".box::before {\n" +
-                "content: \"\\2610\";\n" +
-                "color: black;\n" +
-                "display: inline-block;\n" +
-                "margin-right: 6px;\n" +
-                "}\n" +
-                "\n" +
-                ".check-box::before {\n" +
-                "content: \"\\2611\"; \n" +
-                "color: dodgerblue;\n" +
-                "}\n" +
-                "\n" +
-                ".nested {\n" +
-                "display: none;\n" +
-                "}\n" +
-                "\n" +
-                ".active {\n" +
-                "display: block;\n" +
-                "}\n" +
-                ".highlight {\n" +
-                "background-color: rgba(255, 225, 0, 0.479);\n" +
-                "-moz-border-radius: 1px; / FF1+ /\n" +
-                "-webkit-border-radius: 1px; / Saf3-4 /\n" +
-                "border-radius: 5px; / Opera 10.5, IE 9, Saf5, Chrome /\n" +
-                "-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); / FF3.5+ /\n" +
-                "-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); / Saf3.0+, Chrome /\n" +
-                "box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); / Opera 10.5+, IE 9.0 /\n" +
-                "}\n" +
-                "\n" +
-                ".highlight {\n" +
-                "padding:1px 4px; \n" +
-                "margin:0 0px;\n" +
-                "}\n" +
-                "</style>\n" +
-                "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"jquery.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"highlight.js\"></script>\n" +
-                "<script type=\"text/javascript\" src=\"scrollTo-min.js\" ></script>\n" +
-                "<script>\n" +
-                "\n" +
-                "function Do () {\n" +
-                "var toggler = document.getElementsByClassName(\"box\");\n" +
-                "var i;\n" +
-                "for (i = 0; i < toggler.length; i++) {\n" +
-                "//toggler[i].addEventListener(\"click\", function() {\n" +
-                "toggler[i].parentElement.querySelector(\".nested\").classList.toggle(\"active\");\n" +
-                "toggler[i].classList.toggle(\"check-box\");\n" +
-                "//});\n" +
-                "}\n" +
-                "\n" +
-                "}</script>\n" +
-                "<script type=\"text/javascript\">\n" +
-                "jQuery(document).ready(function(){\n" +
-                "\n" +
-                "var search_number = 0;\n" +
-                "var search_count = 0;\n" +
-                "var count_text = 0;\n" +
-                "var srch_numb = 0;\n" +
-                "\n" +
-                "function scroll_to_word(){\n" +
-                "// $('#text .selectHighlight').click(() => {\n" +
-                "// $('html, body').animate({\n" +
-                "// scrollTop: $('.selectHighlight').offset().top\n" +
-                "// }, 200);\n" +
-                "// });\n" +
-                "var pos = $('#text .selectHighlight').animate();\n" +
-                "jQuery.scrollTo(\".selectHighlight\", 500, {offset:-150});\n" +
-                "}\n" +
-                "\n" +
-                "$('#search_text').bind('keyup oncnange', function() {\n" +
-                "$('#text').removeHighlight();\n" +
-                "txt = $('#search_text').val();\n" +
-                "if (txt == '') return;\n" +
-                "$('#text').highlight(txt);\n" +
-                "search_count = $('#text span.highlight').size() - 1;\n" +
-                "count_text = search_count + 1;\n" +
-                "search_number = 0;\n" +
-                "$('#text').selectHighlight(search_number);\n" +
-                "if ( search_count >= 0 ) scroll_to_word();\n" +
-                "$('#count').html('Total matches: <b>'+count_text+'</b>');\n" +
-                "});\n" +
-                "\n" +
-                "$('#clear_button').click(function() {\n" +
-                "$('#text').removeHighlight();\n" +
-                "$('#search_text').val('Search');\n" +
-                "$('#count').html('');\n" +
-                "jQuery.scrollTo(0, 500, {queue:true});\n" +
-                "});\n" +
-                "\n" +
-                "$('#prev_search').click(function() {\n" +
-                "if (search_number == 0) return;\n" +
-                "$('#text .selectHighlight').removeClass('selectHighlight');\n" +
-                "search_number--;\n" +
-                "srch_numb = search_number + 1;\n" +
-                "$('#text').selectHighlight(search_number);\n" +
-                "if ( search_count >= 0 ) { \n" +
-                "scroll_to_word();\n" +
-                "$('#count').html('Shown: <b>'+srch_numb+'</b> of '+$('#text span.highlight').size());\n" +
-                "}\n" +
-                "});\n" +
-                "\n" +
-                "$('#next_search').click(function() {\n" +
-                "if (search_number == search_count) return;\n" +
-                "$('#text .selectHighlight').removeClass('selectHighlight');\n" +
-                "search_number++;\n" +
-                "srch_numb = search_number + 1;\n" +
-                "$('#text').selectHighlight(search_number);\n" +
-                "if ( search_count >= 0 ) { \n" +
-                "scroll_to_word();\n" +
-                "$('#count').html('Shown: <b>'+srch_numb+'</b> of '+$('#text span.highlight').size());\n" +
-                "}\n" +
-                "});\n" +
-                "\n" +
-                "});\n" +
-                "\n" +
-                "</script>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<div id=\"search_block\" style=\"position: inherit; display: block; top: 7px; background-color: #f0f0f0;\" >\n" +
-                "<input id=\"prev_search\" type=\"button\" value=\"<\" />\n" +
-                "<input id=\"search_text\" type=\"text\" value=\"Search\" onblur=\"if (this.value=='') this.value='Search';\" onfocus=\"if (this.value=='Search') this.value='';\" />\n" +
-                "<input id=\"next_search\" type=\"button\" value=\">\" />\n" +
-                "<input type=\"button\" id=\"butt\" onclick=\"Do();\" value=\"Open\"/>\n" +
-                "<input id=\"clear_button\" type=\"button\" value=\"X\" />\n" +
-                "\n" +
-                "\n" +
-                "<div id=\"count\" style=\"font-size:10pt;\"></div>\n" +
-                "</div>\n" +
-                "<div id='text'>\n") +
-                "<h2>" +
-                tree.getProjectName() +
-                "</h2>" +
-                "<ul id=\"myUL\">" +
-                " <li><span class=\"box\">" +
-                tree.getTask().getName() +
-                "</span>" +
-                getHtmlTree(tree.getTask()) +
-                "</li>" +
-                "</ul>" +
-                "</div><script>\n" +
-                "var toggler = document.getElementsByClassName(\"box\");\n" +
-                "var i;\n" +
-                "for (i = 0; i < toggler.length; i++) {\n" +
-                "  toggler[i].addEventListener(\"click\", function() {\n" +
-                "    this.parentElement.querySelector(\".nested\").classList.toggle(\"active\");\n" +
-                "    this.classList.toggle(\"check-box\");\n" +
-                "  });\n" +
-                "}\n" +
-                "</script>\n" +
-                "</body>\n" +
-                "</html>";
-        saveIndexHtml(htmlString, pathToProject);
+        String treeHtml = getTreePage()
+                .replace(
+                        "projectName",
+                        tree.getProjectName()
+                )
+                .replace(
+                        "<taskTree/>",
+                        getHtmlTree(
+                                tree.getTask(),
+                                formTypes,
+                                attachmentDocumentMap,
+                                forArchive,
+                                (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
+                );
+        saveIndexHtml(treeHtml, pathToProject);
         copyFilesToProjectFolder(pathToProject);
         log.info("finish saving html");
     }
 
-    private static void saveIndexHtml(String indexHtmlBody, String path) throws FileNotFoundException {
+    private static void saveIndexHtml(String indexHtmlBody, String path) {
         try (PrintWriter out = new PrintWriter(path + "/index.html")) {
             out.println(indexHtmlBody);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
-    private static String getHtmlTree(Task mainTask) {
+    private static String getHtmlTree(
+            Task mainTask,
+            Map<String, FormType> formTypes,
+            Map<String, AttachmentDocument> attachmentDocumentMap,
+            boolean forArchive,
+            int startPathWith
+    ) {
+        TaskSorter.byTaskName(mainTask.getTasks());
         String htmlTree = "<ul class=\"nested\">\n";
         for (Task task : mainTask.getTasks()) {
             if (task.getTasks() != null && !task.getTasks().isEmpty()) {
                 htmlTree = htmlTree + "<li>";
                 htmlTree = htmlTree + addImage(task);
                 htmlTree = htmlTree + "<span class=\"box\"";
-                htmlTree = addColorId(htmlTree, task);
-                htmlTree = htmlTree + ">" + task.getName() + "</span>";
+                htmlTree = addNameColor(htmlTree, task);
+                htmlTree = htmlTree + ">" + task.getName() + getDetails(task) + "</span>";
             } else {
                 htmlTree = htmlTree + "<li";
                 if (task.getIcon() == 3) {
-                    htmlTree = htmlTree + "><a href=\"" + task.getPath() + "\" target=\"_blank\">" + task.getName() + "</a></li>\n";
+                    String[] split = task.getPath().split("/");
+                    String classWithId = "";
+                    String path = null;
+                    if (split.length > 1) {
+                        FormType formType;
+                        if (forArchive) {
+                            path = Paths.get("/" + task.getPath()).toString()
+                                    .substring(
+                                            0,
+                                            task
+                                                    .getPath()
+                                                    .length() - split[split.length - 1]
+                                                    .length()
+                                    );
+                        } else {
+                            path = Paths.get(task.getPath()).toString()
+                                    .substring(
+                                            0,
+                                            task
+                                                    .getPath()
+                                                    .length() - 1 - split[split.length - 1]
+                                                    .length()
+                                    ).substring(startPathWith);
+                        }
+                        formType = new FormTypeService()
+                                .getFormType(
+                                        formTypes,
+                                        path
+                                );
+                        if (formType != null) {
+                            classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
+                        } else {
+                            log.warn("Not formType path: " + path);
+                        }
+                    }
+                    AttachmentDocument attachmentDocument = null;
+                    if (path != null) {
+                        attachmentDocument =
+                                new AttachmentDocumentService()
+                                        .getAttachmentDocument(
+                                                attachmentDocumentMap,
+                                                Paths.get(
+                                                        path,
+                                                        task.getName()
+                                                ).toString()
+                                        );
+                    }
+                    if (attachmentDocument == null) {
+                        log.warn("Not found attachment document path: " + Paths.get(
+                                Objects.requireNonNull(path),
+                                task.getName()
+                        ).toString());
+                        htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
+                                + task.getPath()
+                                + "\" target=\"_blank\" type=\"1\" description=\"1\" certificate=\"1\" comment=\"1\" uploadDate=\"1\" fileName=\"1\">"
+                                + task.getName()
+                                + "</a></li>\n";
+                    } else {
+                        htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
+                                + task.getPath()
+                                + "\" target=\"_blank\""
+                                + "\" type=\"" + attachmentDocument.getType()
+                                + "\" description=\"" + attachmentDocument.getDescription()
+                                + "\" certificate=\"" + attachmentDocument.getCertificate()
+                                + "\" comment=\"" + attachmentDocument.getComment()
+                                + "\" uploadDate=\"" + attachmentDocument.getUploadDate()
+                                + "\" fileName=\"" + attachmentDocument.getFileName()
+                                + "\">" + task.getName() + "</a></li>\n";
+                    }
                 } else {
-                    htmlTree = addColorId(htmlTree, task);
+                    htmlTree = addNameColor(htmlTree, task);
                     htmlTree = htmlTree + ">" + addImage(task) + task.getName() + "</li>\n";
                 }
             }
             if (task.getTasks() != null) {
-                htmlTree = htmlTree + getHtmlTree(task);
+                htmlTree = htmlTree + getHtmlTree(task, formTypes, attachmentDocumentMap, forArchive, startPathWith);
             }
 
         }
@@ -320,16 +289,30 @@ public class PageService {
         return htmlTree;
     }
 
-    private static String addColorId(String htmlTree, Task task) {
-        switch (task.getIcon()) {
-            case 1:
-                htmlTree = htmlTree + " id= \"grey\"";
-                break;
-            case 2:
-                htmlTree = htmlTree + " id= \"red\"";
-                break;
+    private static String addNameColor(String htmlTree, Task task) {
+        String color = "black";
+        if (task.getColor() == null) {
+            switch (task.getIcon()) {
+                case 1:
+                    color = "grey";
+                    break;
+                case 2:
+                    color = "red";
+            }
+        } else {
+            color = task.getColor();
         }
-        return htmlTree;
+        return htmlTree + " style=\"color: " + color + "\"";
+    }
+
+    private static String getDetails(Task task) {
+        StringBuilder htmlDetails = new StringBuilder();
+        if (task.getDetail() != null && !task.getDetail().isEmpty()) {
+            for (Map.Entry<String, String> entry : task.getDetail().entrySet()) {
+                htmlDetails.append("<span lass=\"box\" style=\"color: ").append(entry.getValue()).append("\">").append(entry.getKey()).append("</span>");
+            }
+        }
+        return htmlDetails.toString();
     }
 
     private static String addImage(Task task) {
@@ -345,21 +328,17 @@ public class PageService {
     private static void copyFilesToProjectFolder(String path) {
         copyFileToProjectFolder("file/g.png", path + "/g.png");
         copyFileToProjectFolder("file/r.png", path + "/r.png");
-        copyFileToProjectFolder("file/highlight.js", path + "/highlight.js");
-        copyFileToProjectFolder("file/jquery.js", path + "/jquery.js");
-        copyFileToProjectFolder("file/scrollTo-min.js", path + "/scrollTo-min.js");
+        copyFileToProjectFolder("file/background.jpg", path + "/background.jpg");
+        copyFileToProjectFolder("front/css/tree.css", path + "/tree.css");
+        copyFileToProjectFolder("front/js/main.js", path + "/main.js");
+        copyFileToProjectFolder("front/js/toggler.js", path + "/toggler.js");
     }
 
     private static void copyFileToProjectFolder(String pathFrom, String pathTo) {
-        try (BufferedInputStream gOriginal = new BufferedInputStream(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream(pathFrom)));
-             BufferedOutputStream gCopy = new BufferedOutputStream(new FileOutputStream(new File(pathTo)))
-        ) {
-            int b = 0;
-            while (b != -1) {
-                b = gOriginal.read();
-                gCopy.write(b);
-            }
+        try {
+            Files.copy(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream(pathFrom)), Paths.get(pathTo), REPLACE_EXISTING);
         } catch (IOException e) {
+            log.warn(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -367,5 +346,40 @@ public class PageService {
     private static String getFolderName(String path) {
         String[] split = path.split("/");
         return split[split.length - 1];
+    }
+
+    private static String getLoginRedirectPage() {
+        return convertHtmlToString("front/html/loginRedirectPage.html");
+    }
+
+    private static String getTreePage() {
+        return convertHtmlToString("front/html/tree.html");
+    }
+
+    private static String getRootPage() {
+        return convertHtmlToString("front/html/root.html");
+    }
+
+    private static String convertHtmlToString(String file) {
+        InputStream resourceAsStream = PageService.class.getClassLoader().getResourceAsStream(file);
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            Objects.requireNonNull(resourceAsStream),
+                            StandardCharsets.UTF_8
+                    )
+            );
+            String str;
+            while ((str = in.readLine()) != null) {
+                if (str.contains(STATIC_IP_FLAG))
+                    str = str.replaceAll(STATIC_IP_FLAG, getStaticServer());
+                contentBuilder.append(str);
+            }
+            in.close();
+        } catch (IOException e) {
+            return null;
+        }
+        return contentBuilder.toString();
     }
 }

@@ -14,4 +14,6 @@ public interface Repositories {
     AbstractRepository<Token> TOKEN_REPOSITORY = new TokenRepository();
 
     AbstractRepository<Folder> FOLDER_REPOSITORY = new FolderRepository();
+
+    FolderRepository DIRECT_FOLDER_REPOSITORY = new FolderRepository();
 }
