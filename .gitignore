@@ -7,3 +7,5 @@ dependency-reduced-pom.xml
 /docFileOut/
 /reportOut/
 /pdfTemplates/
+.idea
+file_server.iml
