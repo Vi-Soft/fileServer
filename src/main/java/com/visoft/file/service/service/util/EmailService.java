@@ -25,8 +25,8 @@ public class EmailService {
                 + getServerName()
                 + (password != null
                         ? (version == Version.HE
-                            ? "\nאנא השתמש בכניסה הבאה: login =" + email + " password=" + password
-                            : "\nPlease use next credentials: login=" + email + " Password=" + password)
+                            ? "\nאנא השתמש בכניסה הבאה: login " + email + " password " + password
+                            : "\nPlease use next credentials: login " + email + " Password " + password)
                         : ""
                 )
                 , email
