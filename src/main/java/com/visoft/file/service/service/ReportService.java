@@ -1,5 +1,7 @@
 package com.visoft.file.service.service;
 
+import com.mongodb.ErrorCategory;
+import com.mongodb.MongoWriteException;
 import com.networknt.config.Config;
 import com.visoft.file.service.Version;
 import com.visoft.file.service.dto.*;
@@ -296,7 +298,7 @@ public class ReportService {
 
                 if (reportDto.getTimestamp() != 0) {
                     if (exportPool.size() >= 3)
-                        sendError(reportDto.getArchiveName() + "\nMax downloads already running, please wait", reportDto.getEmail());
+                        sendError(reportDto.getArchiveName() + "\n\nPlease wait \nMax downloads already running", reportDto.getEmail());
 
                     if (exportPool.entrySet()
                             .stream()
@@ -304,7 +306,7 @@ public class ReportService {
                                     entry.getKey() != reportDto.getTimestamp()
                                             && entry.getValue().getProjectName().equals(reportDto.getProjectName())
                             ))
-                        sendError(reportDto.getArchiveName() + "\nMax downloads per project already running, please wait", reportDto.getEmail());
+                        sendError(reportDto.getArchiveName() + "\n\nPlease wait \nMax downloads per project already running", reportDto.getEmail());
                 }
 
                 if (validateToken(reportDto.getCustomToken())) {
@@ -345,7 +347,7 @@ public class ReportService {
                                     buildTree(reportDto);
 
                                     Folder folder = new Folder(
-                                            "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName(),
+                                            getFolderName(reportDto),
                                             reportDto.getCount() > 1 && exportPool.containsKey(reportDto.getTimestamp())
                                                     ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
                                             reportDto.getProjectName(),
@@ -413,6 +415,14 @@ public class ReportService {
                                             randomPassword
                                     );
                                     log.info("send email success ");
+                                } catch (MongoWriteException e) {
+                                    if (e.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
+                                        String description = "Folder '" + getFolderName(reportDto) + "' already exists";
+                                        log.error(description);
+                                        sendError(reportDto.getArchiveName() + "\n\n" + description + "\n\nPlease try again later", reportDto.getEmail());
+                                        removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName()).toString());
+                                        removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     log.error(e.getMessage());
@@ -442,6 +452,10 @@ public class ReportService {
             SenderService.send(exchange, BAD_REQUEST);
         }
 
+    }
+
+    private String getFolderName(ReportDto reportDto) {
+        return "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName();
     }
 
     private void buildTree(ReportDto reportDto) {
