@@ -297,16 +297,25 @@ public class ReportService {
             if (reportDto.getArchiveName() != null) {
 
                 if (reportDto.getTimestamp() != 0) {
-                    if (exportPool.size() >= 3)
+                    if (exportPool.size() >= 3) {
                         sendError(reportDto.getArchiveName() + "\n\nPlease wait \nMax downloads already running", reportDto.getEmail());
+                        log.warn(RETURN + BAD_REQUEST);
+                        SenderService.send(exchange, BAD_REQUEST);
+                        return;
+                    }
 
                     if (exportPool.entrySet()
-                            .stream()
-                            .anyMatch(entry ->
-                                    entry.getKey() != reportDto.getTimestamp()
-                                            && entry.getValue().getProjectName().equals(reportDto.getProjectName())
-                            ))
+                        .stream()
+                        .anyMatch(entry ->
+                                entry.getKey() != reportDto.getTimestamp()
+                                        && entry.getValue().getProjectName().equals(reportDto.getProjectName())
+                        )
+                    ) {
                         sendError(reportDto.getArchiveName() + "\n\nPlease wait \nMax downloads per project already running", reportDto.getEmail());
+                        log.warn(RETURN + BAD_REQUEST);
+                        SenderService.send(exchange, BAD_REQUEST);
+                        return;
+                    }
                 }
 
                 if (validateToken(reportDto.getCustomToken())) {
@@ -432,6 +441,7 @@ public class ReportService {
                                     removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
                                 } finally {
                                     removeFile(reportDto.getArchiveName() + getReportExtension());
+                                    exportPool.remove(reportDto.getTimestamp());
                                 }
                             }).start();
                             SenderService.send(exchange, OK);
