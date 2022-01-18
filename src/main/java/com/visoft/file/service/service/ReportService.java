@@ -28,6 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
@@ -292,6 +295,7 @@ public class ReportService {
     public void unzip(HttpServerExchange exchange) throws IOException {
         log.info("unzip");
         ReportDto reportDto = getRequestBody(exchange);
+        log.info("reportDto: " + reportDto);
 
         if (reportDto != null) {
             if (reportDto.getArchiveName() != null) {
@@ -468,6 +472,11 @@ public class ReportService {
         return "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName();
     }
 
+    private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
+
     private void buildTree(ReportDto reportDto) {
         log.info("start tree web");
 
@@ -477,9 +486,21 @@ public class ReportService {
                 reportDto.getArchiveName()
         ).toString();
 
-        Map<String, FormType> formTypeMap = reportDto.getFormTypes().parallelStream().collect(Collectors.toMap(FormType::getPath, a -> a));
-        Map<String, AttachmentDocument> attachmentDocumentMap = reportDto.getAttachmentDocuments().parallelStream().collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
-        Map<String, CommonLogBook> commonLogBookMap = reportDto.getCommonLogBooks().parallelStream().collect(Collectors.toMap(CommonLogBook::getFullPath, a -> a));
+        Map<String, FormType> formTypeMap =
+                reportDto.getFormTypes()
+                        .parallelStream()
+                        .filter(distinctByKey(FormType::getPath))
+                        .collect(Collectors.toMap(FormType::getPath, a -> a));
+        Map<String, AttachmentDocument> attachmentDocumentMap =
+                reportDto.getAttachmentDocuments()
+                        .parallelStream()
+                        .filter(distinctByKey(AttachmentDocument::getPath))
+                        .collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
+        Map<String, CommonLogBook> commonLogBookMap =
+                reportDto.getCommonLogBooks()
+                        .parallelStream()
+                        .filter(distinctByKey(CommonLogBook::getFullPath))
+                        .collect(Collectors.toMap(CommonLogBook::getFullPath, a -> a));
         Report fullTree = getFullTree(reportDto);
         getRealTask(
                 fullTree.getTask(),
