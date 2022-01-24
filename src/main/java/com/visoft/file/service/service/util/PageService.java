@@ -101,7 +101,7 @@ public class PageService {
     }
 
     private static String getHtmlWithProperties(String folder) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(rootPath + folder + "/index.html"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(rootPath + folder + "/RUN_ME.html"))) {
 
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -180,7 +180,7 @@ public class PageService {
     }
 
     private static void saveIndexHtml(String indexHtmlBody, String path) {
-        try (PrintWriter out = new PrintWriter(path + "/index.html")) {
+        try (PrintWriter out = new PrintWriter(path + "/RUN_ME.html")) {
             out.println(indexHtmlBody);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
