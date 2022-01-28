@@ -18,18 +18,23 @@ public class EmailService {
 
     public static void sendSuccess(String reportName, String email, Version version, String password) {
         send(
-                getEmailSuccessMessage()
-                + ": "
-                + reportName
-                + (version == Version.HE? "\nאתה יכול לראות את ההורדה שלך כאן: " : "\nYou can see your download here: ")
-                + getServerName()
-                + (password != null
-                        ? (version == Version.HE
-                            ? "\nאנא השתמש בכניסה הבאה: login " + email + " password " + password
-                            : "\nPlease use next credentials: login " + email + " Password " + password)
-                        : ""
-                )
-                , email
+            (version == Version.HE? "שלום רב," : "Greetings,") + "\n"
+                + (version == Version.HE? "בוצעה הורדת מסמכי הפרויקט לפי הבקשה." : "Project documents were downloaded as requested.") + "\n"
+                + (version == Version.HE? "שם התיקיה: " : "Folder name: ") + reportName + "\n\n"
+                + (version == Version.HE? "קישור למערכת ההורדה:" : "Link to the download system:") + "\n\n"
+                + getServerName() + "\n\n"
+                + (version == Version.HE? "שם משתמש " : "Username ") + email + "\n"
+                + (version == Version.HE? "סיסמא " : "Password  ") + password + "\n\n"
+                + (version == Version.HE? "הצעדים הדרושים:" : "Necessary steps:") + "\n\n"
+                + (version == Version.HE? "1. במסך יופיעו כל הפרויקטים הניתנים להורדה. בוחרים פרויקט מסוים." : "1. All downloadable projects will appear on the screen. Choose a specific project.") + "\n"
+                + (version == Version.HE? "2. לוחצים על כפתור ההורדה" : "2. Press the download button.") + "\n"
+                + (version == Version.HE? "3. התיקייה שיורדת היא בפורמט ZIP." : "3. The downloaded folder is in ZIP format.") + "\n"
+                + (version == Version.HE? "4. יש לחלץ את הקבצים לתיקיה רגילה." : "4. Extract the files to a standard folder.") + "\n"
+                + (version == Version.HE? "5. בתיקייה הרגילה שנוצרה יש ללחוץ על קובץ RUN_ME." : "5. In the standard created folder, click on the RUN_ME file.") + "\n"
+                + (version == Version.HE? "6. הקובץ נפתח בדפדפן ובתפריט שנפתח אפשר למצוא את הקבצים הדרושים לפי מיקומם בעץ הפרויקט." : "6. The file is opened in the browser and you can find the necessary files in the menu according to their location in the project tree.") + "\n\n"
+                + (version == Version.HE? "בברכה," : "Best regards,") + "\n"
+                + (version == Version.HE? "צוות וי-סופט." : "Vi-Soft team.") + "\n"
+            , email
         );
     }
 
