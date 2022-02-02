@@ -16,8 +16,8 @@ pipeline {
                 sh """
                  ssh -p 57122 ${USER_AT_HOST} rm -rf /home/visrvadmin/vi-soft/fileServer/jar-dir
                  ssh -p 57122 ${USER_AT_HOST} mkdir /home/visrvadmin/vi-soft/fileServer/jar-dir
-                 scp -P 57122 ~/workspace/Vi-Soft-NG/target/*.jar ${USER_AT_HOST}:~/vi-soft/fileServer/jar-dir/.
-                 scp -P 57122 ~/workspace/Vi-Soft-NG/ci/* ${USER_AT_HOST}:~/vi-soft/fileServer/.
+                 scp -P 57122 ~/workspace/fileServer/target/*.jar ${USER_AT_HOST}:~/vi-soft/fileServer/jar-dir/.
+                 scp -P 57122 ~/workspace/fileServer/ci/* ${USER_AT_HOST}:~/vi-soft/fileServer/.
                  ssh -p 57122 ${USER_AT_HOST} chmod 700 /home/visrvadmin/vi-soft/fileServer/ci/${DEPLOY_FILE}
                  ssh -p 57122 ${USER_AT_HOST} /home/visrvadmin/vi-soft/fileServer/ci/${DEPLOY_FILE}
                 """
