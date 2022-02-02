@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'export PATH=/home/visrvadmin/jdk/openlogic-openjdk-8u292-b10-linux-x64/bin:${PATH}; mvn -B clean package -DskipTests'
+               
+            }
+   
+        }   
+        stage('Deliver') { 
+            steps {
+                sh """
+                 ssh -p 57122 ${USER_AT_HOST} rm -rf /home/visrvadmin/vi-soft/fileServer/jar-dir
+                 ssh -p 57122 ${USER_AT_HOST} mkdir /home/visrvadmin/vi-soft/fileServer/jar-dir
+                 scp -P 57122 ~/workspace/Vi-Soft-NG/target/*.jar ${USER_AT_HOST}:~/vi-soft/fileServer/jar-dir/.
+                 scp -P 57122 ~/workspace/Vi-Soft-NG/ci/* ${USER_AT_HOST}:~/vi-soft/fileServer/.
+                 ssh -p 57122 ${USER_AT_HOST} chmod 700 /home/visrvadmin/vi-soft/fileServer/ci/${DEPLOY_FILE}
+                 ssh -p 57122 ${USER_AT_HOST} /home/visrvadmin/vi-soft/fileServer/ci/${DEPLOY_FILE}
+                """
+            }
+        }
+    }
+}
