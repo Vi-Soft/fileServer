@@ -7,12 +7,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'export PATH=/home/visrvadmin/jdk/openlogic-openjdk-8u292-b10-linux-x64/bin:${PATH}; mvn -B clean package -DskipTests'
-                    if (env.USER_AT_HOST == 'visrvadmin@10.10.10.70') {
+                if (env.USER_AT_HOST == 'visrvadmin@10.10.10.70') {
                         sh """         
                             rm ./src/main/resources/application.properties
                             mv ./src/main/resources/application-test.properties  ./src/main/resources/application.properties
                         """
-                    }                
+                }                
                
             }
    
