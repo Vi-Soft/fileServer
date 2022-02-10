@@ -209,7 +209,7 @@ public class PageService {
                     String[] split = task.getPath().split("/");
                     String classWithId = "";
                     String path = null;
-                    if (split.length > 1) {
+                    if (split.length > 0) {
                         FormType formType;
                         if (forArchive) {
                             path = Paths.get("/" + task.getPath()).toString()
@@ -255,7 +255,7 @@ public class PageService {
                     }
                     if (attachmentDocument == null) {
                         log.warn("Not found attachment document path: " + Paths.get(
-                                path != null ? path : "",
+                                Objects.requireNonNull(path),
                                 task.getName()
                         ));
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
