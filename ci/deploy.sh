@@ -10,4 +10,4 @@ if [[ "" !=  "$PID" ]]; then
   kill -9 $PID
 fi
 cp jar-dir/*.jar jar-dir/file-server.jar
-java -Dcheck-db-services.run-all=false -DuseDbFile=false -Dmail-environment.prod-mode=true -jar jar-dir/file-server.jar
+java -jar jar-dir/file-server.jar
