@@ -21,7 +21,7 @@ public enum Type {
     LAB_ORDER("Lab_Order"),
     SURVEYING_ORDER("Surveying_Order"),
     CAR_PAR_OBS("CAR_PAR_OBS"),
-    HWS_CERTIFICATE("HWS_CERTIFICATE"),
+    CM_TASK_EXECUTION_APPROVAL("CM_TASK_EXECUTION_APPROVAL"),
     CM_ATTACHMENT("CM_ATTACHMENT");
 
     private final String value;
