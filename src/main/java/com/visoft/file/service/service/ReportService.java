@@ -9,7 +9,6 @@ import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.Role;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
-import com.visoft.file.service.service.util.SenderService;
 import io.undertow.server.HttpServerExchange;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
@@ -35,12 +34,14 @@ import java.util.stream.Collectors;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
+import static com.visoft.file.service.service.util.SenderService.*;
 import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 
 @Log4j
@@ -52,7 +53,7 @@ public class ReportService {
 
     @Synchronized
     private static ReportDto getRequestBody(HttpServerExchange exchange) {
-        log.info("getRequestBody");
+        log.info(GET_REQUEST_BODY);
         ReportDto reportDto;
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
@@ -71,24 +72,24 @@ public class ReportService {
                 return null;
             }
         }
-        log.info(RETURN + reportDto);
+        log.info(RETURN + ": " + reportDto);
         return reportDto;
     }
 
     private static String validateReportDto(ReportDto dto) {
         String validateProjectNameResult = validateProjectName(dto);
         if (validateProjectNameResult != null) {
-            log.warn(RETURN + validateProjectNameResult);
+            sendWarn(RETURN, validateProjectNameResult);
             return validateProjectNameResult;
         }
         String validateCompanyNameResult = validateCompanyName(dto);
         if (validateCompanyNameResult != null) {
-            log.warn(RETURN + validateCompanyNameResult);
+            sendWarn(RETURN, validateCompanyNameResult);
             return validateCompanyNameResult;
         }
         String validateArchiveNameResult = validateArchiveName(dto);
         if (validateArchiveNameResult != null) {
-            log.warn(RETURN + validateArchiveNameResult);
+            sendWarn(RETURN, validateArchiveNameResult);
             return validateArchiveNameResult;
         }
         int parentIdNullCount = 0;
@@ -100,23 +101,23 @@ public class ReportService {
             Long orderInGroup = task.getOrderInGroup();
             Integer icon = task.getIcon();
             if (name == null || name.isEmpty()) {
-                log.warn(TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                sendWarn(TASK_NAME_NOT_CORRECT, "id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return TASK_NAME_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             if (id == null || id.isEmpty()) {
-                log.warn(TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                sendWarn(TASK_ID_NOT_CORRECT, "id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             ids.add(id);
             if (parentId == null || parentId.isEmpty()) {
-                log.warn(PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                sendWarn(PARENT_TASK_ID_NOT_CORRECT, "id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return PARENT_TASK_ID_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             if (task.getParentId().equals("-1")) {
                 parentIdNullCount++;
             }
             if (orderInGroup == null) {
-                log.warn(ORDER_IN_GROUP_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
+                sendWarn(ORDER_IN_GROUP_NOT_CORRECT, "id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId);
                 return ORDER_IN_GROUP_NOT_CORRECT + " id:" + id + "name:" + name + " order:" + orderInGroup + " parentId:" + parentId;
             }
             if (icon == null || icon < 0 || icon > 2) {
@@ -132,35 +133,35 @@ public class ReportService {
             log.warn(MORE_ONE_EQUALS_TASK_ID);
             return MORE_ONE_EQUALS_TASK_ID;
         }
-        log.info(RETURN + SUCCESS);
+        sendInfo(REPORT_DTO_VALIDATION_SUCCESS, dto.getArchiveName());
         return null;
     }
 
 
     private static String validateProjectName(ReportDto dto) {
         if (validateName(dto.getProjectName())) {
-            log.warn(RETURN + PROJECT_NAME_NOT_CORRECT);
+            sendWarn(RETURN, PROJECT_NAME_NOT_CORRECT);
             return PROJECT_NAME_NOT_CORRECT;
         }
-        log.info(RETURN + SUCCESS);
+        sendInfo(PROJECT_NAME_VALIDATE_SUCCESS, dto.getProjectName());
         return null;
     }
 
     private static String validateCompanyName(ReportDto dto) {
         if (validateName(dto.getCompanyName())) {
-            log.warn(RETURN + COMPANY_NAME_NOT_CORRECT);
+            sendWarn(RETURN, COMPANY_NAME_NOT_CORRECT);
             return COMPANY_NAME_NOT_CORRECT;
         }
-        log.info(RETURN + SUCCESS);
+        sendInfo(COMPANY_NAME_VALIDATE_SUCCESS, dto.getCompanyName());
         return null;
     }
 
     private static String validateArchiveName(ReportDto dto) {
         if (validateName(dto.getArchiveName())) {
-            log.warn(RETURN + ARCHIVE_NAME_NOT_CORRECT);
+            sendWarn(RETURN, ARCHIVE_NAME_NOT_CORRECT);
             return ARCHIVE_NAME_NOT_CORRECT;
         }
-        log.info(RETURN + SUCCESS);
+        sendInfo(ARCHIVE_NAME_VALIDATE_SUCCESS, dto.getArchiveName());
         return null;
     }
 
@@ -257,6 +258,7 @@ public class ReportService {
                     .collect(Collectors.toList());
             for (Path path : subfolder) {
                 if (path.getFileName().toString().equals(archiveName)) {
+                    sendInfo(ALREADY_UNZIP, archiveName);
                     return ALREADY_UNZIP;
                 }
             }
@@ -279,13 +281,13 @@ public class ReportService {
 
     private static void downloadZip(ReportDto reportDto) throws IOException {
         String fileName = reportDto.getArchiveName();
-        log.info("start download: " + fileName);
-        System.out.println("start down " + fileName);
+        sendInfo(START_DOWNLOAD, fileName);
+        sendInfo(START_DOWN,  fileName);
         URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName + "&customToken=" + getToken());
         ReadableByteChannel rbc = Channels.newChannel(website.openStream());
         FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        log.info("finish download: " + fileName);
+        sendInfo(FINISH_DOWNLOAD, fileName);
     }
 
     private static boolean existsFolder(String path) {
@@ -293,9 +295,9 @@ public class ReportService {
     }
 
     public void unzip(HttpServerExchange exchange) throws IOException {
-        log.info("unzip");
+        log.info(START_UNZIP);
         ReportDto reportDto = getRequestBody(exchange);
-        log.info("reportDto: " + reportDto);
+        log.info(REPORT_DTO + reportDto);
 
         if (reportDto != null) {
             if (reportDto.getArchiveName() != null) {
@@ -303,21 +305,21 @@ public class ReportService {
                 if (reportDto.getTimestamp() != 0) {
                     if (exportPool.size() >= 3) {
                         sendError(reportDto.getArchiveName() + "\n\nPlease wait \nMax downloads already running", reportDto.getEmail());
-                        log.warn(RETURN + BAD_REQUEST);
-                        SenderService.send(exchange, BAD_REQUEST);
+                        sendWarn(RETURN, MAX_DOWNLOADS_PER_PROJECT);
+                        send(exchange, BAD_REQUEST);
                         return;
                     }
 
                     if (exportPool.entrySet()
-                        .stream()
-                        .anyMatch(entry ->
-                                entry.getKey() != reportDto.getTimestamp()
-                                        && entry.getValue().getProjectName().equals(reportDto.getProjectName())
-                        )
+                            .stream()
+                            .anyMatch(entry ->
+                                    entry.getKey() != reportDto.getTimestamp()
+                                            && entry.getValue().getProjectName().equals(reportDto.getProjectName())
+                            )
                     ) {
                         sendError(reportDto.getArchiveName() + "\n\nPlease wait \nMax downloads per project already running", reportDto.getEmail());
-                        log.warn(RETURN + BAD_REQUEST);
-                        SenderService.send(exchange, BAD_REQUEST);
+                        sendWarn(RETURN, MAX_DOWNLOADS_PER_PROJECT);
+                        send(exchange, BAD_REQUEST);
                         return;
                     }
                 }
@@ -325,23 +327,22 @@ public class ReportService {
                 if (validateToken(reportDto.getCustomToken())) {
                     String validateReportDtoResult = validateReportDto(reportDto);
                     if (validateReportDtoResult != null) {
-                        SenderService.send(exchange, BAD_REQUEST);
-                        log.warn("not correct report dto: " + validateReportDtoResult);
+                        send(exchange, BAD_REQUEST);
+                        sendWarn(NOT_CORRECT_REPORT_DTO, validateReportDtoResult);
                     } else {
                         sortByParentIdAndOrderInGroup(reportDto);
-                        log.info("sort report dto");
+                        sendInfo(SORT_REPORT_DTO, reportDto.getArchiveName());
                         String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
-                        log.info("validate zip");
+                        sendInfo(VALIDATE_ZIP, reportDto.getArchiveName());
                         if (validateZipResult != null) {
-                            SenderService.send(exchange, BAD_REQUEST);
-                            SenderService.send(exchange, validateZipResult);
-                            log.warn("not correct zip: " + validateZipResult);
+                            send(exchange, BAD_REQUEST);
+                            send(exchange, validateZipResult);
+                            sendWarn(NOT_CORRECT_ZIP, validateZipResult);
                         } else {
                             new Thread(() -> {
                                 try {
                                     downloadZip(reportDto);
-
-                                    log.info("start unzip: " + reportDto.getArchiveName());
+                                    sendInfo(START_UNZIP, reportDto.getArchiveName());
                                     String path = rootPath + "/" + reportDto.getArchiveName() + getReportExtension();
                                     String archivePath = Paths.get(
                                             rootPath,
@@ -351,7 +352,7 @@ public class ReportService {
 
                                     zipUnpack(path, archivePath);
 
-                                    log.info("finish unzip: " + reportDto.getArchiveName());
+                                    sendInfo(FINISH_UNZIP, reportDto.getArchiveName());
 
                                     addToMutualArchive(reportDto, path, reportDto.getArchiveName());
 
@@ -369,7 +370,7 @@ public class ReportService {
                                     );
 
                                     FOLDER_SERVICE.create(folder);
-                                    log.info("created folder db");
+                                    sendInfo(FOLDER_CREATED, folder.getFolder());
 
                                     String randomPassword = null;
 
@@ -384,7 +385,8 @@ public class ReportService {
                                                     Role.USER,
                                                     Collections.singletonList(folder.getId())
                                             );
-                                            log.info("creating new user. user:" + user + " password: " + randomPassword);
+                                            sendInfo(CREATING_NEW_USER + user,
+                                                    USER_PASSWORD + randomPassword);
 
                                             USER_SERVICE.create(user);
                                             Token createdUserToken = new Token(
@@ -392,11 +394,11 @@ public class ReportService {
                                                     user.getId()
                                             );
 
-                                            log.info("create token");
+                                            log.info(CREATE_TOKEN);
                                             TOKEN_SERVICE.create(createdUserToken);
-                                            log.info("token created " + createdUserToken);
+                                            sendInfo(TOKEN_CREATED, createdUserToken.toString());
                                         } else {
-                                            log.info("change password to " + randomPassword);
+                                            sendInfo(PASSWORD_CHANGED, randomPassword);
                                             user.getFolders().add(folder.getId());
                                             user.setPassword(getEncode(randomPassword));
                                             USER_SERVICE.update(user, user.getId());
@@ -413,9 +415,9 @@ public class ReportService {
                                             }
                                         }
 
-                                        log.info("calculated user");
+                                        sendInfo(CALCULATED_USER, user.getId().toString());
                                     } else {
-                                        log.info("reportDto.getPassword: " + reportDto.getPassword());
+                                        sendInfo(REPORT_DTO_PASSWORD, reportDto.getPassword());
                                     }
 
                                     if (isDownloadDone(reportDto.getTimestamp()))
@@ -427,7 +429,7 @@ public class ReportService {
                                             reportDto.getVersion(),
                                             randomPassword
                                     );
-                                    log.info("send email success ");
+                                    sendInfo(EMAIL_SEND, reportDto.getEmail());
                                 } catch (MongoWriteException e) {
                                     if (e.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
                                         String description = "Folder '" + getFolderName(reportDto) + "' already exists";
@@ -440,7 +442,7 @@ public class ReportService {
                                     e.printStackTrace();
                                     log.error(e.getMessage());
                                     sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
-                                    log.error("send error email");
+                                    log.error(SEND_ERROR_EMAIL);
                                     removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName()).toString());
                                     removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
                                 } finally {
@@ -448,24 +450,23 @@ public class ReportService {
                                     exportPool.remove(reportDto.getTimestamp());
                                 }
                             }).start();
-                            SenderService.send(exchange, OK);
-                            log.info("send OK");
+                            send(exchange, OK);
+                            sendInfo(UNZIP_SUCCESS, reportDto.getArchiveName());
                         }
                     }
                 } else {
-                    log.warn(RETURN + FORBIDDEN);
-                    SenderService.send(exchange, FORBIDDEN);
+                    sendWarn(RETURN, FORBIDDEN);
+                    send(exchange, INVALID_TOKEN, FORBIDDEN);
                 }
             } else {
-                log.warn(RETURN + BAD_REQUEST);
+                sendWarn(RETURN, BAD_REQUEST);
                 sendError(reportDto.getArchiveName() + "\n" + reportDto.getErrorMassage(), reportDto.getEmail());
-                SenderService.send(exchange, BAD_REQUEST);
+                send(exchange, ARCHIVE_NAME_IS_EMPTY, BAD_REQUEST);
             }
         } else {
-            log.warn(RETURN + BAD_REQUEST);
-            SenderService.send(exchange, BAD_REQUEST);
+            sendWarn(RETURN, BAD_REQUEST);
+            send(exchange, REPORT_DTO_IS_EMPTY, BAD_REQUEST);
         }
-
     }
 
     private String getFolderName(ReportDto reportDto) {
@@ -478,7 +479,7 @@ public class ReportService {
     }
 
     private void buildTree(ReportDto reportDto) {
-        log.info("start tree web");
+        log.info(START_WEB_TREE);
 
         String archivePath = Paths.get(
                 rootPath,
@@ -515,16 +516,16 @@ public class ReportService {
                 attachmentDocumentMap,
                 true
         );
-        log.info("finish tree web");
+        log.info(FINISH_WEB_TREE);
 
-        log.info("start zip: " + reportDto.getArchiveName());
+        sendInfo(START_ZIP, reportDto.getArchiveName());
         zipPack(archivePath, Paths.get(
                 rootPath,
                 reportDto.getCompanyName(),
                 reportDto.getArchiveName() + ".zip").toString());
-        log.info("finish zip: " + reportDto.getArchiveName());
+        sendInfo(FINISH_ZIP, reportDto.getArchiveName());
 
-        log.info("start tree zip");
+        log.info(START_ZIP_TREE);
         setPathFullPath(
                 fullTree.getTask(),
                 reportDto.getCompanyName() + "/" + reportDto.getArchiveName()
@@ -536,25 +537,27 @@ public class ReportService {
                 attachmentDocumentMap,
                 false
         );
-        log.info("finish tree zip");
+        log.info(FINISH_ZIP_TREE);
     }
 
     @Synchronized
     private void addToMutualArchive(ReportDto reportDto, String path, String archiveName) {
         if (reportDto.getCount() > 1) {
-            log.info("start unzip to mutual folder");
             String fullMutualPath = Paths.get(
                     rootPath,
                     reportDto.getCompanyName(),
                     String.valueOf(reportDto.getTimestamp())
             ).toString();
 
+            sendInfo(START_UNZIP_FOLDER, fullMutualPath);
+
             zipUnpack(
                     path,
                     Paths.get(fullMutualPath,
                             archiveName).toString()
             );
-            log.info("finish unzip to mutual folder");
+            sendInfo(FINISH_UNZIP_FOLDER, fullMutualPath);
+
             if (!exportPool.containsKey(reportDto.getTimestamp())) {
                 exportPool.put(reportDto.getTimestamp(), MultiExport.builder()
                         .size(reportDto.getCount())
@@ -574,12 +577,12 @@ public class ReportService {
                 multiExport.setCount(multiExport.getCount() + 1);
 
                 if (isDownloadDone(reportDto.getTimestamp())) {
-                    log.info("start zip mutual folder");
+                    sendInfo(START_ZIP_FOLDER, fullMutualPath);
                     zipPack(
                             fullMutualPath,
                             fullMutualPath + ".zip"
                     );
-                    log.info("finish zip mutual folder");
+                    sendInfo(FINISH_ZIP_FOLDER, fullMutualPath);
                 }
 
             }
@@ -625,14 +628,13 @@ public class ReportService {
 
     private void removeFile(String path) {
         deleteQuietly(new File(Paths.get(rootPath, path).toString()));
-        log.info("delete " + path);
-
+        sendInfo(DELETE, path);
     }
 
     private boolean validateToken(String token) {
-        log.info("validateToken");
+        log.info(VALIDATE_TOKEN);
         boolean result = token != null && !token.isEmpty() && token.equals(getToken());
-        log.info(RETURN + result);
+        sendInfo(RETURN, Boolean.toString(result));
         return result;
     }
 

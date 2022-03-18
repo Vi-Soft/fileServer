@@ -18,7 +18,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
+import static com.visoft.file.service.service.util.SenderService.sendWarn;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Log4j
@@ -158,7 +161,7 @@ public class PageService {
             Map<String, AttachmentDocument> attachmentDocumentMap,
             boolean forArchive
     ) {
-        log.info("start saving html");
+        log.info(START_SAVE_HTML);
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String treeHtml = getTreePage()
                 .replace(
@@ -176,7 +179,7 @@ public class PageService {
                 );
         saveIndexHtml(treeHtml, pathToProject);
         copyFilesToProjectFolder(pathToProject);
-        log.info("finish saving html");
+        log.info(FINISH_SAVE_HTML);
     }
 
     private static void saveIndexHtml(String indexHtmlBody, String path) {
@@ -238,7 +241,7 @@ public class PageService {
                         if (formType != null) {
                             classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
                         } else {
-                            log.warn("Not formType path: " + path);
+                            sendWarn(NOT_FORM_TYPE_PATH , path);
                         }
                     }
                     AttachmentDocument attachmentDocument = null;
@@ -254,10 +257,10 @@ public class PageService {
                                         );
                     }
                     if (attachmentDocument == null) {
-                        log.warn("Not found attachment document path: " + Paths.get(
+                        sendWarn(ATTACHMENT_DOCUMENT_PATH_NOT_FOUND, Paths.get(
                                 Objects.requireNonNull(path),
                                 task.getName()
-                        ));
+                        ).toString());
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
                                 + task.getPath()
                                 + "\" target=\"_blank\" type=\"1\" description=\"1\" certificate=\"1\" comment=\"1\" uploadDate=\"1\" fileName=\"1\">"
