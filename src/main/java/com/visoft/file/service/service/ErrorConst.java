@@ -78,6 +78,8 @@ public interface ErrorConst {
 
     String ATTACHMENT_DOCUMENT_PATH_NOT_FOUND = "Attachment document path not found";
 
+    String USER_HAS_NO_PERMISSIONS_URI = "User has no permissions to uri";
+
     int UNAUTHORIZED = 401;
 
     int FORBIDDEN = 403;

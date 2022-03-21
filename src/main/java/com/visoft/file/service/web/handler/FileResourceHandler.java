@@ -19,7 +19,9 @@ import static com.visoft.file.service.persistance.entity.Role.ADMIN;
 import static com.visoft.file.service.persistance.entity.Role.USER;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.FORBIDDEN;
+import static com.visoft.file.service.service.ErrorConst.USER_HAS_NO_PERMISSIONS_URI;
 import static com.visoft.file.service.service.util.SenderService.send;
+import static com.visoft.file.service.service.util.SenderService.sendInfo;
 
 public class FileResourceHandler extends ResourceHandler {
 
@@ -40,13 +42,13 @@ public class FileResourceHandler extends ResourceHandler {
                 if (haveAccess(user, requestURI)) {
                     super.handleRequest(exchange);
                 } else {
+                    sendInfo(USER_HAS_NO_PERMISSIONS_URI, requestURI);
                     send(exchange, FORBIDDEN);
                 }
             }
         } else {
             if (requestURI.equals("/")) {
-                sendResponse(exchange, user
-                );
+                sendResponse(exchange, user);
             } else {
                 if (user.getRole().equals(USER)) {
                     requestURI = reorganizeRequestURI(requestURI);

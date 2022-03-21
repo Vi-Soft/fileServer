@@ -81,4 +81,6 @@ public interface StatusConst {
     String ADMIN_CREATED = "Admin created";
 
     String LOGIN_SUCCESS = "Login success";
+
+    String GET_FOLDER = "Get folder";
 }

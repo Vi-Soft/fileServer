@@ -1,11 +1,13 @@
 package com.visoft.file.service.service.util;
 
-import com.visoft.file.service.dto.*;
+import com.visoft.file.service.dto.AttachmentDocument;
+import com.visoft.file.service.dto.FormType;
+import com.visoft.file.service.dto.Report;
+import com.visoft.file.service.dto.Task;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.AttachmentDocumentService;
 import com.visoft.file.service.service.FormTypeService;
 import com.visoft.file.service.util.TaskSorter;
-import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import lombok.extern.log4j.Log4j;
@@ -18,9 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
+import static com.visoft.file.service.service.util.SenderService.sendInfo;
 import static com.visoft.file.service.service.util.SenderService.sendWarn;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -104,6 +108,7 @@ public class PageService {
     }
 
     private static String getHtmlWithProperties(String folder) throws IOException {
+        String htmlString;
         try (BufferedReader br = new BufferedReader(new FileReader(rootPath + folder + "/RUN_ME.html"))) {
 
             StringBuilder sb = new StringBuilder();
@@ -113,7 +118,7 @@ public class PageService {
                 sb.append(System.lineSeparator());
                 line = br.readLine();
             }
-            String htmlString = sb.toString()
+            htmlString = sb.toString()
                     .replace("r.png", getStaticServer() + "/r.png")
                     .replace("g.png", getStaticServer() + "/g.png")
                     .replace("background.jpg", getStaticServer() + "/background.jpg")
@@ -123,14 +128,21 @@ public class PageService {
                     .replace("main.js", getStaticServer() + "/main.js")
                     .replace("toggler.js", getStaticServer() + "/toggler.js");
 
-            return getHtmlWithHeader(htmlString, folder);
+        } catch (FileNotFoundException e) {
+            sendInfo(FOLDER_NOT_FOUND, folder);
+            throw new FileNotFoundException();
         }
+        return getHtmlWithHeader(htmlString, folder);
     }
 
     private static String getHtmlWithHeader(String htmlString, String folder) {
-        folder = folder.charAt(folder.length() - 1) == '/'? folder.substring(0, folder.length() - 1) : folder;
+        folder = folder.charAt(folder.length() - 1) == '/' ? folder.substring(0, folder.length() - 1) : folder;
         Folder byFolder = FOLDER_SERVICE.findByFolder(folder);
-
+        if (byFolder == null || byFolder.getFolder() == null) {
+            sendInfo(FOLDER_NOT_FOUND, folder);
+        } else {
+            sendInfo(GET_FOLDER, folder);
+        }
         String[] split = htmlString.split("<body>");
         return split[0] +
                 "<body>\n" +
@@ -147,11 +159,11 @@ public class PageService {
                 "<a href=\"" + server + folder + ".zip\" >\n" +
                 "\t\t<button class=\"btn\"> <h2>Download</h2></button></p>\n" +
                 "\t</a>" +
-                (byFolder != null && byFolder.getMutualFolder() != null?
-                "<a href=\"" + server + byFolder.getMutualFolder() + ".zip\" >\n" +
-                "\t\t<button class=\"btn\"> <h2>Download All</h2></button></p>\n" +
-                "\t</a>"
-                : "") +
+                (byFolder != null && byFolder.getMutualFolder() != null ?
+                        "<a href=\"" + server + byFolder.getMutualFolder() + ".zip\" >\n" +
+                                "\t\t<button class=\"btn\"> <h2>Download All</h2></button></p>\n" +
+                                "\t</a>"
+                        : "") +
                 split[1];
     }
 
@@ -241,7 +253,7 @@ public class PageService {
                         if (formType != null) {
                             classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
                         } else {
-                            sendWarn(NOT_FORM_TYPE_PATH , path);
+                            sendWarn(NOT_FORM_TYPE_PATH, path);
                         }
                     }
                     AttachmentDocument attachmentDocument = null;
