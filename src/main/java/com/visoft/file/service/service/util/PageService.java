@@ -101,7 +101,7 @@ public class PageService {
     }
 
     private static String getHtmlWithProperties(String folder) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(rootPath + folder + "/RUN_ME.html"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(rootPath + folder + "/index.html"))) {
 
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -174,13 +174,13 @@ public class PageService {
                                 forArchive,
                                 (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
                 );
-        saveIndexHtml(treeHtml, pathToProject);
+        saveIndexHtml(treeHtml, pathToProject, forArchive);
         copyFilesToProjectFolder(pathToProject);
         log.info("finish saving html");
     }
 
-    private static void saveIndexHtml(String indexHtmlBody, String path) {
-        try (PrintWriter out = new PrintWriter(path + "/RUN_ME.html")) {
+    private static void saveIndexHtml(String indexHtmlBody, String path, boolean forArchive) {
+        try (PrintWriter out = new PrintWriter(path + (forArchive ? "/RUN_ME.html" : "/index.html"))) {
             out.println(indexHtmlBody);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
