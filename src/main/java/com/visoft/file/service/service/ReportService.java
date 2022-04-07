@@ -196,7 +196,7 @@ public class ReportService {
         List<Task> deletedTask = new ArrayList<>();
         for (Task task : report.getTask().getTasks()) {
             String taskName = task.getName();
-            if (taskName.equals("RUN_ME.html")
+            if (taskName.equals("index.html")
                     || taskName.equals("g.png")
                     || taskName.equals("r.png")) {
                 deletedTask.add(task);
