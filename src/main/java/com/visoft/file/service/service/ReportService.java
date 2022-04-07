@@ -68,7 +68,7 @@ public class ReportService {
                 reportDto.setErrorMassage(e.getMessage());
                 return reportDto;
             } catch (IOException ioException) {
-                log.warn(ioException.getMessage());
+                sendWarn(UNABLE_TO_READ_VALUE_REQUEST_BODY, ioException.getMessage());
                 return null;
             }
         }

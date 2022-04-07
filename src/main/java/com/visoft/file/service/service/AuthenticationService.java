@@ -26,8 +26,7 @@ import static com.visoft.file.service.service.DI.DependencyInjectionService.USER
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.StatusConst.LOGIN;
 import static com.visoft.file.service.service.StatusConst.LOGIN_SUCCESS;
-import static com.visoft.file.service.service.util.SenderService.send;
-import static com.visoft.file.service.service.util.SenderService.sendWarn;
+import static com.visoft.file.service.service.util.SenderService.*;
 
 @Log4j
 public class AuthenticationService {
@@ -80,6 +79,7 @@ public class AuthenticationService {
             Model model = reader.read(new FileReader("pom.xml"));
             send(exchange, Optional.ofNullable(model.getVersion()).orElse("undefined"));
         } catch (IOException | XmlPullParserException e) {
+            sendWarn(UNABLE_TO_GET_APP_VERSION, e.getMessage());
             e.printStackTrace();
         }
     }
@@ -91,6 +91,8 @@ public class AuthenticationService {
         try {
             return Config.getInstance().getMapper().readValue(s, LoginDto.class);
         } catch (IOException e) {
+            sendWarn(UNABLE_TO_READ_VALUE_REQUEST_BODY, e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

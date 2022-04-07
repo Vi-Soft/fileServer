@@ -393,6 +393,8 @@ public class PageService {
             }
             in.close();
         } catch (IOException e) {
+            sendWarn(UNABLE_TO_CONVERT_HTML_TO_STRING, e.getMessage());
+            e.printStackTrace();
             return null;
         }
         return contentBuilder.toString();

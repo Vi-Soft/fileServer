@@ -4,6 +4,9 @@ import com.visoft.file.service.dto.Task;
 
 import java.util.List;
 
+import static com.visoft.file.service.service.ErrorConst.UNABLE_TO_SORT_TASK;
+import static com.visoft.file.service.service.util.SenderService.sendWarn;
+
 /**
  * This class sorts the passed task list
  */
@@ -29,6 +32,8 @@ public class TaskSorter {
         try {
             return Integer.valueOf(possibleStringIntegerValue);
         } catch (NumberFormatException | NullPointerException e) {
+            sendWarn(UNABLE_TO_SORT_TASK, e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
