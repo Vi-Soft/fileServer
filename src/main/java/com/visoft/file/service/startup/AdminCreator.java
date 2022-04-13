@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.TOKEN_SERVICE;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.USER_SERVICE;
+import static com.visoft.file.service.service.ErrorConst.ADMIN_ALREADY_EXISTS;
+import static com.visoft.file.service.service.StatusConst.ADMIN_CREATED;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
 
@@ -24,7 +26,7 @@ public class AdminCreator {
         String login = "admin";
         String password = "visoft";
         if (USER_SERVICE.isExistsByLogin(login)) {
-            log.info("Admin already exists");
+            log.info(ADMIN_ALREADY_EXISTS);
         } else {
             String encodedPassword = getEncode(password);
             User user = new User(
@@ -39,7 +41,7 @@ public class AdminCreator {
                     user.getId()
             );
             TOKEN_SERVICE.create(createdUserToken);
-            log.info("Admin created");
+            log.info(ADMIN_CREATED);
 
             USER_SERVICE.findAll().forEach(u -> {
                 u.setPassword(encodedPassword);

@@ -26,12 +26,14 @@ import static com.visoft.file.service.persistance.entity.UserConst.DELETED;
 import static com.visoft.file.service.persistance.entity.UserConst._ID;
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.StatusConst.USER_HAS_BEEN_CREATED;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.EncoderService.isPasswordsMatch;
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
 import static com.visoft.file.service.service.util.SenderService.send;
+import static com.visoft.file.service.service.util.SenderService.sendInfo;
 
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
 
@@ -47,6 +49,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         } else {
             User user = findById(new ObjectId(dto.getId()));
             if (user == null) {
+                sendInfo(USER_DOES_NOT_EXIST, null);
                 send(exchange, BAD_REQUEST);
             }
             List<ObjectId> folders = null;
@@ -72,6 +75,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public void findById(HttpServerExchange exchange) {
         User user = findById(getIdFromRequest(exchange));
         if (user == null) {
+            sendInfo(USER_DOES_NOT_EXIST, null);
             send(exchange, NOT_FOUND);
         } else {
             send(
@@ -122,6 +126,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                     createdUser.getId()
             );
             TOKEN_SERVICE.create(createdUserToken);
+            sendInfo(USER_HAS_BEEN_CREATED, createdUser.getId().toString());
             send(exchange, CREATE);
         }
     }
@@ -143,6 +148,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         ObjectId userId = getIdFromRequest(exchange);
         User currentUser = USER_SERVICE.findById(userId);
         if (currentUser == null || currentUser.getDeleted().equals(false)) {
+            sendInfo(USER_DOES_NOT_EXIST, userId.toString());
             send(exchange, FORBIDDEN);
         } else {
             update(
@@ -226,6 +232,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     private boolean validate(UserCreateDto dto) {
         if (dto == null) {
+            sendInfo(DTO_IS_EMPTY, null);
             return false;
         }
         return validate(dto.getLogin(), dto.getPassword(), dto.getFolders());
@@ -233,9 +240,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     private boolean validate(UserUpdateDto dto) {
         if (dto == null) {
+            sendInfo(DTO_IS_EMPTY, null);
             return false;
         }
         if (dto.getId() == null || dto.getId().isEmpty()) {
+            sendInfo(USER_UPDATE_DTO_ID_IS_EMPTY, null);
             return false;
         }
         return validate(dto.getLogin(), dto.getPassword(), dto.getFolders());
@@ -243,20 +252,25 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     private boolean validate(String login, String password, List<String> folders) {
         if (login == null || login.isEmpty()) {
+            sendInfo(USER_LOGIN_IS_EMPTY, login);
             return false;
         }
         if (password == null || password.isEmpty()) {
+            sendInfo(USER_PASSWORD_IS_EMPTY, password);
             return false;
         }
         if (folders == null) {
+            sendInfo(FOLDER_DTO_IS_EMPTY, null);
             return false;
         }
         if (!folders.isEmpty()) {
             if (new HashSet<>(folders).size() != folders.size()) {
+                sendInfo(FOLDER_DTO_DUPLICATE, String.valueOf(folders.size()));
                 return false;
             }
             for (String folder : folders) {
                 if (!FOLDER_SERVICE.existsFolder(new ObjectId(folder))) {
+                    sendInfo(FOLDER_DOES_NOT_EXIST, folder);
                     return false;
                 }
             }
