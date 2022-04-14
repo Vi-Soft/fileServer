@@ -25,8 +25,7 @@ import static com.visoft.file.service.service.ErrorConst.NOT_FOUND;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.PropertiesService.getRootPath;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
-import static com.visoft.file.service.service.util.SenderService.send;
-import static com.visoft.file.service.service.util.SenderService.sendInfo;
+import static com.visoft.file.service.service.util.SenderService.*;
 
 public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements FolderService {
 
@@ -95,8 +94,9 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
                 String companyFolder = split[split.length - 1 - 1];
                 FileSystemService.deleteIfEmpty(getRootPath() + "/" + companyFolder);
             } catch (IOException e) {
-                sendInfo(FOLDER_NOT_FOUND, folder.getFolder());
+                sendWarn(FOLDER_NOT_FOUND, folder.getFolder());
                 send(exchange, NOT_FOUND);
+                e.printStackTrace();
             }
         } else {
             sendInfo(FOLDER_NOT_FOUND, null);

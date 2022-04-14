@@ -80,6 +80,16 @@ public interface ErrorConst {
 
     String USER_HAS_NO_PERMISSIONS_URI = "User has no permissions to uri";
 
+    String UNABLE_TO_SORT_TASK = "Unable to sort Task by name";
+
+    String UNABLE_TO_READ_VALUE_REQUEST_BODY = "Unable to read value by requestBody";
+
+    String UNABLE_TO_GET_APP_VERSION = "Unable to get app version";
+
+    String UNABLE_TO_CONVERT_HTML_TO_STRING = "Unable to convert html to string";
+
+    String UNABLE_TO_READ_FILE_FROM_BYTE = "Unable to read file from byte";
+
     int UNAUTHORIZED = 401;
 
     int FORBIDDEN = 403;

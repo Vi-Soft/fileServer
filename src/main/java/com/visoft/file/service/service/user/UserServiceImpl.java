@@ -32,8 +32,7 @@ import static com.visoft.file.service.service.util.EncoderService.isPasswordsMat
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
-import static com.visoft.file.service.service.util.SenderService.send;
-import static com.visoft.file.service.service.util.SenderService.sendInfo;
+import static com.visoft.file.service.service.util.SenderService.*;
 
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
 
@@ -203,6 +202,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         try {
             return Config.getInstance().getMapper().readValue(s, UserCreateDto.class);
         } catch (IOException e) {
+            sendWarn(UNABLE_TO_READ_VALUE_REQUEST_BODY, e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -214,6 +215,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
         try {
             return Config.getInstance().getMapper().readValue(s, UserUpdateDto.class);
         } catch (IOException e) {
+            sendWarn(UNABLE_TO_READ_VALUE_REQUEST_BODY, e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

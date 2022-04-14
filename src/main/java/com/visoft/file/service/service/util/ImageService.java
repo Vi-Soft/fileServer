@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Objects;
 
+import static com.visoft.file.service.service.ErrorConst.UNABLE_TO_READ_FILE_FROM_BYTE;
+
 public class ImageService {
     private static String JS = "text/javascript";
     private static String PNG = "image/png";
@@ -34,6 +36,7 @@ public class ImageService {
         try {
             fileContent = IOUtils.toByteArray(Objects.requireNonNull(PageService.class.getClassLoader().getResourceAsStream("file/" + fileName)));
         } catch (IOException e) {
+            SenderService.sendWarn(UNABLE_TO_READ_FILE_FROM_BYTE, e.getMessage());
             e.printStackTrace();
         }
         return fileContent;
