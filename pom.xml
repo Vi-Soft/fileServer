@@ -15,6 +15,7 @@
         <version.undertow>1.4.23.Final</version.undertow>
         <version.mongo>3.7.1</version.mongo>
         <versions.maven-version>2.4</versions.maven-version>
+        <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
     </properties>
 
     <dependencies>
@@ -205,8 +206,24 @@
     <build>
         <defaultGoal>install</defaultGoal>
         <directory>target</directory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -312,7 +329,7 @@
 
             <!-- end Google error-proce compiles -->
         </plugins>
-
+        <finalName>${project.artifactId}-${project.version}-${git.commit.id.abbrev}</finalName>
         <pluginManagement>
             <plugins>
                 <!--This plugin's configuration is used to store Eclipse m2e settings
