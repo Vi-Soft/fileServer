@@ -3,6 +3,7 @@ enabled: true
 allowedOrigins:
   #  - http://localhost:4200
   # http://localhost:3000
+  # - http://localhost:3001
   - http://visoft-test.visoft-eng.com:8090
   - http://visoftapp1.visoft-eng.com:8090
   - http://10.10.10.65:8090
@@ -11,5 +12,6 @@ allowedMethods:
   - GET
   - POST
   - DELETE
+  - PUT
 
   
