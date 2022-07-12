@@ -8,6 +8,7 @@ allowedOrigins:
   - http://visoftapp1.visoft-eng.com:8090
   - http://10.10.10.65:8090
   - http://10.10.10.70:8090
+  - http://visoftapp1.visoft-eng.com:3002
 allowedMethods:
   - GET
   - POST
