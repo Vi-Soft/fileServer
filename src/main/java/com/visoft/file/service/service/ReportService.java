@@ -220,6 +220,7 @@ public class ReportService {
             Task task,
             List<TaskDto> tasks,
             Map<String, FormType> formTypes,
+            Map<String, AttachmentDocument> attachmentDocumentMap,
             Map<String, CommonLogBook> commonLogBookMap,
             Version version) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
@@ -231,6 +232,16 @@ public class ReportService {
                         taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
                     }
                 }
+                attachmentDocumentMap.keySet()
+                    .forEach(path -> {
+                        String validPath = path.replace("\\", "/").substring(1);
+                        if (taskTask.getPath() != null
+                            && taskTask.getPath().contains(validPath.substring(validPath.indexOf("/") + 1))
+                            && validPath.length() < taskTask.getPath().length()) {
+
+                            taskTask.setPath(validPath);
+                        }
+                    });
                 for (TaskDto taskDto : tasks) {
                     FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {
@@ -245,7 +256,7 @@ public class ReportService {
                         taskTask.setType(formType.getType());
                     }
                 }
-                getRealTask(taskTask, tasks, formTypes, commonLogBookMap, version);
+                getRealTask(taskTask, tasks, formTypes, attachmentDocumentMap, commonLogBookMap, version);
             }
             sortByParentIdAndOrderInGroup(task.getTasks());
         }
@@ -489,26 +500,29 @@ public class ReportService {
 
         Map<String, FormType> formTypeMap =
                 reportDto.getFormTypes()
-                        .parallelStream()
-                        .filter(distinctByKey(FormType::getPath))
-                        .collect(Collectors.toMap(FormType::getPath, a -> a));
+                    .parallelStream()
+                    .map(this::mapPathObject)
+                    .filter(distinctByKey(FormType::getPath))
+                    .collect(Collectors.toMap(FormType::getPath, Function.identity()));
         Map<String, AttachmentDocument> attachmentDocumentMap =
                 reportDto.getAttachmentDocuments()
-                        .parallelStream()
-                        .filter(distinctByKey(AttachmentDocument::getPath))
-                        .collect(Collectors.toMap(AttachmentDocument::getPath, a -> a));
+                    .parallelStream()
+                    .map(this::mapPathObject)
+                    .filter(distinctByKey(AttachmentDocument::getPath))
+                    .collect(Collectors.toMap(AttachmentDocument::getPath, Function.identity()));
         Map<String, CommonLogBook> commonLogBookMap =
                 reportDto.getCommonLogBooks()
                         .parallelStream()
                         .filter(distinctByKey(CommonLogBook::getFullPath))
-                        .collect(Collectors.toMap(CommonLogBook::getFullPath, a -> a));
+                        .collect(Collectors.toMap(CommonLogBook::getFullPath, Function.identity()));
         Report fullTree = getFullTree(reportDto);
         getRealTask(
-                fullTree.getTask(),
-                reportDto.getTasks(),
-                formTypeMap,
-                commonLogBookMap,
-                reportDto.getVersion()
+            fullTree.getTask(),
+            reportDto.getTasks(),
+            formTypeMap,
+            attachmentDocumentMap,
+            commonLogBookMap,
+            reportDto.getVersion()
         );
         saveIndexHtml(
                 fullTree,
@@ -538,6 +552,16 @@ public class ReportService {
                 false
         );
         log.info(FINISH_ZIP_TREE);
+    }
+
+    private <T extends PathObject> T mapPathObject(T pathObject) {
+        for (Type type : Type.values()) {
+            final String hebrewName = "\\" + type.getHebrewName() + "\\";
+            if (pathObject.getPath().contains(hebrewName)) {
+                pathObject.setPath(pathObject.getPath().replace(hebrewName, "\\" + type.getValue() + "\\"));
+            }
+        }
+        return pathObject;
     }
 
     @Synchronized
@@ -641,8 +665,17 @@ public class ReportService {
     private Task getTreeByFileSystem(Task task, String path, String companyName, String projectName) {
         String fullPath = rootPath + companyName + projectName + path;
         if (task != null) {
-            if (new File(fullPath).isDirectory()) {
-                String[] list = new File(fullPath).list();
+            File file = new File(fullPath);
+            if (file.isDirectory()) {
+                final Type type = Type.findByHebrewName(file.getName());
+                if (type != null) {
+                    final String newName = type.getValue();
+                    path = path.replace(file.getName(), newName);
+                    File newDir = new File(Paths.get(file.getParent(), newName).toString());
+                    file.renameTo(newDir);
+                    file = newDir;
+                }
+                String[] list = file.list();
                 List<Task> tasks = new ArrayList<>();
                 if (list != null) {
                     for (String s : list) {

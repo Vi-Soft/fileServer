@@ -6,7 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 import static com.visoft.file.service.dto.Type.DEFAULT;
 
 @Data
-public class FormType {
+public class FormType implements PathObject {
 
     private Type type = DEFAULT;
 
