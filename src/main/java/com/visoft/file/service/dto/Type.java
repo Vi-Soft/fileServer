@@ -2,36 +2,45 @@ package com.visoft.file.service.dto;
 
 public enum Type {
 
-    CHECKLIST("Checklist"),
-    APPROVAL_OF_SUBCONTRACTORS("Approval_Of_Sub-Contractor"),
-    APPROVAL_OF_MATERIALS("Preliminary_Materials_Inspection"),
-    APPROVAL_OF_SUPPLIERS("Approval_of_Supplier"),
-    POC("POC"),
-    NCR_IL("NCR"),
-    RFI_IL("RFI"),
-    SUPERVISION_REPORTS("Supervision_Reports"),
-    AS_MADE("As_Made"),
-    MEETING_SUMMARY("Meetings_Summary"),
-    QC_AUDITS("QC_Audits"),
-    MONTHLY_REPORTS("Monthly_Reports"),
-    CONSTRUCTION_DOCUMENTS("Construction_Documents"),
-    ADDITIONAL_DOCS("Additional_Documents"),
-    DRAWINGS_IL("Drawings"),
-    DEFAULT("Default"),
-    LAB_ORDER("Lab_Order"),
-    SURVEYING_ORDER("Surveying_Order"),
-    CAR_PAR_OBS("CAR_PAR_OBS"),
-    CM_TASK_EXECUTION_APPROVAL("CM_TASK_EXECUTION_APPROVAL"),
-    CM_ATTACHMENT("CM_ATTACHMENT");
+    CHECKLIST("Checklist", "רשימת תיוג"),
+    APPROVAL_OF_SUBCONTRACTORS("Approval_Of_Sub-Contractor", "אישור קבלני משנה"),
+    APPROVAL_OF_MATERIALS("Preliminary_Materials_Inspection", "בקרה מקדימה לחומרים"),
+    APPROVAL_OF_SUPPLIERS("Approval_of_Supplier", "אישור ספקים"),
+    POC("POC", "דו\"ח קטעי ניסוי"),
+    NCR_IL("NCR", "טופס אי התאמה"),
+    RFI_IL("RFI", ""),
+    SUPERVISION_REPORTS("Supervision_Reports", "דוחות פיקוח עליון"),
+    AS_MADE("As_Made", ""),
+    MEETING_SUMMARY("Meetings_Summary", ""),
+    QC_AUDITS("QC_Audits", "מבדקים פנימיים בקרת איכות"),
+    MONTHLY_REPORTS("Monthly_Reports", ""),
+    CONSTRUCTION_DOCUMENTS("Construction_Documents", ""),
+    ADDITIONAL_DOCS("Additional_Documents", ""),
+    DRAWINGS_IL("Drawings", ""),
+    DEFAULT("Default", ""),
+    LAB_ORDER("Lab_Order", ""),
+    SURVEYING_ORDER("Surveying_Order", ""),
+    CAR_PAR_OBS("CAR_PAR_OBS", ""),
+    CM_TASK_EXECUTION_APPROVAL("CM_TASK_EXECUTION_APPROVAL", ""),
+    CM_ATTACHMENT("CM_ATTACHMENT", ""),
+    PRELIMINARY("Preliminary", "בקרה מקדימה"),
+    SUMMARY("Summary", "דוחות");
 
     private final String value;
 
-    Type(String value) {
+    private final String hebrewName;
+
+    Type(String value, String hebrewName) {
         this.value = value;
+        this.hebrewName = hebrewName;
     }
 
     public String getValue() {
         return this.value;
+    }
+
+    public String getHebrewName() {
+        return this.hebrewName;
     }
 
     public boolean equalsName(String otherValue) {
@@ -40,5 +49,14 @@ public enum Type {
 
     public String toString() {
         return this.value;
+    }
+
+    public static Type findByHebrewName(String hebrewName){
+        for(Type type : values()){
+            if( type.hebrewName.equals(hebrewName)){
+                return type;
+            }
+        }
+        return null;
     }
 }

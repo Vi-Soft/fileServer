@@ -6,7 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.nio.file.Paths;
 
 @Data
-public class AttachmentDocument {
+public class AttachmentDocument implements PathObject {
 
     private String path;
 
