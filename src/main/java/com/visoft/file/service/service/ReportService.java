@@ -42,6 +42,8 @@ import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
 import static com.visoft.file.service.service.util.SenderService.*;
+import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
 import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 
 @Log4j
@@ -233,11 +235,12 @@ public class ReportService {
                         taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
                     }
                 }
+                final String taskPath = separatorsToUnix(taskTask.getPath());
                 for (String path : attachmentDocumentMap.keySet()) {
-                    String validPath = path.replace("\\", "/").substring(1);
-                    if (taskTask.getPath() != null
+                    String validPath = separatorsToUnix(path).substring(1);
+                    if (taskPath != null
                         && taskTask.getPath().contains(validPath.substring(validPath.indexOf("/") + 1))
-                        && validPath.length() < taskTask.getPath().length()) {
+                        && validPath.length() < taskPath.length()) {
 
                         taskTask.setPath(validPath);
                         if (Arrays.stream(Type.values()).anyMatch(type -> path.contains(type.getValue()))) {
@@ -558,10 +561,11 @@ public class ReportService {
     }
 
     private <T extends PathObject> T mapPathObject(T pathObject) {
+        final String path = separatorsToUnix(pathObject.getPath());
         for (Type type : Type.values()) {
-            final String hebrewName = "\\" + type.getHebrewName() + "\\";
-            if (pathObject.getPath().contains(hebrewName)) {
-                pathObject.setPath(pathObject.getPath().replace(hebrewName, "\\" + type.getValue() + "\\"));
+            final String hebrewName = "/" + type.getHebrewName() + "/";
+            if (path.contains(hebrewName)) {
+                pathObject.setPath(path.replace(hebrewName, "/" + type.getValue() + "/"));
             }
         }
         return pathObject;
