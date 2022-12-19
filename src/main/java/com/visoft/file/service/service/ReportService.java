@@ -224,6 +224,7 @@ public class ReportService {
             Map<String, CommonLogBook> commonLogBookMap,
             Version version) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
+            log.info(ATTACHMENTS + attachmentDocumentMap.keySet());
             for (Task taskTask : task.getTasks()) {
                 if (version == Version.RU) {
                     CommonLogBook commonLogBook = new CommonLogBookService().getCommonLogBook(commonLogBookMap, taskTask.getPath());
@@ -232,16 +233,18 @@ public class ReportService {
                         taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
                     }
                 }
-                attachmentDocumentMap.keySet()
-                    .forEach(path -> {
-                        String validPath = path.replace("\\", "/").substring(1);
-                        if (taskTask.getPath() != null
-                            && taskTask.getPath().contains(validPath.substring(validPath.indexOf("/") + 1))
-                            && validPath.length() < taskTask.getPath().length()) {
+                for (String path : attachmentDocumentMap.keySet()) {
+                    String validPath = path.replace("\\", "/").substring(1);
+                    if (taskTask.getPath() != null
+                        && taskTask.getPath().contains(validPath.substring(validPath.indexOf("/") + 1))
+                        && validPath.length() < taskTask.getPath().length()) {
 
-                            taskTask.setPath(validPath);
+                        taskTask.setPath(validPath);
+                        if (Arrays.stream(Type.values()).anyMatch(type -> path.contains(type.getValue()))) {
+                            break;
                         }
-                    });
+                    }
+                }
                 for (TaskDto taskDto : tasks) {
                     FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {

@@ -6,7 +6,7 @@ public enum Type {
     APPROVAL_OF_SUBCONTRACTORS("Approval_Of_Sub-Contractor", "אישור קבלני משנה"),
     APPROVAL_OF_MATERIALS("Preliminary_Materials_Inspection", "בקרה מקדימה לחומרים"),
     APPROVAL_OF_SUPPLIERS("Approval_of_Supplier", "אישור ספקים"),
-    POC("POC", "דו\"ח קטעי ניסוי"),
+    POC("POC", "דו_ח קטעי ניסוי"),
     NCR_IL("NCR", "טופס אי התאמה"),
     RFI_IL("RFI", ""),
     SUPERVISION_REPORTS("Supervision_Reports", "דוחות פיקוח עליון"),
