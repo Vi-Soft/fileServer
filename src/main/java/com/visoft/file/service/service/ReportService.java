@@ -42,12 +42,14 @@ import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
 import static com.visoft.file.service.service.util.SenderService.*;
-import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
 import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
 import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 
 @Log4j
 public class ReportService {
+
+    private static final String UNACCEPTABLE_CHARACTERS = "[\\\\|/*:?\"<>%#]";
+    private static final String CHARACTER = "_";
 
     private static final String rootPath = getRootPath();
 
@@ -561,13 +563,14 @@ public class ReportService {
     }
 
     private <T extends PathObject> T mapPathObject(T pathObject) {
-        final String path = separatorsToUnix(pathObject.getPath());
+        String path = separatorsToUnix(pathObject.getPath());
         for (Type type : Type.values()) {
             final String hebrewName = "/" + type.getHebrewName() + "/";
             if (path.contains(hebrewName)) {
-                pathObject.setPath(path.replace(hebrewName, "/" + type.getValue() + "/"));
+                path = path.replace(hebrewName, "/" + type.getValue() + "/");
             }
         }
+        pathObject.setPath(path.trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER));
         return pathObject;
     }
 
@@ -694,6 +697,12 @@ public class ReportService {
                     }
                 }
             } else {
+                final String newName = file.getName().trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER);
+                if (!file.getName().equals(newName)) {
+                    path = path.replace(file.getName(), newName);
+                    File newFile = new File(Paths.get(file.getParent(), newName).toString());
+                    file.renameTo(newFile);
+                }
                 task.setIcon(3);
                 task.setPath(path.substring(1));
             }
