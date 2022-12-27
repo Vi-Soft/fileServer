@@ -4,6 +4,7 @@ import com.visoft.file.service.dto.AttachmentDocument;
 import com.visoft.file.service.dto.FormType;
 import com.visoft.file.service.dto.Report;
 import com.visoft.file.service.dto.Task;
+import com.visoft.file.service.dto.Type;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.AttachmentDocumentService;
 import com.visoft.file.service.service.FormTypeService;
@@ -19,9 +20,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.ReportService.DEFAULT_TYPES_TO_DISPLAY;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
 import static com.visoft.file.service.service.util.SenderService.sendInfo;
@@ -171,6 +174,7 @@ public class PageService {
             Report tree,
             Map<String, FormType> formTypes,
             Map<String, AttachmentDocument> attachmentDocumentMap,
+            Set<Type> typesToDisplay,
             boolean forArchive
     ) {
         log.info(START_SAVE_HTML);
@@ -186,6 +190,7 @@ public class PageService {
                                 tree.getTask(),
                                 formTypes,
                                 attachmentDocumentMap,
+                                typesToDisplay,
                                 forArchive,
                                 (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
                 );
@@ -206,6 +211,7 @@ public class PageService {
             Task mainTask,
             Map<String, FormType> formTypes,
             Map<String, AttachmentDocument> attachmentDocumentMap,
+            Set<Type> typesToDisplay,
             boolean forArchive,
             int startPathWith
     ) {
@@ -213,6 +219,12 @@ public class PageService {
         String htmlTree = "<ul class=\"nested\">\n";
         for (Task task : mainTask.getTasks()) {
             if (task.getTasks() != null && !task.getTasks().isEmpty()) {
+                if (task.getPath() == null
+                    && task.getOrderInGroup() != 1
+                    && !containsTypesToDisplay(task, typesToDisplay)) {
+
+                    continue;
+                }
                 htmlTree = htmlTree + "<li>";
                 htmlTree = htmlTree + addImage(task);
                 htmlTree = htmlTree + "<span class=\"box\"";
@@ -296,12 +308,26 @@ public class PageService {
                 }
             }
             if (task.getTasks() != null) {
-                htmlTree = htmlTree + getHtmlTree(task, formTypes, attachmentDocumentMap, forArchive, startPathWith);
+                htmlTree = htmlTree + getHtmlTree(task, formTypes, attachmentDocumentMap, typesToDisplay, forArchive, startPathWith);
             }
 
         }
         htmlTree = htmlTree + "</li></ul>\n";
         return htmlTree;
+    }
+
+    private static boolean containsTypesToDisplay(Task task, Set<Type> typesToDisplay) {
+        if (typesToDisplay.contains(task.getType()) || DEFAULT_TYPES_TO_DISPLAY.contains(task.getType())) {
+            return true;
+        }
+
+        final List<Task> tasks = task.getTasks();
+
+        if (tasks != null && !tasks.isEmpty()) {
+            return tasks.stream().anyMatch(subTask -> containsTypesToDisplay(subTask, typesToDisplay));
+        }
+
+        return false;
     }
 
     private static String addNameColor(String htmlTree, Task task) {

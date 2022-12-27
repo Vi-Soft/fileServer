@@ -48,6 +48,7 @@ import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 @Log4j
 public class ReportService {
 
+    public static final List<Type> DEFAULT_TYPES_TO_DISPLAY = Collections.singletonList(Type.SUMMARY);
     private static final String UNACCEPTABLE_CHARACTERS = "[\\\\|/*:?\"<>%#]";
     private static final String CHARACTER = "_";
 
@@ -260,6 +261,11 @@ public class ReportService {
                             taskTask.setColor(taskDto.getColor());
                             taskTask.setDetail(taskDto.getDetail());
                         }
+                        DEFAULT_TYPES_TO_DISPLAY.stream()
+                            .filter(type -> taskTask.getName().equals(type.getValue())
+                                || taskTask.getName().equals(type.getHebrewName())
+                            ).findAny()
+                            .ifPresent(taskTask::setType);
                     } else {
                         taskTask.setType(formType.getType());
                     }
@@ -536,6 +542,7 @@ public class ReportService {
                 fullTree,
                 formTypeMap,
                 attachmentDocumentMap,
+                reportDto.getTypesToDisplay(),
                 true
         );
         log.info(FINISH_WEB_TREE);
@@ -557,6 +564,7 @@ public class ReportService {
                 fullTree,
                 formTypeMap,
                 attachmentDocumentMap,
+                reportDto.getTypesToDisplay(),
                 false
         );
         log.info(FINISH_ZIP_TREE);
@@ -570,7 +578,13 @@ public class ReportService {
                 path = path.replace(hebrewName, "/" + type.getValue() + "/");
             }
         }
-        pathObject.setPath(path.trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER));
+        String fileName = Paths.get(path).getFileName().toString();
+        pathObject.setPath(
+            path.replace(
+                fileName,
+                fileName.trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER)
+            )
+        );
         return pathObject;
     }
 
