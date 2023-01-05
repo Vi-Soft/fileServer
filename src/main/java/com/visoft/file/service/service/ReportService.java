@@ -530,6 +530,7 @@ public class ReportService {
                         .collect(Collectors.toMap(CommonLogBook::getFullPath, Function.identity()));
         Report fullTree = getFullTree(reportDto);
         log.info(ATTACHMENTS + attachmentDocumentMap.keySet());
+        log.info("formTypes" + formTypeMap.keySet());
         getRealTask(
             fullTree.getTask(),
             reportDto.getTasks(),
