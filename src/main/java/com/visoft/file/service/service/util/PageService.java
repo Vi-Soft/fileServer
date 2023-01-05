@@ -178,6 +178,8 @@ public class PageService {
             boolean forArchive
     ) {
         log.info(START_SAVE_HTML);
+        log.info(tree.getTask());
+        log.info(typesToDisplay);
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String treeHtml = getTreePage()
                 .replace(

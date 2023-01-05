@@ -229,7 +229,6 @@ public class ReportService {
             Map<String, CommonLogBook> commonLogBookMap,
             Version version) {
         if (task.getTasks() != null && !task.getTasks().isEmpty()) {
-            log.info(ATTACHMENTS + attachmentDocumentMap.keySet());
             for (Task taskTask : task.getTasks()) {
                 if (version == Version.RU) {
                     CommonLogBook commonLogBook = new CommonLogBookService().getCommonLogBook(commonLogBookMap, taskTask.getPath());
@@ -530,6 +529,7 @@ public class ReportService {
                         .filter(distinctByKey(CommonLogBook::getFullPath))
                         .collect(Collectors.toMap(CommonLogBook::getFullPath, Function.identity()));
         Report fullTree = getFullTree(reportDto);
+        log.info(ATTACHMENTS + attachmentDocumentMap.keySet());
         getRealTask(
             fullTree.getTask(),
             reportDto.getTasks(),
