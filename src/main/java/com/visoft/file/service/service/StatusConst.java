@@ -16,6 +16,8 @@ public interface StatusConst {
 
     String REPORT_DTO = "ReportDto: ";
 
+    String ATTACHMENTS = "Attachments: ";
+
     String EMAIL_SEND = "Email send to";
 
     String START_DOWNLOAD = "Start download";
