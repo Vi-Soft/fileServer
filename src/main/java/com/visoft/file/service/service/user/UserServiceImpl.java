@@ -14,6 +14,7 @@ import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +64,9 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 );
             } else {
                 user.setLogin(dto.getLogin());
-                user.setPassword(getEncode(dto.getPassword()));
+                if (!StringUtils.isEmpty(dto.getPassword())) {
+                    user.setPassword(getEncode(dto.getPassword()));
+                }
                 user.setFolders(folders);
                 update(user, user.getId());
             }
@@ -238,7 +241,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             sendInfo(DTO_IS_EMPTY, null);
             return false;
         }
-        return validate(dto.getLogin(), dto.getPassword(), dto.getFolders());
+        if (StringUtils.isEmpty(dto.getPassword())) {
+            sendInfo(USER_PASSWORD_IS_EMPTY, dto.getPassword());
+            return false;
+        }
+        return validate(dto.getLogin(), dto.getFolders());
     }
 
     private boolean validate(UserUpdateDto dto) {
@@ -250,16 +257,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             sendInfo(USER_UPDATE_DTO_ID_IS_EMPTY, null);
             return false;
         }
-        return validate(dto.getLogin(), dto.getPassword(), dto.getFolders());
+        return validate(dto.getLogin(), dto.getFolders());
     }
 
-    private boolean validate(String login, String password, List<String> folders) {
+    private boolean validate(String login, List<String> folders) {
         if (login == null || login.isEmpty()) {
             sendInfo(USER_LOGIN_IS_EMPTY, login);
-            return false;
-        }
-        if (password == null || password.isEmpty()) {
-            sendInfo(USER_PASSWORD_IS_EMPTY, password);
             return false;
         }
         if (folders == null) {
