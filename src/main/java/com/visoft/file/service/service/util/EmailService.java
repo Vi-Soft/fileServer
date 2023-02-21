@@ -19,7 +19,7 @@ public class EmailService {
     public static void sendSuccess(String reportName, String email, Version version, String password) {
         send(
             (version == Version.IL? "שלום רב," : "Greetings,") + "\n"
-                + (version == Version.IL? "בוצעה הורדת מסמכי הפרויקט לפי הבקשה." : "Project documents were downloaded as requested.") + "\n"
+                + (version == Version.IL? "הורדת הפרוייקט הסתיימה .בהצלחה" : "The project download has successfully finished.") + "\n"
                 + (version == Version.IL? "שם התיקיה: " : "Folder name: ") + reportName + "\n\n"
                 + (version == Version.IL? "קישור למערכת ההורדה:" : "Link to the download system:") + "\n\n"
                 + getServerName() + "\n\n"
@@ -30,8 +30,9 @@ public class EmailService {
                 + (version == Version.IL? "2. לוחצים על כפתור ההורדה" : "2. Press the download button.") + "\n"
                 + (version == Version.IL? "3. התיקייה שיורדת היא בפורמט ZIP." : "3. The downloaded folder is in ZIP format.") + "\n"
                 + (version == Version.IL? "4. יש לחלץ את הקבצים לתיקיה רגילה." : "4. Extract the files to a standard folder.") + "\n"
-                + (version == Version.IL? "5. בתיקייה הרגילה שנוצרה יש ללחוץ על קובץ RUN_ME." : "5. In the standard created folder, click on the RUN_ME file.") + "\n"
+                + (version == Version.IL? "5. בתיקייה שנוצרה יש ללחוץ על קובץ RUN_ME." : "5. In the extracted folder, click on the RUN_ME file.") + "\n"
                 + (version == Version.IL? "6. הקובץ נפתח בדפדפן ובתפריט שנפתח אפשר למצוא את הקבצים הדרושים לפי מיקומם בעץ הפרויקט." : "6. The file is opened in the browser and you can find the necessary files in the menu according to their location in the project tree.") + "\n\n"
+                + (version == Version.IL? "שימו ,לב הורדת הפרוייקט תהיה זמינה שבוע לכל הפחות ולאחר מכן ההורדה תימחק .מהשרת" : "Attention, the downloaded material will be available for at least 1 week, afterward it will be deleted from the server.") + "\n\n"
                 + (version == Version.IL? "בברכה," : "Best regards,") + "\n"
                 + (version == Version.IL? "צוות וי-סופט." : "Vi-Soft team.") + "\n"
             , email

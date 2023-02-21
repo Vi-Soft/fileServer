@@ -39,6 +39,8 @@ public class ReportDto {
 
     private Set<CommonLogBook> commonLogBooks = new HashSet<>();
 
+    private Set<Type> typesToDisplay = new HashSet<>();
+
     @JsonIgnore
     private String errorMassage;
 }

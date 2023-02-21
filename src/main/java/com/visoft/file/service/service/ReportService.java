@@ -42,10 +42,15 @@ import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
 import static com.visoft.file.service.service.util.SenderService.*;
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
 import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 
 @Log4j
 public class ReportService {
+
+    public static final List<Type> DEFAULT_TYPES_TO_DISPLAY = Collections.singletonList(Type.SUMMARY);
+    private static final String UNACCEPTABLE_CHARACTERS = "[\\\\|/*:?\"<>%#]";
+    private static final String CHARACTER = "_";
 
     private static final String rootPath = getRootPath();
 
@@ -232,16 +237,19 @@ public class ReportService {
                         taskTask.setOrderInGroup(commonLogBook.getOrderInGroup());
                     }
                 }
-                attachmentDocumentMap.keySet()
-                    .forEach(path -> {
-                        String validPath = path.replace("\\", "/").substring(1);
-                        if (taskTask.getPath() != null
-                            && taskTask.getPath().contains(validPath.substring(validPath.indexOf("/") + 1))
-                            && validPath.length() < taskTask.getPath().length()) {
+                final String taskPath = separatorsToUnix(taskTask.getPath());
+                for (String path : attachmentDocumentMap.keySet()) {
+                    String validPath = separatorsToUnix(path).substring(1);
+                    if (taskPath != null
+                        && taskTask.getPath().contains(validPath.substring(validPath.indexOf("/") + 1))
+                        && validPath.length() < taskPath.length()) {
 
-                            taskTask.setPath(validPath);
+                        taskTask.setPath(validPath);
+                        if (Arrays.stream(Type.values()).anyMatch(type -> path.contains(type.getValue()))) {
+                            break;
                         }
-                    });
+                    }
+                }
                 for (TaskDto taskDto : tasks) {
                     FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {
@@ -252,6 +260,11 @@ public class ReportService {
                             taskTask.setColor(taskDto.getColor());
                             taskTask.setDetail(taskDto.getDetail());
                         }
+                        DEFAULT_TYPES_TO_DISPLAY.stream()
+                            .filter(type -> taskTask.getName().equals(type.getValue())
+                                || taskTask.getName().equals(type.getHebrewName())
+                            ).findAny()
+                            .ifPresent(taskTask::setType);
                     } else {
                         taskTask.setType(formType.getType());
                     }
@@ -516,6 +529,8 @@ public class ReportService {
                         .filter(distinctByKey(CommonLogBook::getFullPath))
                         .collect(Collectors.toMap(CommonLogBook::getFullPath, Function.identity()));
         Report fullTree = getFullTree(reportDto);
+        log.info(ATTACHMENTS + attachmentDocumentMap.keySet());
+        log.info("formTypes" + formTypeMap.keySet());
         getRealTask(
             fullTree.getTask(),
             reportDto.getTasks(),
@@ -528,6 +543,7 @@ public class ReportService {
                 fullTree,
                 formTypeMap,
                 attachmentDocumentMap,
+                reportDto.getTypesToDisplay(),
                 true
         );
         log.info(FINISH_WEB_TREE);
@@ -549,18 +565,27 @@ public class ReportService {
                 fullTree,
                 formTypeMap,
                 attachmentDocumentMap,
+                reportDto.getTypesToDisplay(),
                 false
         );
         log.info(FINISH_ZIP_TREE);
     }
 
     private <T extends PathObject> T mapPathObject(T pathObject) {
+        String path = separatorsToUnix(pathObject.getPath());
         for (Type type : Type.values()) {
-            final String hebrewName = "\\" + type.getHebrewName() + "\\";
-            if (pathObject.getPath().contains(hebrewName)) {
-                pathObject.setPath(pathObject.getPath().replace(hebrewName, "\\" + type.getValue() + "\\"));
+            final String hebrewName = "/" + type.getHebrewName() + "/";
+            if (path.contains(hebrewName)) {
+                path = path.replace(hebrewName, "/" + type.getValue() + "/");
             }
         }
+        String fileName = Paths.get(path).getFileName().toString();
+        pathObject.setPath(
+            path.replace(
+                fileName,
+                fileName.trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER)
+            )
+        );
         return pathObject;
     }
 
@@ -687,6 +712,12 @@ public class ReportService {
                     }
                 }
             } else {
+                final String newName = file.getName().trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER);
+                if (!file.getName().equals(newName)) {
+                    path = path.replace(file.getName(), newName);
+                    File newFile = new File(Paths.get(file.getParent(), newName).toString());
+                    file.renameTo(newFile);
+                }
                 task.setIcon(3);
                 task.setPath(path.substring(1));
             }
