@@ -10,7 +10,18 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link media="all" rel="stylesheet" href="css/main.css" />
+
+    <style>
+
+      #togglePassword {
+        margin-left: -30px;
+        cursor: pointer;
+        display: initial;
+      }
+
+    </style>
   </head>
   <body class="login_page_styles register_page_styles">
     <div class="wrapper">
@@ -54,6 +65,7 @@
                     name="password"
                     id="password-1"
                   />
+                  <i class="far fa-eye" id="togglePassword"></i>
                 </div>
               </div>
               <!-- <div class="forgot-holder text-center">
@@ -69,6 +81,15 @@
               </div>
               <script>
                 (function() {
+                  const togglePassword = document.getElementById("togglePassword")
+
+                  togglePassword.addEventListener("click", e => {
+                    const password = document.getElementById("password-1")
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+
+                    password.setAttribute('type', type);
+                  })
+
                   const signInBtn = document.getElementsByClassName(
                     "registration-form-submit"
                   )[0];
