@@ -584,7 +584,7 @@ public class ReportService {
             path.replace(
                 fileName,
                 fileName.trim().replaceAll(UNACCEPTABLE_CHARACTERS, CHARACTER)
-            )
+            ).replace("//", "/")
         );
         return pathObject;
     }
