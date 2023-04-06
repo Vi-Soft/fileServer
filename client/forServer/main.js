@@ -2,7 +2,7 @@
 function cleanSearchArea(){
 	var searchResultDiv = document.getElementById("searchResult");
 	searchResultDiv.innerHTML = "";
-	
+
 	var searchTextEl = document.getElementById('search_text');
 	searchTextEl.value = '';
 }
@@ -84,4 +84,28 @@ function hiddenEmptyFolders() {
     if (previousElementSibling.getElementsByTagName("A").length === 0)
       previousElementSibling.classList.toggle("empty-folder");
   });
+}
+
+function shareDownloadedProject() {
+  let emails = window.prompt("Please enter email addresses for sharing. the emails shall be separated with the ';' character");
+
+  if (emails?.length) {
+    const url = "http://visoftapp1.visoft-eng.com:8180/api/share";
+
+    const requestOptions = {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        emails: emails.split(";"),
+        folder: window.location.href.replace("http://visoftapp1.visoft-eng.com:8180/", "")
+      })
+    };
+
+    var resp = fetch(url, requestOptions)
+        .catch(err => console.log(err));
+  }
 }

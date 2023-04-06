@@ -14,7 +14,10 @@ import static io.undertow.util.Methods.GET;
 
 public class RouterHandlerProvider implements HandlerProvider {
 
-    private HttpHandler unzip = e -> new ReportService().unzip(e);
+    private ReportService reportService = new ReportService();
+
+    private HttpHandler unzip = e -> reportService.unzip(e);
+    private HttpHandler share = e -> reportService.shareFolder(e);
     private HttpHandler login = AuthenticationService::login;
     private HttpHandler logout = AuthenticationService::logout;
     private HttpHandler version = AuthenticationService::getApplicationVersion;
@@ -36,6 +39,9 @@ public class RouterHandlerProvider implements HandlerProvider {
                 .add(POST, "/unzip",
                         getEagerFormParsingHandler()
                                 .setNext(unzip))
+                .add(POST, "/share",
+                        getEagerFormParsingHandler()
+                                .setNext(share))
                 .add(GET, "/version",
                         getEagerFormParsingHandler()
                                 .setNext(version));

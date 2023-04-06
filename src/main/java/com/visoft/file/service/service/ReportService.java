@@ -9,6 +9,8 @@ import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.Role;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
+import com.visoft.file.service.web.security.AuthenticatedUser;
+import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
@@ -30,12 +32,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
+import static com.visoft.file.service.service.util.EmailService.sendShared;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
@@ -316,6 +320,84 @@ public class ReportService {
 
     private static boolean existsFolder(String path) {
         return new File(path).exists();
+    }
+
+    public void shareFolder(HttpServerExchange exchange) {
+        log.info("Start sharing");
+        ShareDto shareDto;
+        exchange.startBlocking();
+        InputStream is = exchange.getInputStream();
+        String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
+        try {
+            shareDto = Config.getInstance().getMapper().readValue(s, ShareDto.class);
+            log.info("Share dto: " + shareDto);
+
+            AuthenticatedUser authenticatedUser = SecurityHandler.authenticatedUser;
+            User currentUser = authenticatedUser.getUser();
+            final Folder folder = FOLDER_SERVICE.findByFolder(shareDto.getFolder());
+
+            if (folder != null) {
+                shareDto.getEmails().forEach(email -> {
+                    User user = USER_SERVICE.findByLogin(email);
+                    String randomPassword = USER_SERVICE.getRandomPassword();
+                    if (Pattern.compile("^(.+)@(\\S+)$")
+                        .matcher(email)
+                        .matches()) {
+
+                        if (user == null) {
+                                user = new User(
+                                    email,
+                                    getEncode(randomPassword),
+                                    Role.USER,
+                                    Collections.singletonList(folder.getId())
+                                );
+                                sendInfo(CREATING_NEW_USER + user,
+                                    USER_PASSWORD + randomPassword);
+
+                                USER_SERVICE.create(user);
+                                Token createdUserToken = new Token(
+                                    generate(ObjectId.get()),
+                                    user.getId()
+                                );
+
+                                log.info(CREATE_TOKEN);
+                                TOKEN_SERVICE.create(createdUserToken);
+                                sendInfo(TOKEN_CREATED, createdUserToken.toString());
+                        } else {
+                            sendInfo(PASSWORD_CHANGED, randomPassword);
+                            user.getFolders().add(folder.getId());
+                            user.setPassword(getEncode(randomPassword));
+                            USER_SERVICE.update(user, user.getId());
+                            Token token = TOKEN_SERVICE.findByUserId(user.getId());
+                            if (token == null) {
+                                TOKEN_SERVICE.create(new Token(
+                                    generate(ObjectId.get()),
+                                    user.getId())
+                                );
+                            } else {
+                                token.setToken(generate(ObjectId.get()));
+                                token.setExpiration(Instant.now().plusSeconds(10800L));
+                                TOKEN_SERVICE.update(token, token.getId());
+                            }
+                        }
+                        log.info("Shared " + shareDto.getFolder() + " to " + email);
+                        sendShared(
+                            shareDto.getFolder(),
+                            currentUser.getLogin(),
+                            email,
+                            randomPassword
+                        );
+                    }
+                });
+                log.info("Sharing successfully finished");
+            } else {
+                send(exchange, FOLDER_NOT_FOUND, BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            sendWarn(SHARE_NOT_VALID, e.getMessage());
+            e.printStackTrace();
+            send(exchange, SHARE_NOT_VALID, BAD_REQUEST);
+        }
     }
 
     public void unzip(HttpServerExchange exchange) throws IOException {

@@ -84,3 +84,26 @@ function hiddenEmptyFolders() {
             previousElementSibling.classList.toggle("empty-folder");
     });
 }
+
+function shareDownloadedProject() {
+    let emails = window.prompt("Enter email addresses for sharing. the emails shall be separated with the ';' character");
+    if (emails?.length) {
+        const url = "http://visoftapp1.visoft-eng.com:8180/api/share";
+
+        const requestOptions = {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                emails: emails.split(";"),
+                folder: window.location.href.replace("http://visoftapp1.visoft-eng.com:8180/", "")
+            })
+        };
+
+        var resp = fetch(url, requestOptions)
+            .catch(err => console.log(err));
+    }
+}

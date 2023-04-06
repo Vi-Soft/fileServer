@@ -42,6 +42,8 @@ public interface ErrorConst {
 
     String REPORT_DTO_IS_EMPTY = "Report dto is empty";
 
+    String SHARE_NOT_VALID = "Share not valid";
+
     String NOT_CORRECT_REPORT_DTO = "Not correct report dto";
 
     String NOT_CORRECT_ZIP = "Not correct zip";
