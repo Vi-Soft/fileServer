@@ -33,7 +33,7 @@ public class Scheduler extends TimerTask {
     public void run() {
         LocalDateTime now = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());
         FOLDER_SERVICE.findAll().forEach(folder -> {
-            if (folder.getDate() != null && ChronoUnit.WEEKS.between(LocalDateTime.ofInstant(folder.getDate(), ZoneId.systemDefault()), now) >= 2) {
+            if (folder.getDate() != null && ChronoUnit.WEEKS.between(LocalDateTime.ofInstant(folder.getDate(), ZoneId.systemDefault()), now) >= 5) {
                 deleteQuietly(new File(Paths.get(rootPath, folder.getFolder()).toString()));
                 deleteQuietly(new File(Paths.get(rootPath, folder.getFolder() + ".zip").toString()));
                 FOLDER_SERVICE.delete(folder.getId());
