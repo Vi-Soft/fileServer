@@ -1,6 +1,7 @@
 package com.visoft.file.service.service.util;
 
 import com.visoft.file.service.web.handler.GeneralHandlerProvider;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +51,14 @@ public class PropertiesService {
 
     public static String getRootPath() {
         return getProperty("root.path");
+    }
+
+    public static int getFolderLifeDuration() {
+        final String folderLifeDuration = getProperty("scheduler.folder.duration");
+        if (StringUtils.isEmpty(folderLifeDuration)) {
+            return 0;
+        }
+        return Integer.parseInt(folderLifeDuration);
     }
 
     static String getServerName() {
