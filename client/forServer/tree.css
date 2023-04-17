@@ -8,7 +8,7 @@ p {
   line-height: 1.5;
 }
 body {
-  background-image: url(http://10.10.10.65:8090/forServer/background.jpg);
+  background-image: url(http://visoftapp1.visoft-eng.com:8090/forServer/background.jpg);
   background-attachment: fixed;
 }
 .searchResult {
@@ -75,7 +75,7 @@ body {
   text-align: left;
   padding: 15px;
 }
-
+http://10.10.10.65
 .fa {
   color: #ffe399;
 }
