@@ -113,7 +113,7 @@
                       },
                       body
                     };
-                    const url = "http://10.10.10.65:8180/api/login";
+                    const url = "http://visoftapp1.visoft-eng.com:8180/api/login";
 
                     var resp = fetch(url, requestOptions)
                       .then(res => {
@@ -126,7 +126,7 @@
                       .then(data => {
                         const { token, role } = data;
 
-                        window.location = "http://10.10.10.65:8180";
+                        window.location = "http://visoftapp1.visoft-eng.com:8180";
                       })
 
                       .catch(err => console.log(err));
