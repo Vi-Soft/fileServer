@@ -11,7 +11,7 @@ p {
 }
 
 body {
-    background-image: url(http://10.10.10.65:8090/forServer/background.jpg);
+    background-image: url(http://visoftapp1.visoft-eng.com:8090/forServer/background.jpg);
     background-attachment: fixed;
 }
 
