@@ -464,15 +464,17 @@ public class ReportService {
 
                                     removeFile(reportDto.getArchiveName() + getReportExtension());
 
-                                    buildTree(reportDto);
+                                    final String folderName = getFolderName(reportDto);
+
+                                    buildTree(reportDto, folderName);
 
                                     Folder folder = new Folder(
-                                            getFolderName(reportDto),
-                                            reportDto.getCount() > 1 && exportPool.containsKey(reportDto.getTimestamp())
-                                                    ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
-                                            reportDto.getProjectName(),
-                                            getMainTaskName(reportDto),
-                                            Instant.now()
+                                        folderName,
+                                        reportDto.getCount() > 1 && exportPool.containsKey(reportDto.getTimestamp())
+                                                ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
+                                        reportDto.getProjectName(),
+                                        getMainTaskName(reportDto),
+                                        Instant.now()
                                     );
 
                                     FOLDER_SERVICE.create(folder);
@@ -584,7 +586,7 @@ public class ReportService {
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
-    private void buildTree(ReportDto reportDto) {
+    private void buildTree(ReportDto reportDto, String folderName) {
         log.info(START_WEB_TREE);
 
         String archivePath = Paths.get(
@@ -622,11 +624,12 @@ public class ReportService {
             reportDto.getVersion()
         );
         saveIndexHtml(
-                fullTree,
-                formTypeMap,
-                attachmentDocumentMap,
-                reportDto.getTypesToDisplay(),
-                true
+            fullTree,
+            formTypeMap,
+            attachmentDocumentMap,
+            reportDto.getTypesToDisplay(),
+            folderName,
+            true
         );
         log.info(FINISH_WEB_TREE);
 
@@ -644,11 +647,12 @@ public class ReportService {
         );
         getDeleteNotWantFiles(fullTree);
         saveIndexHtml(
-                fullTree,
-                formTypeMap,
-                attachmentDocumentMap,
-                reportDto.getTypesToDisplay(),
-                false
+            fullTree,
+            formTypeMap,
+            attachmentDocumentMap,
+            reportDto.getTypesToDisplay(),
+            folderName,
+            false
         );
         log.info(FINISH_ZIP_TREE);
     }

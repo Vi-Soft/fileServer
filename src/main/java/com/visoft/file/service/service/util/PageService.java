@@ -175,6 +175,7 @@ public class PageService {
             Map<String, FormType> formTypes,
             Map<String, AttachmentDocument> attachmentDocumentMap,
             Set<Type> typesToDisplay,
+            String folderName,
             boolean forArchive
     ) {
         log.info(START_SAVE_HTML);
@@ -182,20 +183,22 @@ public class PageService {
         log.info(typesToDisplay);
         String pathToProject = rootPath + "/" + tree.getCompanyName() + "/" + tree.getArchiveName();
         String treeHtml = getTreePage()
-                .replace(
-                        "projectName",
-                        tree.getProjectName()
-                )
-                .replace(
-                        "<taskTree/>",
-                        getHtmlTree(
-                                tree.getTask(),
-                                formTypes,
-                                attachmentDocumentMap,
-                                typesToDisplay,
-                                forArchive,
-                                (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
-                );
+            .replace(
+                "folderName",
+                folderName
+            ).replace(
+                "projectName",
+                tree.getProjectName()
+            ).replace(
+                "<taskTree/>",
+                getHtmlTree(
+                    tree.getTask(),
+                    formTypes,
+                    attachmentDocumentMap,
+                    typesToDisplay,
+                    forArchive,
+                    (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
+            );
         saveIndexHtml(treeHtml, pathToProject, forArchive);
         copyFilesToProjectFolder(pathToProject);
         log.info(FINISH_SAVE_HTML);

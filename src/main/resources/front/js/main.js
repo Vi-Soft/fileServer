@@ -99,7 +99,7 @@ function shareDownloadedProject() {
             },
             body: JSON.stringify({
                 emails: emails.split(";"),
-                folder: window.location.href.replace("http://visoftapp1.visoft-eng.com:8180/", "")
+                folder: document.getElementById("folder").innerHTML
             })
         };
 
