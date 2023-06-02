@@ -33,7 +33,7 @@ public class TaskSorter {
             return Integer.valueOf(possibleStringIntegerValue);
         } catch (NumberFormatException | NullPointerException e) {
             sendWarn(UNABLE_TO_SORT_TASK, e.getMessage());
-            e.printStackTrace();
+           // e.printStackTrace();
             return null;
         }
     }

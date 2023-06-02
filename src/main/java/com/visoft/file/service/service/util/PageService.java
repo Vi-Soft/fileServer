@@ -24,7 +24,7 @@ import java.util.Set;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.*;
-import static com.visoft.file.service.service.ReportService.DEFAULT_TYPES_TO_DISPLAY;
+import static com.visoft.file.service.service.ReportService.*;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
 import static com.visoft.file.service.service.util.SenderService.sendInfo;
@@ -43,6 +43,9 @@ public class PageService {
     private static final String staticServer = PropertiesService.getStaticServer();
 
     private static final String STATIC_IP_FLAG = "#static_ip";
+
+    public static final String INDEX_HTML = "/index.html";
+    public static final String RUN_ME_HTML = "/DOUBLE-CLICK-ME.html";
 
     public static void redirectToLoginPage(HttpServerExchange exchange) {
         exchange
@@ -198,14 +201,14 @@ public class PageService {
                     typesToDisplay,
                     forArchive,
                     (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
-            );
+            ).replace("base", forArchive ? "<base href=\"DO_NOT_TOUCH_ME/\">" : "");
         saveIndexHtml(treeHtml, pathToProject, forArchive);
         copyFilesToProjectFolder(pathToProject);
         log.info(FINISH_SAVE_HTML);
     }
 
     private static void saveIndexHtml(String indexHtmlBody, String path, boolean forArchive) {
-        try (PrintWriter out = new PrintWriter(path + (forArchive ? "/RUN_ME.html" : "/index.html"))) {
+        try (PrintWriter out = new PrintWriter(path + (forArchive ? RUN_ME_HTML : INDEX_HTML))) {
             out.println(indexHtmlBody);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
