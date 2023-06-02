@@ -46,6 +46,7 @@ public class PageService {
 
     public static final String INDEX_HTML = "/index.html";
     public static final String RUN_ME_HTML = "/DOUBLE-CLICK-ME.html";
+    public static final String BASE = "<base href=\"%s/\">";
 
     public static void redirectToLoginPage(HttpServerExchange exchange) {
         exchange
@@ -201,7 +202,7 @@ public class PageService {
                     typesToDisplay,
                     forArchive,
                     (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
-            ).replace("base", forArchive ? "<base href=\"DO_NOT_TOUCH_ME/\">" : "");
+            ).replace("base", forArchive ? String.format(BASE, DO_NOT_TOUCH_ME) : "");
         saveIndexHtml(treeHtml, pathToProject, forArchive);
         copyFilesToProjectFolder(pathToProject);
         log.info(FINISH_SAVE_HTML);
