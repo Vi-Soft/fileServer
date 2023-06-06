@@ -14,6 +14,7 @@ import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.io.FileUtils;
 import org.bson.types.ObjectId;
 import org.zeroturnaround.zip.ZipUtil;
 
@@ -43,6 +44,7 @@ import static com.visoft.file.service.service.util.EmailService.sendShared;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
+import static com.visoft.file.service.service.util.PageService.RUN_ME_HTML;
 import static com.visoft.file.service.service.util.PageService.saveIndexHtml;
 import static com.visoft.file.service.service.util.PropertiesService.*;
 import static com.visoft.file.service.service.util.SenderService.*;
@@ -51,6 +53,9 @@ import static org.zeroturnaround.zip.commons.FileUtilsV2_2.deleteQuietly;
 
 @Log4j
 public class ReportService {
+
+    public static final String DO_NOT_TOUCH_ME = "DO_NOT_TOUCH_ME";
+    private static final String TO_ZIP = "TO_ZIP";
 
     public static final List<Type> DEFAULT_TYPES_TO_DISPLAY = Collections.singletonList(Type.SUMMARY);
     private static final String UNACCEPTABLE_CHARACTERS = "[\\\\|/*:?\"<>%#]";
@@ -634,10 +639,32 @@ public class ReportService {
         log.info(FINISH_WEB_TREE);
 
         sendInfo(START_ZIP, reportDto.getArchiveName());
-        zipPack(archivePath, Paths.get(
+
+        String toZip = Paths.get(archivePath, TO_ZIP).toString();
+        String doNotTouchMe = Paths.get(toZip, DO_NOT_TOUCH_ME).toString();
+
+        try {
+            FileUtils.copyDirectory(
+                    new File(archivePath),
+                    new File(doNotTouchMe),
+                    pathname -> !RUN_ME_HTML.contains(pathname.getName())
+            );
+            FileUtils.copyDirectory(
+                    new File(archivePath),
+                    new File(toZip),
+                    pathname -> RUN_ME_HTML.contains(pathname.getName())
+            );
+        } catch (IOException e) {
+            sendError(reportDto.getArchiveName() + "\n" + e.getMessage(), reportDto.getEmail());
+        }
+
+        zipPack(toZip, Paths.get(
                 rootPath,
                 reportDto.getCompanyName(),
                 reportDto.getArchiveName() + ".zip").toString());
+
+        FileUtils.deleteQuietly(new File(toZip));
+
         sendInfo(FINISH_ZIP, reportDto.getArchiveName());
 
         log.info(START_ZIP_TREE);
