@@ -23,6 +23,8 @@ public enum Type {
     CAR_PAR_OBS("CAR_PAR_OBS", ""),
     CM_TASK_EXECUTION_APPROVAL("CM_TASK_EXECUTION_APPROVAL", ""),
     CM_ATTACHMENT("CM_ATTACHMENT", ""),
+    QUALITY_PLAN_PROCEDURE("Quality_Plan_Procedure", "תוכנית בקרת איכות ונהלים"),
+    OTHER_DOCUMENTS("Other_Documents", "מסמכי תיעוד QC אחרים"),
     PRELIMINARY("Preliminary", "בקרה מקדימה"),
     SUMMARY("Summary", "דוחות");
 
