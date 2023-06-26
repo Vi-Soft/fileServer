@@ -203,6 +203,9 @@ public class PageService {
                     forArchive,
                     (tree.getCompanyName() + tree.getArchiveName()).length() + 2)
             ).replace("base", forArchive ? String.format(BASE, DO_NOT_TOUCH_ME) : "");
+        if (forArchive) {
+            treeHtml = treeHtml.replace("block", "none");
+        }
         saveIndexHtml(treeHtml, pathToProject, forArchive);
         copyFilesToProjectFolder(pathToProject);
         log.info(FINISH_SAVE_HTML);
