@@ -26,7 +26,8 @@ public enum Type {
     QUALITY_PLAN_PROCEDURE("Quality_Plan_Procedure", "תוכנית בקרת איכות ונהלים"),
     OTHER_DOCUMENTS("Other_Documents", "מסמכי תיעוד QC אחרים"),
     PRELIMINARY("Preliminary", "בקרה מקדימה"),
-    SUMMARY("Summary", "דוחות");
+    SUMMARY("Summary", "דוחות"),
+    LAYERED_SYSTEMS("Layered_Systems", "Layered_Systems");
 
     private final String value;
 
