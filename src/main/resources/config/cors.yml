@@ -4,6 +4,7 @@ allowedOrigins:
   #  - http://localhost:4200
   # http://localhost:3000
   # - http://localhost:3001
+  - https://visoftapp1.visoft-eng.com/archive
   - http://visoft-test.visoft-eng.com:8090
   - http://visoftapp1.visoft-eng.com:8090
   - http://visoftapp1.visoft-eng.com:8180
