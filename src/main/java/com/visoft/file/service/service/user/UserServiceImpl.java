@@ -286,7 +286,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     public String getRandomPassword() {
         return Arrays.toString(
-                new Random().ints(5, 0, 10).toArray()
+                new Random().ints(6, 0, 10).toArray()
         ).replaceAll("\\[|]|,|\\s", "");
     }
 
