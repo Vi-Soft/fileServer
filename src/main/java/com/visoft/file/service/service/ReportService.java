@@ -339,7 +339,7 @@ public class ReportService {
 
             AuthenticatedUser authenticatedUser = SecurityHandler.authenticatedUser;
             User currentUser = authenticatedUser.getUser();
-            final Folder folder = FOLDER_SERVICE.findByFolder(File.separator + shareDto.getFolder());
+            final Folder folder = FOLDER_SERVICE.findByFolder(shareDto.getFolder());
             
             if (folder != null) {
                 shareDto.getEmails().forEach(email -> {

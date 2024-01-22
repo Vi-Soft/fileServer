@@ -6,9 +6,9 @@ import com.mongodb.client.model.Indexes;
 import com.visoft.file.service.config.DBConfig;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.FolderConst;
+import org.bson.Document;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.visoft.file.service.persistance.entity.GeneralConst._ID;
+import java.util.regex.Pattern;
 
 /**
  * Configuration mongo db class for {@link Folder}
@@ -16,7 +16,8 @@ import static com.visoft.file.service.persistance.entity.GeneralConst._ID;
 public class FolderRepository extends AbstractRepository<Folder> {
 
     public Folder findByFolder(String folder) {
-        return collection.find(eq("folder", folder)).first();
+        Document doc = new Document("folder", Pattern.compile(folder));
+        return collection.find(doc).first();
     }
 
     /**
