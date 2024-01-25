@@ -7,7 +7,6 @@ import com.visoft.file.service.dto.Task;
 import com.visoft.file.service.dto.Type;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.service.AttachmentDocumentService;
-import com.visoft.file.service.service.FormTypeService;
 import com.visoft.file.service.util.TaskSorter;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
@@ -24,6 +23,7 @@ import java.util.Set;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.FOLDER_SERVICE;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.FormTypeService.getFormType;
 import static com.visoft.file.service.service.ReportService.*;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.PropertiesService.getStaticServer;
@@ -269,11 +269,10 @@ public class PageService {
                                                     .length()
                                     ).substring(startPathWith);
                         }
-                        formType = new FormTypeService()
-                                .getFormType(
-                                        formTypes,
-                                        path
-                                );
+                        formType = getFormType(
+                            formTypes,
+                            path
+                        );
                         if (formType != null) {
                             classWithId = formType.getType().getValue() + "-" + split[split.length - 2];
                         } else {

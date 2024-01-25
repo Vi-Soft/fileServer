@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 
 import static com.visoft.file.service.service.DI.DependencyInjectionService.*;
 import static com.visoft.file.service.service.ErrorConst.*;
+import static com.visoft.file.service.service.FormTypeService.getFormType;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendShared;
@@ -260,7 +261,7 @@ public class ReportService {
                     }
                 }
                 for (TaskDto taskDto : tasks) {
-                    FormType formType = new FormTypeService().getFormType(formTypes, taskTask.getPath());
+                    FormType formType = getFormType(formTypes, taskTask.getPath());
                     if (formType == null) {
                         if (taskTask.getName().equals(taskDto.getId())) {
                             taskTask.setIcon(taskDto.getIcon());
@@ -316,7 +317,7 @@ public class ReportService {
         String fileName = reportDto.getArchiveName();
         sendInfo(START_DOWNLOAD, fileName);
         sendInfo(START_DOWN,  fileName);
-        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName + "&customToken=" + getToken());
+        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName.replace("+", "%2B") + "&customToken=" + getToken());
         ReadableByteChannel rbc = Channels.newChannel(website.openStream());
         FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
@@ -685,7 +686,7 @@ public class ReportService {
     }
 
     private <T extends PathObject> T mapPathObject(T pathObject) {
-        String path = separatorsToUnix(pathObject.getPath());
+        String path = separatorsToUnix(pathObject.getPath()).replace("//", "/");
         for (Type type : Type.values()) {
             final String hebrewName = "/" + type.getHebrewName() + "/";
             if (path.contains(hebrewName)) {
