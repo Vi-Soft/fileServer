@@ -164,13 +164,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     @Override
     public void findAll(HttpServerExchange exchange) {
         send(
-                exchange,
-                toJson(
-                        findAll()
-                        .parallelStream()
-                        .map(UserOutcomeDto::new)
-                        .collect(Collectors.toList())
-                )
+            exchange,
+            toJson(
+                findAll().stream()
+                    .map(UserOutcomeDto::new)
+                    .collect(Collectors.toList())
+            )
         );
     }
 

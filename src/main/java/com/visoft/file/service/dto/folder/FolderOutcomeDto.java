@@ -20,11 +20,15 @@ public class FolderOutcomeDto {
      * {@link Folder#getFolder() folder}
      */
     private String folder;
+    private String projectName;
+    private String taskName;
 
     public FolderOutcomeDto(Folder folder) {
         if (folder != null) {
             this.id = folder.getId().toString();
             this.folder = folder.getFolder();
+            this.projectName = folder.getProjectName();
+            this.taskName = folder.getTaskName();
         }
     }
 }

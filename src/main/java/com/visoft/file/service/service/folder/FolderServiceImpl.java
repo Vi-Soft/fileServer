@@ -1,5 +1,6 @@
 package com.visoft.file.service.service.folder;
 
+import com.visoft.file.service.dto.folder.FolderFindDto;
 import com.visoft.file.service.dto.folder.FolderOutcomeDto;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.GeneralConst;
@@ -9,6 +10,8 @@ import com.visoft.file.service.persistance.repository.FolderRepository;
 import com.visoft.file.service.persistance.repository.Repositories;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
 import com.visoft.file.service.service.util.FileSystemService;
+import com.visoft.file.service.util.pageable.PageResult;
+import com.visoft.file.service.util.pageable.Pageable;
 import io.undertow.server.HttpServerExchange;
 import org.bson.types.ObjectId;
 
@@ -25,6 +28,8 @@ import static com.visoft.file.service.service.ErrorConst.NOT_FOUND;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.PropertiesService.getRootPath;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
+import static com.visoft.file.service.service.util.RequestService.getPageableFromRequest;
+import static com.visoft.file.service.service.util.RequestService.getParamFromRequest;
 import static com.visoft.file.service.service.util.SenderService.*;
 
 public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements FolderService {
@@ -116,16 +121,25 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
 
     @Override
     public void findAll(HttpServerExchange exchange) {
+        FolderFindDto dto = FolderFindDto.builder()
+            .folder(getParamFromRequest(exchange, "folder"))
+            .projectName(getParamFromRequest(exchange, "projectName"))
+            .taskName(getParamFromRequest(exchange, "taskName"))
+            .build();
+
+        Pageable pageable = getPageableFromRequest(exchange);
+
+        List<FolderOutcomeDto> data = directFolderRepository.findAllByNameContains(dto, pageable).stream()
+            .map(FolderOutcomeDto::new)
+            .collect(Collectors.toList());
+
+        int total = directFolderRepository.findAll().size();
+
         send(
-                exchange,
-                toJson(
-//                        getIdsFromFolders(
-                        findAll()
-                                .parallelStream()
-                                .map(FolderOutcomeDto::new)
-                                .collect(Collectors.toList())
-//                        )
-                )
+            exchange,
+            toJson(
+                new PageResult<>(data, total)
+            )
         );
     }
 
