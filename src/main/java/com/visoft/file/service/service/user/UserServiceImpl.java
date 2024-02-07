@@ -1,6 +1,9 @@
 package com.visoft.file.service.service.user;
 
 import com.networknt.config.Config;
+import com.visoft.file.service.dto.folder.FolderFindDto;
+import com.visoft.file.service.dto.folder.FolderOutcomeDto;
+import com.visoft.file.service.dto.folder.UserFindDto;
 import com.visoft.file.service.dto.user.UserCreateDto;
 import com.visoft.file.service.dto.user.UserOutcomeDto;
 import com.visoft.file.service.dto.user.UserUpdateDto;
@@ -8,8 +11,12 @@ import com.visoft.file.service.persistance.entity.Role;
 import com.visoft.file.service.persistance.entity.Token;
 import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.persistance.entity.UserConst;
+import com.visoft.file.service.persistance.repository.FolderRepository;
 import com.visoft.file.service.persistance.repository.Repositories;
+import com.visoft.file.service.persistance.repository.UserRepository;
 import com.visoft.file.service.service.abstractService.AbstractServiceImpl;
+import com.visoft.file.service.util.pageable.PageResult;
+import com.visoft.file.service.util.pageable.Pageable;
 import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import org.bson.conversions.Bson;
@@ -33,6 +40,8 @@ import static com.visoft.file.service.service.util.EncoderService.isPasswordsMat
 import static com.visoft.file.service.service.util.JWTService.generate;
 import static com.visoft.file.service.service.util.JsonService.toJson;
 import static com.visoft.file.service.service.util.RequestService.getIdFromRequest;
+import static com.visoft.file.service.service.util.RequestService.getPageableFromRequest;
+import static com.visoft.file.service.service.util.RequestService.getParamFromRequest;
 import static com.visoft.file.service.service.util.SenderService.*;
 
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
@@ -40,6 +49,8 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public UserServiceImpl() {
         super(Repositories.USER_REPOSITORY);
     }
+
+    private final UserRepository directUserRepository = Repositories.DIRECT_USER_REPOSITORY;
 
     @Override
     public void update(HttpServerExchange exchange) {
@@ -163,12 +174,25 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     @Override
     public void findAll(HttpServerExchange exchange) {
+        UserFindDto dto = UserFindDto.builder()
+            .deleted(getParamFromRequest(exchange, "deleted"))
+            .login(getParamFromRequest(exchange, "login"))
+            .role(getParamFromRequest(exchange, "role"))
+            .build();
+
+        Pageable pageable = getPageableFromRequest(exchange);
+
+        PageResult<User> result = directUserRepository.findAll(dto, pageable);
+
         send(
             exchange,
             toJson(
-                findAll().stream()
-                    .map(UserOutcomeDto::new)
-                    .collect(Collectors.toList())
+                new PageResult<>(
+                    result.getData().stream()
+                        .map(UserOutcomeDto::new)
+                        .collect(Collectors.toList()),
+                    result.getTotal()
+                )
             )
         );
     }

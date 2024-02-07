@@ -14,5 +14,5 @@ import java.util.List;
 public class PageResult<T> {
 
     private List<T> data;
-    private Integer total;
+    private Long total;
 }

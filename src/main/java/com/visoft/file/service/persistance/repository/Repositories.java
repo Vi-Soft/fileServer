@@ -16,4 +16,6 @@ public interface Repositories {
     AbstractRepository<Folder> FOLDER_REPOSITORY = new FolderRepository();
 
     FolderRepository DIRECT_FOLDER_REPOSITORY = new FolderRepository();
+
+    UserRepository DIRECT_USER_REPOSITORY = new UserRepository();
 }

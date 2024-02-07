@@ -129,16 +129,17 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
 
         Pageable pageable = getPageableFromRequest(exchange);
 
-        List<FolderOutcomeDto> data = directFolderRepository.findAllByNameContains(dto, pageable).stream()
-            .map(FolderOutcomeDto::new)
-            .collect(Collectors.toList());
-
-        int total = directFolderRepository.findAll().size();
+        PageResult<Folder> result = directFolderRepository.findAll(dto, pageable);
 
         send(
             exchange,
             toJson(
-                new PageResult<>(data, total)
+                new PageResult<>(
+                    result.getData().stream()
+                        .map(FolderOutcomeDto::new)
+                        .collect(Collectors.toList()),
+                    result.getTotal()
+                )
             )
         );
     }

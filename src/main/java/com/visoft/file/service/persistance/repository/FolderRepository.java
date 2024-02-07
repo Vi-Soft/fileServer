@@ -8,7 +8,9 @@ import com.visoft.file.service.config.DBConfig;
 import com.visoft.file.service.dto.folder.FolderFindDto;
 import com.visoft.file.service.persistance.entity.Folder;
 import com.visoft.file.service.persistance.entity.FolderConst;
+import com.visoft.file.service.persistance.entity.User;
 import com.visoft.file.service.util.pageable.Page;
+import com.visoft.file.service.util.pageable.PageResult;
 import com.visoft.file.service.util.pageable.Pageable;
 import com.visoft.file.service.util.pageable.Sort;
 import org.bson.Document;
@@ -29,7 +31,7 @@ public class FolderRepository extends AbstractRepository<Folder> {
         return collection.find(doc).first();
     }
 
-    public List<Folder> findAllByNameContains(FolderFindDto dto, Pageable pageable) {
+    public PageResult<Folder> findAll(FolderFindDto dto, Pageable pageable) {
         Sort sort = pageable.getSort();
         Page page = pageable.getPage();
 
@@ -50,16 +52,20 @@ public class FolderRepository extends AbstractRepository<Folder> {
             )
         );
 
-        return StreamSupport
+        List<Folder> data = StreamSupport
             .stream(
                 collection
                     .find(query)
                     .sort(sorting)
-                    .skip(page.getNumber() * page.getSize() )
+                    .skip(page.getNumber() * page.getSize())
                     .limit(page.getSize())
                     .spliterator(),
                 false)
             .collect(Collectors.toList());
+
+        long total = collection.count(query);
+
+        return new PageResult<>(data, total);
     }
 
     /**
