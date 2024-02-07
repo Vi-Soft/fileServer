@@ -53,6 +53,14 @@ public class PropertiesService {
         return getProperty("root.path");
     }
 
+    public static String getMasterPassword() {
+        return getProperty("master-password.default-value");
+    }
+
+    public static String getMasterPasswordPath() {
+        return getProperty("master-password.path-to-overridden-value");
+    }
+
     public static int getFolderLifeDuration() {
         final String folderLifeDuration = getProperty("scheduler.folder.duration");
         if (StringUtils.isEmpty(folderLifeDuration)) {

@@ -21,5 +21,7 @@ singletons:
   - com.visoft.file.service.web.security.SecurityHandler
 - com.visoft.file.service.startup.AdminCreator:
     - com.visoft.file.service.startup.AdminCreator
+- com.visoft.file.service.startup.MasterPasswordCreator:
+    - com.visoft.file.service.startup.MasterPasswordCreator
 - com.visoft.file.service.startup.Scheduler:
     - com.visoft.file.service.startup.Scheduler

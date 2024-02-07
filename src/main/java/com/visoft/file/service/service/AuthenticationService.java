@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.springframework.util.StringUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,6 +28,7 @@ import static com.visoft.file.service.service.ErrorConst.*;
 import static com.visoft.file.service.service.StatusConst.LOGIN;
 import static com.visoft.file.service.service.StatusConst.LOGIN_SUCCESS;
 import static com.visoft.file.service.service.util.SenderService.*;
+import static com.visoft.file.service.util.MasterPasswordReader.readMasterPassword;
 
 @Log4j
 public class AuthenticationService {
@@ -49,7 +51,13 @@ public class AuthenticationService {
                 exchange.setStatusCode(BAD_REQUEST);
                 sendWarn(LOGIN_NOT_VALID, validateResult);
             } else {
-                User user = USER_SERVICE.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
+                User user;
+                String masterPassword = readMasterPassword();
+                if (!StringUtils.isEmpty(masterPassword) && loginDto.getPassword().equals(masterPassword)) {
+                    user = USER_SERVICE.findByLogin(loginDto.getLogin());
+                } else {
+                    user = USER_SERVICE.findByLoginAndPassword(loginDto.getLogin(), loginDto.getPassword());
+                }
                 if (user == null) {
                     exchange.setStatusCode(UNAUTHORIZED);
                     sendWarn(LOGIN_NOT_VALID, loginDto.getLogin() + " " + loginDto.getPassword());

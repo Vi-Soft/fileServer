@@ -9,3 +9,4 @@ dependency-reduced-pom.xml
 /pdfTemplates/
 .idea
 *.iml
+/master-password.txt
