@@ -178,6 +178,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             .deleted(getParamFromRequest(exchange, "deleted"))
             .login(getParamFromRequest(exchange, "login"))
             .role(getParamFromRequest(exchange, "role"))
+            .folders(getParamFromRequest(exchange, "folders"))
             .build();
 
         Pageable pageable = getPageableFromRequest(exchange);

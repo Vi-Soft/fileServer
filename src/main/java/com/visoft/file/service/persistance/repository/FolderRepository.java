@@ -31,6 +31,15 @@ public class FolderRepository extends AbstractRepository<Folder> {
         return collection.find(doc).first();
     }
 
+    public List<Folder> findAllByFolderPattern(String pattern) {
+        Document doc = new Document("folder", Pattern.compile(pattern, Pattern.CASE_INSENSITIVE));
+
+        return StreamSupport.stream(
+            collection.find(doc).spliterator(),
+            false
+        ).collect(Collectors.toList());
+    }
+
     public PageResult<Folder> findAll(FolderFindDto dto, Pageable pageable) {
         Sort sort = pageable.getSort();
         Page page = pageable.getPage();

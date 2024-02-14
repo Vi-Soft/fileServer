@@ -11,4 +11,5 @@ public class UserFindDto {
     private String deleted;
     private String login;
     private String role;
+    private String folders;
 }
