@@ -27,6 +27,7 @@ public enum Type {
     OTHER_DOCUMENTS("Other_Documents", "מסמכי תיעוד QC אחרים"),
     PRELIMINARY("Preliminary", "בקרה מקדימה"),
     SUMMARY("Summary", "דוחות"),
+    TRAINING_MATERIALS("Training_Materials", "הדרכות"),
     LAYERED_SYSTEMS("Layered_Systems", "Layered_Systems");
 
     private final String value;
