@@ -371,7 +371,11 @@ public class ReportService {
                                 sendInfo(TOKEN_CREATED, createdUserToken.toString());
                         } else {
                             sendInfo(PASSWORD_CHANGED, randomPassword);
-                            user.getFolders().add(folder.getId());
+                            if (user.getFolders() == null) {
+                                user.setFolders(Collections.singletonList(folder.getId()));
+                            } else {
+                                user.getFolders().add(folder.getId());
+                            }
                             user.setPassword(getEncode(randomPassword));
                             USER_SERVICE.update(user, user.getId());
                             Token token = TOKEN_SERVICE.findByUserId(user.getId());
@@ -513,7 +517,11 @@ public class ReportService {
                                             sendInfo(TOKEN_CREATED, createdUserToken.toString());
                                         } else {
                                             sendInfo(PASSWORD_CHANGED, randomPassword);
-                                            user.getFolders().add(folder.getId());
+                                            if (user.getFolders() == null) {
+                                                user.setFolders(Collections.singletonList(folder.getId()));
+                                            } else {
+                                                user.getFolders().add(folder.getId());
+                                            }
                                             user.setPassword(getEncode(randomPassword));
                                             USER_SERVICE.update(user, user.getId());
                                             Token token = TOKEN_SERVICE.findByUserId(user.getId());
