@@ -125,6 +125,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             if (dto.getFolders() != null && !dto.getFolders().isEmpty()) {
                 folders = FOLDER_SERVICE.getIdsFromStrings(dto.getFolders());
             }
+            dto.setLogin(dto.getLogin().toLowerCase());
 
             if (isExistsByLogin(dto.getLogin())) {
                 send(exchange, LOGIN_EXISTS, BAD_REQUEST);
