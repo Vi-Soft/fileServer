@@ -31,6 +31,8 @@ public class ReportDto {
 
     private String password;
 
+    private String mainCompanyId;
+
     private List<TaskDto> tasks;
 
     private Set<FormType> formTypes = new HashSet<>();
