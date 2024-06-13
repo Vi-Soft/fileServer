@@ -8,6 +8,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import static com.visoft.file.service.service.util.PropertiesService.getDBName;
+import static com.visoft.file.service.service.util.PropertiesService.getDBUrl;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
@@ -19,7 +20,7 @@ public class DBConfig {
     /**
      * Get connection to mongo database
      */
-    private final static MongoClient mongoClient = MongoClients.create();
+    private final static MongoClient mongoClient = MongoClients.create(getDBUrl());
 
     /**
      * Get instance mongo database

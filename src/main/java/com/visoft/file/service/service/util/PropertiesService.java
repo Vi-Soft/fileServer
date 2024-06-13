@@ -74,7 +74,11 @@ public class PropertiesService {
     }
 
     public static String getDBName() {
-        return getProperty("db");
+        return getProperty("db.name");
+    }
+
+    public static String getDBUrl() {
+        return getProperty("db.url");
     }
 
     private static String getProperty(String value) {
