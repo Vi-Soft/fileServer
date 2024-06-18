@@ -313,13 +313,13 @@ public class ReportService {
         );
     }
 
-    private static void downloadZip(ReportDto reportDto) throws IOException {
+    private static void downloadZip(ReportDto reportDto, boolean isWinMode, String folderName) throws IOException {
         String fileName = reportDto.getArchiveName();
         sendInfo(START_DOWNLOAD, fileName);
         sendInfo(START_DOWN,  fileName);
         URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName.replace("+", "%2B") + "&customToken=" + getToken() + "&mainCompanyId=" + reportDto.getMainCompanyId());
         ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + fileName + getReportExtension());
+        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + (isWinMode ? folderName : fileName) + getReportExtension());
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         sendInfo(FINISH_DOWNLOAD, fileName);
     }
@@ -417,6 +417,7 @@ public class ReportService {
 
         if (reportDto != null) {
             if (reportDto.getArchiveName() != null) {
+                boolean isWinMode = Boolean.TRUE.equals(reportDto.getIsWinMode());
 
                 if (reportDto.getTimestamp() != 0) {
                     if (exportPool.size() >= 3) {
@@ -457,26 +458,28 @@ public class ReportService {
                         } else {
                             new Thread(() -> {
                                 try {
-                                    downloadZip(reportDto);
-                                    sendInfo(START_UNZIP, reportDto.getArchiveName());
-                                    String path = rootPath + "/" + reportDto.getArchiveName() + getReportExtension();
-                                    String archivePath = Paths.get(
-                                            rootPath,
-                                            reportDto.getCompanyName(),
-                                            reportDto.getArchiveName()
-                                    ).toString();
-
-                                    zipUnpack(path, archivePath);
-
-                                    sendInfo(FINISH_UNZIP, reportDto.getArchiveName());
-
-                                    addToMutualArchive(reportDto, path, reportDto.getArchiveName());
-
-                                    removeFile(reportDto.getArchiveName() + getReportExtension());
-
                                     final String folderName = getFolderName(reportDto);
+                                    downloadZip(reportDto, isWinMode, folderName);
 
-                                    buildTree(reportDto, folderName);
+                                    if (!isWinMode) {
+                                        sendInfo(START_UNZIP, reportDto.getArchiveName());
+                                        String path = rootPath + "/" + reportDto.getArchiveName() + getReportExtension();
+                                        String archivePath = Paths.get(
+                                                rootPath,
+                                                reportDto.getCompanyName(),
+                                                reportDto.getArchiveName()
+                                        ).toString();
+
+                                        zipUnpack(path, archivePath);
+
+                                        sendInfo(FINISH_UNZIP, reportDto.getArchiveName());
+
+                                        addToMutualArchive(reportDto, path, reportDto.getArchiveName());
+
+                                        removeFile(reportDto.getArchiveName() + getReportExtension());
+
+                                        buildTree(reportDto, folderName);
+                                    }
 
                                     Folder folder = new Folder(
                                         folderName,
@@ -484,7 +487,8 @@ public class ReportService {
                                                 ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
                                         reportDto.getProjectName(),
                                         getMainTaskName(reportDto),
-                                        Instant.now()
+                                        Instant.now(),
+                                        isWinMode
                                     );
 
                                     FOLDER_SERVICE.create(folder);
@@ -568,7 +572,9 @@ public class ReportService {
                                     removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName()).toString());
                                     removeFile(Paths.get(reportDto.getCompanyName(), reportDto.getArchiveName() + getReportExtension()).toString());
                                 } finally {
-                                    removeFile(reportDto.getArchiveName() + getReportExtension());
+                                    if (!isWinMode) {
+                                        removeFile(reportDto.getArchiveName() + getReportExtension());
+                                    }
                                     exportPool.remove(reportDto.getTimestamp());
                                 }
                             }).start();

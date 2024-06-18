@@ -50,11 +50,12 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     ) {
         create(
                 new Folder(
-                        folder,
-                        mutualFolder,
-                        projectName,
-                        taskName,
-                        data
+                    folder,
+                    mutualFolder,
+                    projectName,
+                    taskName,
+                    data,
+                    false
                 )
         );
     }

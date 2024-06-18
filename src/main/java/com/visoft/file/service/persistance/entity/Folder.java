@@ -22,6 +22,8 @@ public class Folder {
 
     private String taskName;
 
+    private Boolean winFolder;
+
     @BsonCreator
     public Folder(
             @BsonProperty(GeneralConst.ID) ObjectId id,
@@ -29,7 +31,8 @@ public class Folder {
             @BsonProperty(FolderConst.MUTUAL_FOLDER) String mutualFolder,
             @BsonProperty(FolderConst.PROJECT_NAME) String projectName,
             @BsonProperty(FolderConst.TASK_NAME) String taskName,
-            @BsonProperty(FolderConst.DATE) Instant date
+            @BsonProperty(FolderConst.DATE) Instant date,
+            @BsonProperty(FolderConst.WIN_FOLDER) Boolean winFolder
     ) {
         this.id = id;
         this.folder = folder;
@@ -37,6 +40,7 @@ public class Folder {
         this.projectName = projectName;
         this.taskName = taskName;
         this.date = date;
+        this.winFolder = winFolder;
     }
 
     public Folder(
@@ -44,15 +48,17 @@ public class Folder {
             String mutualFolder,
             String projectName,
             String taskName,
-            Instant date
+            Instant date,
+            boolean winFolder
     ) {
         this(
-                ObjectId.get(),
-                folder,
-                mutualFolder,
-                projectName,
-                taskName,
-                date
+            ObjectId.get(),
+            folder,
+            mutualFolder,
+            projectName,
+            taskName,
+            date,
+            winFolder
         );
     }
 }

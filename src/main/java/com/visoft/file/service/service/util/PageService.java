@@ -63,15 +63,17 @@ public class PageService {
     public static void getMainUserHtml(HttpServerExchange exchange, List<Folder> folders) {
         StringBuilder htmlString = new StringBuilder();
         for (Folder folder : folders) {
+            boolean isWinFolder = Boolean.TRUE.equals(folder.getWinFolder());
+            String folderName = getFolderName(folder.getFolder());
             htmlString
                     .append("<div>\n")
                     .append("    <a href=\"")
-                    .append(folder.getFolder())
+                    .append(isWinFolder ? server + folder.getFolder() + ".zip" : folder.getFolder())
                     .append("\">\n")
                     .append("        <table class=\"btn\">\n")
                     .append("            <tr>\n")
                     .append("                <td>")
-                    .append(getFolderName(folder.getFolder()))
+                    .append(isWinFolder ? "(Win) Download " + folderName : folderName)
                     .append("</td>\n")
                     .append("                <td>&nbsp;/&nbsp;</td>\n")
                     .append("                <td>")

@@ -43,6 +43,8 @@ public class ReportDto {
 
     private Set<Type> typesToDisplay = new HashSet<>();
 
+    private Boolean isWinMode;
+
     @JsonIgnore
     private String errorMassage;
 }

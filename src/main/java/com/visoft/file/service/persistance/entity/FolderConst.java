@@ -13,4 +13,6 @@ public interface FolderConst extends GeneralConst {
     String MUTUAL_FOLDER = "mutualFolder";
 
     String DATE = "date";
+
+    String WIN_FOLDER = "winFolder";
 }
