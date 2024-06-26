@@ -39,7 +39,7 @@ public class EmailService {
         } else {
             message +=
                 (version == Version.IL ? "5. בתיקייה שנוצרה יש ללחוץ על קובץ  DOUBLE-CLICK-ME" : "5. In the extracted folder, click on the DOUBLE-CLICK-ME file.") + "\n"
-                + (version == Version.IL ? "6. הקובץ נפתח בדפדפן ובתפריט שנפתח אפשר למצוא את הקבצים הדרושים לפי מיקומם בעץ הפרויקט." : "6. The file is opened in the browser and you can find the necessary files in the menu according to their location in the project tree.") + "\n\n"
+                + (version == Version.IL ? "6. הקובץ נפתח בדפדפן ובתפריט שנפתח אפשר למצוא את הקבצים הדרושים לפי מיקומם בעץ הפרויקט." : "6. The file is opened in the browser and you can find the necessary files in the menu according to their location in the project tree.") + "\n\n";
         }
 
         return message
