@@ -553,6 +553,7 @@ public class ReportService {
                                             reportDto.getArchiveName(),
                                             reportDto.getEmail(),
                                             reportDto.getVersion(),
+                                            isWinMode,
                                             randomPassword
                                     );
                                     sendInfo(EMAIL_SEND, reportDto.getEmail());
