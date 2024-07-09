@@ -28,7 +28,9 @@ public enum Type {
     PRELIMINARY("Preliminary", "בקרה מקדימה"),
     SUMMARY("Summary Reports", "דוחות"),
     TRAINING_MATERIALS("Training_Materials", "הדרכות"),
-    LAYERED_SYSTEMS("Layered_Systems", "Layered_Systems");
+    ACCEPTANCE_TESTS("Acceptance Tests", "בדיקות קבלה"),
+    LAYERED_SYSTEMS("Layered_Systems", "Layered_Systems"),
+    ;
 
     private final String value;
 
