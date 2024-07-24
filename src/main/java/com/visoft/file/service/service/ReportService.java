@@ -319,7 +319,9 @@ public class ReportService {
         sendInfo(START_DOWN,  fileName);
         URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName.replace("+", "%2B") + "&customToken=" + getToken() + "&mainCompanyId=" + reportDto.getMainCompanyId());
         ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-        FileOutputStream fos = new FileOutputStream(getRootPath() + "/" + (isWinMode ? folderName : fileName) + getReportExtension());
+        String path = getRootPath() + "/" + (isWinMode ? folderName : fileName);
+        new File(path).mkdirs();
+        FileOutputStream fos = new FileOutputStream(path + getReportExtension());
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         sendInfo(FINISH_DOWNLOAD, fileName);
     }
