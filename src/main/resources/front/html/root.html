@@ -20,4 +20,28 @@
 </header>
 <replace/>
 </body>
+<script>
+    var links = document.getElementsByClassName("download-link");
+    var i;
+    for (i = 0; i < links.length; i++) {
+        const link = links[i];
+        link.addEventListener("click", function() {
+            let div = document.createElement("div");
+            div.append("The download will start shortly");
+            link.append(div);
+            setTimeout(() => {
+                div.remove();
+            }, 6000);
+        });
+    }
+</script>
+<style>
+    .download-link {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: red !important;
+        width: fit-content;
+    }
+</style>
 </html>
