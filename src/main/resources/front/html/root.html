@@ -27,7 +27,8 @@
         const link = links[i];
         link.addEventListener("click", function() {
             let div = document.createElement("div");
-            div.append("The download will start shortly");
+            div.append("The download will start shortly...");
+            div.classList.add('download-message');
             link.append(div);
             setTimeout(() => {
                 div.remove();
@@ -39,9 +40,18 @@
     .download-link {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 16px;
-        color: red !important;
+        color: white !important;
         width: fit-content;
+    }
+
+    .download-message {
+        background-color: #039696;
+        border-radius: 4px;
+        padding: 0.5em 1em;
+        pointer-events: none;
+        margin-bottom: 8px;
     }
 </style>
 </html>
