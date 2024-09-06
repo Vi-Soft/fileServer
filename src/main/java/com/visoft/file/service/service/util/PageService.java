@@ -66,7 +66,8 @@ public class PageService {
             boolean isWinFolder = Boolean.TRUE.equals(folder.getWinFolder());
             String folderName = getFolderName(folder.getFolder());
             htmlString
-                    .append("<div>\n")
+                    .append("<div ")
+                    .append(isWinFolder ? "id=\"" + folder.getFolder() + "\" class=\"win-folder\" >\n" : ">\n")
                     .append("    <a href=\"")
                     .append(isWinFolder ? server + folder.getFolder() + ".zip" : folder.getFolder())
                     .append("\"")
