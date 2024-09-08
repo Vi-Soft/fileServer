@@ -8,7 +8,7 @@ p {
   line-height: 1.5;
 }
 body {
-  background-image: url(https://visoftapp1.visoft-eng.com/archive-login/forServer/background.jpg);
+  background-image: url(http://visoftapp1.visoft-eng.com:8090/forServer/background.jpg);
   background-attachment: fixed;
 }
 .searchResult {

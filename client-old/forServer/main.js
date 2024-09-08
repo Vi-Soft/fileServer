@@ -90,7 +90,6 @@ function shareDownloadedProject() {
   let emails = window.prompt("Please enter email addresses for sharing. the emails shall be separated with the ';' character");
 
   if (emails?.length) {
-    //const url = "http://visoftapp1.visoft-eng.com:8180/api/share";
     const url = "https://visoftapp1.visoft-eng.com/archive/api/share";
 
     const requestOptions = {

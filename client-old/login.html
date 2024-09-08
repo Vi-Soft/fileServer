@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>i-Soft</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link media="all" rel="stylesheet" href="css/main.css" />
+
+    <style>
+
+      #togglePassword {
+        margin-left: -30px;
+        cursor: pointer;
+        display: initial;
+      }
+
+    </style>
+  </head>
+  <body class="login_page_styles register_page_styles">
+    <div class="wrapper">
+      <div class="container ">
+        <div class="head-login">
+          <div class="logo">
+            <a href="#">
+              <img src="img/logo.png" alt="" />
+            </a>
+          </div>
+          <!-- <ul class="leng-list">
+						<li class="active"><a href="#">En</a></li>
+						<li><a href="#">Ru</a></li>
+						<li><a href="#">He</a></li>
+					</ul> -->
+        </div>
+        <div class="login-two-columns">
+          <div class="col">
+            <form class="registration-form">
+              <div class="head-form">
+                <h2>Login</h2>
+              </div>
+
+              <div class="row">
+                <div class="input-holder">
+                  <!-- add class active on click LABEL -->
+                  <label class="active" for="email-1"
+                    >User name <mark>&#10033;</mark></label
+                  >
+                  <input required type="text" name="name" id="email-1" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-holder">
+                  <label class="active" for="password-1"
+                    >Password <mark>&#10033;</mark></label
+                  >
+                  <input
+                    required
+                    type="password"
+                    name="password"
+                    id="password-1"
+                  />
+                  <i class="far fa-eye" id="togglePassword"></i>
+                </div>
+              </div>
+              <!-- <div class="forgot-holder text-center">
+								<a href="#" class="green-text">Forgot password?</a>
+							</div>
+							
+							<div class="row">
+								<img src="img/captcha.jpg" alt="captcha">
+							</div> -->
+              <div class="row">
+                <a href="#" class="btn registration-form-submit">Sign in</a>
+                <!-- <a href="#" class="btn btn-no-bg">Register</a> -->
+              </div>
+              <script>
+                (function() {
+                  const togglePassword = document.getElementById("togglePassword")
+
+                  togglePassword.addEventListener("click", e => {
+                    const password = document.getElementById("password-1")
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+
+                    password.setAttribute('type', type);
+                  })
+
+                  const signInBtn = document.getElementsByClassName(
+                    "registration-form-submit"
+                  )[0];
+
+                  signInBtn.addEventListener("click", e => {
+                    e.preventDefault();
+
+                    const login = document.getElementById("email-1").value;
+                    const password = document.getElementById("password-1")
+                      .value;
+                    let body = { login, password };
+                    body = JSON.stringify(body);
+
+                    const requestOptions = {
+                      method: "POST",
+                      credentials: "include",
+                      // mode: "no-cors",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                      },
+                      body
+                    };
+                    const url = "https://visoftapp1.visoft-eng.com/archive/api/login";
+
+                    var resp = fetch(url, requestOptions)
+                      .then(res => {
+                        res.status == 401
+                          ? swal("Oops", "Wrong user name or password", "error")
+                          : console.log("data ===>>>", res);
+
+                        return res.json();
+                      })
+                      .then(data => {
+                        const { token, role } = data;
+
+                        window.location = "https://visoftapp1.visoft-eng.com/archive";
+                      })
+
+                      .catch(err => console.log(err));
+                  });
+                })();
+              </script>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
