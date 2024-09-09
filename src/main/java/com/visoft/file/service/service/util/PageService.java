@@ -69,7 +69,7 @@ public class PageService {
                     .append("<div ")
                     .append(isWinFolder ? "id=\"" + folder.getFolder() + "\" class=\"win-folder\" >\n" : ">\n")
                     .append("    <a href=\"")
-                    .append(isWinFolder ? server + folder.getFolder() + ".zip" : folder.getFolder())
+                    .append(isWinFolder ? server + folder.getFolder() + ".zip" : server + folder.getFolder())
                     .append("\"")
                     .append(isWinFolder ? " class=\"download-link\"" : "")
                     .append(">\n")
@@ -301,13 +301,13 @@ public class PageService {
                                 task.getName()
                         ).toString());
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
-                                + task.getPath()
+                                + server + task.getPath()
                                 + "\" target=\"_blank\" type=\"1\" description=\"1\" certificate=\"1\" comment=\"1\" uploadDate=\"1\" fileName=\"1\">"
                                 + task.getName()
                                 + "</a></li>\n";
                     } else {
                         htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
-                                + task.getPath()
+                                + server + task.getPath()
                                 + "\" target=\"_blank\""
                                 + "\" type=\"" + attachmentDocument.getType()
                                 + "\" description=\"" + attachmentDocument.getDescription()
