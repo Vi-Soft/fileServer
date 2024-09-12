@@ -69,7 +69,7 @@ public class PageService {
                     .append("<div ")
                     .append(isWinFolder ? "id=\"" + folder.getFolder() + "\" class=\"win-folder\" >\n" : ">\n")
                     .append("    <a href=\"")
-                    .append(isWinFolder ? server + folder.getFolder() + ".zip" : server + folder.getFolder())
+                    .append(isWinFolder ? server + folder.getFolder() + ".zip" : server + folder.getFolder() + "/")
                     .append("\"")
                     .append(isWinFolder ? " class=\"download-link\"" : "")
                     .append(">\n")
