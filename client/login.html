@@ -113,7 +113,7 @@
                       },
                       body
                     };
-                    const url = "https://visoftapp1.visoft-eng.com/archive/api/login";
+                    const url = "https://archive.visoft-eng.com/archive/api/login";
 
                     var resp = fetch(url, requestOptions)
                       .then(res => {
@@ -126,7 +126,7 @@
                       .then(data => {
                         const { token, role } = data;
 
-                        window.location = "https://visoftapp1.visoft-eng.com/archive";
+                        window.location = "https://archive.visoft-eng.com/archive";
                       })
 
                       .catch(err => console.log(err));
