@@ -91,7 +91,7 @@ function shareDownloadedProject() {
 
   if (emails?.length) {
     //const url = "http://visoftapp1.visoft-eng.com:8180/api/share";
-    const url = "https://visoftapp1.visoft-eng.com/archive/api/share";
+    const url = "https://archive.visoft-eng.com/archive/api/share";
 
     const requestOptions = {
       method: "POST",
