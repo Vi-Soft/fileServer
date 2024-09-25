@@ -25,7 +25,7 @@ public class ReportDto {
 
     private String archiveName;
 
-    private int count;
+    private Integer count;
 
     private long timestamp;
 
@@ -44,6 +44,10 @@ public class ReportDto {
     private Set<Type> typesToDisplay = new HashSet<>();
 
     private Boolean isWinMode;
+
+    private Boolean reportSharing;
+
+    private List<String> emailsToShare;
 
     @JsonIgnore
     private String errorMassage;

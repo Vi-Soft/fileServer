@@ -42,6 +42,7 @@ import static com.visoft.file.service.service.FormTypeService.getFormType;
 import static com.visoft.file.service.service.StatusConst.*;
 import static com.visoft.file.service.service.util.EmailService.sendError;
 import static com.visoft.file.service.service.util.EmailService.sendShared;
+import static com.visoft.file.service.service.util.EmailService.sendSharedSuccess;
 import static com.visoft.file.service.service.util.EmailService.sendSuccess;
 import static com.visoft.file.service.service.util.EncoderService.getEncode;
 import static com.visoft.file.service.service.util.JWTService.generate;
@@ -75,6 +76,9 @@ public class ReportService {
         String s = (new Scanner(is, "UTF-8")).useDelimiter("\\A").next();
         try {
             reportDto = Config.getInstance().getMapper().readValue(s, ReportDto.class);
+            if (reportDto.getCount() == null) {
+                reportDto.setCount(0);
+            }
         } catch (Exception e) {
             log.warn(e.getMessage());
             reportDto = new ReportDto();
@@ -317,7 +321,7 @@ public class ReportService {
         String fileName = reportDto.getArchiveName();
         sendInfo(START_DOWNLOAD, fileName);
         sendInfo(START_DOWN,  fileName);
-        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName.replace("+", "%2B") + "&customToken=" + getToken() + "&mainCompanyId=" + reportDto.getMainCompanyId());
+        URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName.replace("+", "%2B").replace(" ", "%20") + "&customToken=" + getToken() + "&mainCompanyId=" + reportDto.getMainCompanyId());
         ReadableByteChannel rbc = Channels.newChannel(website.openStream());
         String path = getRootPath() + "/" + (isWinMode ? folderName : fileName);
         new File(path).mkdirs();
@@ -419,7 +423,8 @@ public class ReportService {
 
         if (reportDto != null) {
             if (reportDto.getArchiveName() != null) {
-                boolean isWinMode = Boolean.TRUE.equals(reportDto.getIsWinMode());
+                boolean reportSharing = Boolean.TRUE.equals(reportDto.getReportSharing());
+                boolean isWinMode = Boolean.TRUE.equals(reportDto.getIsWinMode()) || reportSharing;
 
                 if (reportDto.getTimestamp() != 0) {
                     if (exportPool.size() >= 3) {
@@ -444,13 +449,16 @@ public class ReportService {
                 }
 
                 if (validateToken(reportDto.getCustomToken())) {
-                    String validateReportDtoResult = validateReportDto(reportDto);
+                    String validateReportDtoResult = reportSharing ? null : validateReportDto(reportDto);
                     if (validateReportDtoResult != null) {
                         send(exchange, BAD_REQUEST);
                         sendWarn(NOT_CORRECT_REPORT_DTO, validateReportDtoResult);
                     } else {
-                        sortByParentIdAndOrderInGroup(reportDto);
-                        sendInfo(SORT_REPORT_DTO, reportDto.getArchiveName());
+                        if (!reportSharing) {
+                            sortByParentIdAndOrderInGroup(reportDto);
+                            sendInfo(SORT_REPORT_DTO, reportDto.getArchiveName());
+                        }
+
                         String validateZipResult = validateZip(reportDto.getArchiveName(), reportDto.getCompanyName());
                         sendInfo(VALIDATE_ZIP, reportDto.getArchiveName());
                         if (validateZipResult != null) {
@@ -496,69 +504,40 @@ public class ReportService {
                                     FOLDER_SERVICE.create(folder);
                                     sendInfo(FOLDER_CREATED, folder.getFolder());
 
-                                    String randomPassword = null;
-
-                                    if (reportDto.getPassword() != null) {
-                                        User user = USER_SERVICE.findByLogin(reportDto.getEmail());
-                                        randomPassword = USER_SERVICE.getRandomPassword();
-                                        if (user == null) {
-
-                                            user = new User(
-                                                    reportDto.getEmail(),
-                                                    getEncode(randomPassword),
-                                                    Role.USER,
-                                                    Collections.singletonList(folder.getId())
+                                    if (reportSharing) {
+                                        reportDto.getEmailsToShare().forEach(email -> {
+                                            String password = calculateUser(email, folder);
+                                            sendSharedSuccess(
+                                                reportDto.getArchiveName(),
+                                                reportDto.getEmail(),
+                                                email,
+                                                reportDto.getVersion(),
+                                                password
                                             );
-                                            sendInfo(CREATING_NEW_USER + user,
-                                                    USER_PASSWORD + randomPassword);
+                                            sendInfo(EMAIL_SEND, email);
+                                        });
+                                    } else {
+                                        String randomPassword = null;
 
-                                            USER_SERVICE.create(user);
-                                            Token createdUserToken = new Token(
-                                                    generate(ObjectId.get()),
-                                                    user.getId()
-                                            );
-
-                                            log.info(CREATE_TOKEN);
-                                            TOKEN_SERVICE.create(createdUserToken);
-                                            sendInfo(TOKEN_CREATED, createdUserToken.toString());
+                                        if (reportDto.getPassword() != null) {
+                                            randomPassword = calculateUser(reportDto.getEmail(), folder);
                                         } else {
-                                            sendInfo(PASSWORD_CHANGED, randomPassword);
-                                            if (user.getFolders() == null) {
-                                                user.setFolders(Collections.singletonList(folder.getId()));
-                                            } else {
-                                                user.getFolders().add(folder.getId());
-                                            }
-                                            user.setPassword(getEncode(randomPassword));
-                                            USER_SERVICE.update(user, user.getId());
-                                            Token token = TOKEN_SERVICE.findByUserId(user.getId());
-                                            if (token == null) {
-                                                TOKEN_SERVICE.create(new Token(
-                                                        generate(ObjectId.get()),
-                                                        user.getId())
-                                                );
-                                            } else {
-                                                token.setToken(generate(ObjectId.get()));
-                                                token.setExpiration(Instant.now().plusSeconds(10800L));
-                                                TOKEN_SERVICE.update(token, token.getId());
-                                            }
+                                            sendInfo(REPORT_DTO_PASSWORD, reportDto.getPassword());
                                         }
 
-                                        sendInfo(CALCULATED_USER, user.getId().toString());
-                                    } else {
-                                        sendInfo(REPORT_DTO_PASSWORD, reportDto.getPassword());
-                                    }
-
-                                    if (isDownloadDone(reportDto.getTimestamp()))
-                                        exportPool.remove(reportDto.getTimestamp());
-
-                                    sendSuccess(
+                                        sendSuccess(
                                             reportDto.getArchiveName(),
                                             reportDto.getEmail(),
                                             reportDto.getVersion(),
                                             isWinMode,
                                             randomPassword
-                                    );
-                                    sendInfo(EMAIL_SEND, reportDto.getEmail());
+                                        );
+                                        sendInfo(EMAIL_SEND, reportDto.getEmail());
+                                    }
+
+                                    if (isDownloadDone(reportDto.getTimestamp())) {
+                                        exportPool.remove(reportDto.getTimestamp());
+                                    }
                                 } catch (MongoWriteException e) {
                                     if (e.getError().getCategory() == ErrorCategory.DUPLICATE_KEY) {
                                         String description = "Folder '" + getFolderName(reportDto) + "' already exists";
@@ -598,6 +577,54 @@ public class ReportService {
             sendWarn(RETURN, BAD_REQUEST);
             send(exchange, REPORT_DTO_IS_EMPTY, BAD_REQUEST);
         }
+    }
+
+    private static String calculateUser(String email, Folder folder) {
+        User user = USER_SERVICE.findByLogin(email);
+        String randomPassword = USER_SERVICE.getRandomPassword();
+        if (user == null) {
+            user = new User(
+                email,
+                getEncode(randomPassword),
+                Role.USER,
+                Collections.singletonList(folder.getId())
+            );
+            sendInfo(CREATING_NEW_USER + user,
+                USER_PASSWORD + randomPassword);
+
+            USER_SERVICE.create(user);
+            Token createdUserToken = new Token(
+                generate(ObjectId.get()),
+                user.getId()
+            );
+
+            log.info(CREATE_TOKEN);
+            TOKEN_SERVICE.create(createdUserToken);
+            sendInfo(TOKEN_CREATED, createdUserToken.toString());
+        } else {
+            sendInfo(PASSWORD_CHANGED, randomPassword);
+            if (user.getFolders() == null) {
+                user.setFolders(Collections.singletonList(folder.getId()));
+            } else {
+                user.getFolders().add(folder.getId());
+            }
+            user.setPassword(getEncode(randomPassword));
+            USER_SERVICE.update(user, user.getId());
+            Token token = TOKEN_SERVICE.findByUserId(user.getId());
+            if (token == null) {
+                TOKEN_SERVICE.create(new Token(
+                    generate(ObjectId.get()),
+                    user.getId())
+                );
+            } else {
+                token.setToken(generate(ObjectId.get()));
+                token.setExpiration(Instant.now().plusSeconds(10800L));
+                TOKEN_SERVICE.update(token, token.getId());
+            }
+        }
+
+        sendInfo(CALCULATED_USER, user.getId().toString());
+        return randomPassword;
     }
 
     private String getFolderName(ReportDto reportDto) {
@@ -798,11 +825,14 @@ public class ReportService {
     }
 
     private String getMainTaskName(ReportDto dto) {
-        for (TaskDto task : dto.getTasks()) {
-            if (task.getParentId().equals("-1")) {
-                return task.getName();
+        if (dto.getTasks() != null) {
+            for (TaskDto task : dto.getTasks()) {
+                if (task.getParentId().equals("-1")) {
+                    return task.getName();
+                }
             }
         }
+
         return null;
     }
 

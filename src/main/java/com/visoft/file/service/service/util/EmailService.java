@@ -27,6 +27,27 @@ public class EmailService {
         sendHtml(getSuccessMessage(reportName, email, version, isWinMode, password), email, version);
     }
 
+    public static void sendSharedSuccess(String reportName, String email, String sharedEmail, Version version, String password) {
+        sendHtml(getSharedSuccessMessage(reportName, email, sharedEmail, version, password), sharedEmail, version);
+    }
+
+    private static String getSharedSuccessMessage(String reportName, String email, String sharedEmail, Version version, String password) {
+        return  (version == Version.IL ? "שלום רב," : "Greetings,") + "<br><br>"
+            + email + (version == Version.IL ? " שיתף אותך בקובץ נקודת עצירה." : " has shared a Stage Gate form with you.") + "<br><br>"
+            + (version == Version.IL ? "שם הקובץ " : "The file name is ") + reportName
+            + (version == Version.IL ? " ניתן להכנס למערכת ההורדות בקישור הבא:" : " and accessible with the following link:") + "<br>"
+            + getServerName() + "<br><br>"
+            + (version == Version.IL ? "שם משתמש: " : "Username: ") + sharedEmail + "<br>"
+            + (version == Version.IL ? "סיסמא: " : "Password: ") + password + "<br><br>"
+            + (version == Version.IL ? "שימו ,לב הורדת הפרוייקט תהיה זמינה שבוע לכל הפחות ולאחר מכן ההורדה תימחק מהשרת." : "Attention, the downloaded material will be available for at least 1 week, afterward it will be deleted from the server.") + "<br><br>"
+            + (version == Version.IL ? "לעזרה ופרטים נוספים ניתן לפנות אל התמיכה באמצעות:" : "For assistance and further information, you can contact support at:") + "<br>"
+            + "support@visoft-eng.com<br>"
+            + "074-7419412<br><br>"
+            + (version == Version.IL ? "בברכה," : "Best regards,") + "<br>"
+            + (version == Version.IL ? "צוות וי-סופט." : "Vi-Soft team.") + "<br><br>"
+            + (version == Version.IL ? "הודעה זו נשלחה באופן אוטומטי - אין להגיב להודעה זו." : "This message was sent automatically - please do not reply to this message.") + "<br><br>";
+    }
+
     private static String getSuccessMessage(String reportName, String email, Version version, boolean isWinMode, String password) {
         String message = (version == Version.IL ? "שלום רב," : "Greetings,") + "<br>"
             + (version == Version.IL ? "הורדת הפרוייקט הסתיימה בהצלחה." : "The project download has successfully finished.") + "<br>"
