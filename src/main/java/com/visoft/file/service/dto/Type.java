@@ -30,6 +30,7 @@ public enum Type {
     TRAINING_MATERIALS("Training_Materials", "הדרכות"),
     ACCEPTANCE_TESTS("Acceptance Tests", "בדיקות קבלה"),
     LAYERED_SYSTEMS("Layered_Systems", "Layered_Systems"),
+    CM_TASK_ATTACHMENT("CM_Task_Attachment", "CM_Task_Attachment"),
     ;
 
     private final String value;
