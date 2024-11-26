@@ -319,6 +319,9 @@ public class ReportService {
 
     private static void downloadZip(ReportDto reportDto, boolean isWinMode, String folderName) throws IOException {
         String fileName = reportDto.getArchiveName();
+        if (Boolean.TRUE.equals(reportDto.getReportSharing())) {
+            reportDto.setArchiveName(reportDto.getReportName());
+        }
         sendInfo(START_DOWNLOAD, fileName);
         sendInfo(START_DOWN,  fileName);
         URL website = new URL(reportDto.getUrl() + "?archiveName=" + fileName.replace("+", "%2B").replace(" ", "%20") + "&customToken=" + getToken() + "&mainCompanyId=" + reportDto.getMainCompanyId());
@@ -628,7 +631,10 @@ public class ReportService {
     }
 
     private String getFolderName(ReportDto reportDto) {
-        return "/" + reportDto.getCompanyName() + "/" + reportDto.getArchiveName();
+        return "/"
+            + reportDto.getCompanyName()
+            + "/"
+            + (Boolean.TRUE.equals(reportDto.getReportSharing()) ? reportDto.getReportName() : reportDto.getArchiveName());
     }
 
     private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {

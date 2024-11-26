@@ -25,6 +25,8 @@ public class ReportDto {
 
     private String archiveName;
 
+    private String reportName;
+
     private Integer count;
 
     private long timestamp;
