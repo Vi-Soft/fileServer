@@ -151,6 +151,11 @@ public class FolderServiceImpl extends AbstractServiceImpl<Folder> implements Fo
     }
 
     @Override
+    public List<Folder> findByFolderPattern(String folderPattern) {
+        return directFolderRepository.findAllByFolderPattern(folderPattern);
+    }
+
+    @Override
     public List<String> getIdsFromObjectId(List<ObjectId> ids) {
         if (ids == null || ids.isEmpty()) {
             return null;

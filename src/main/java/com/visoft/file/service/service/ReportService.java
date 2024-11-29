@@ -494,17 +494,23 @@ public class ReportService {
                                         buildTree(reportDto, folderName);
                                     }
 
-                                    Folder folder = new Folder(
-                                        folderName,
-                                        reportDto.getCount() > 1 && exportPool.containsKey(reportDto.getTimestamp())
-                                                ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
-                                        reportDto.getProjectName(),
-                                        getMainTaskName(reportDto),
-                                        Instant.now(),
-                                        isWinMode
-                                    );
+                                    Folder folder = FOLDER_SERVICE.findByFolderPattern(folderName)
+                                        .stream()
+                                        .findFirst()
+                                        .orElseGet(() -> {
+                                            Folder newFolder = new Folder(
+                                                folderName,
+                                                reportDto.getCount() > 1 && exportPool.containsKey(reportDto.getTimestamp())
+                                                    ? exportPool.get(reportDto.getTimestamp()).getMutualPath() : null,
+                                                reportDto.getProjectName(),
+                                                getMainTaskName(reportDto),
+                                                Instant.now(),
+                                                isWinMode
+                                            );
+                                            FOLDER_SERVICE.create(newFolder);
+                                            return newFolder;
+                                        });
 
-                                    FOLDER_SERVICE.create(folder);
                                     sendInfo(FOLDER_CREATED, folder.getFolder());
 
                                     if (reportSharing) {

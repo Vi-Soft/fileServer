@@ -66,6 +66,8 @@ public interface FolderService extends AbstractService<Folder> {
      */
     Folder findByFolder(String folder);
 
+    List<Folder> findByFolderPattern(String folderPattern);
+
     /**
      * Convert {@link Folder#getId() id} to String
      *
