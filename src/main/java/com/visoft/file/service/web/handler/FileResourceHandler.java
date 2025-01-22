@@ -8,6 +8,8 @@ import com.visoft.file.service.web.security.SecurityHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.resource.ResourceHandler;
 import io.undertow.server.handlers.resource.ResourceManager;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import org.apache.commons.io.FilenameUtils;
 import org.bson.types.ObjectId;
 
@@ -66,14 +68,21 @@ public class FileResourceHandler extends ResourceHandler {
         if (user.getRole().equals(ADMIN)) {
             return true;
         }
-        List<Folder> folders = getFolders(user);
-        if (!folders.isEmpty()) {
-            for (Folder folder : getFolders(user)) {
-                if (requestURI.startsWith(folder.getFolder())) {
-                    return true;
+
+        try {
+            requestURI = URLDecoder.decode(requestURI, "UTF-8");
+            List<Folder> folders = getFolders(user);
+            if (!folders.isEmpty()) {
+                for (Folder folder : getFolders(user)) {
+                    if (requestURI.startsWith(folder.getFolder())) {
+                        return true;
+                    }
                 }
             }
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException("Requested url is incorrect");
         }
+
         return false;
     }
 
