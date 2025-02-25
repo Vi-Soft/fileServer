@@ -300,14 +300,14 @@ public class PageService {
                                 Objects.requireNonNull(path),
                                 task.getName()
                         ).toString());
-                        htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
-                                + server + task.getPath()
+                        htmlTree = htmlTree + "><a class=\"" + classWithId
+                                + "\" href=\"" + (forArchive ? "" : server) + task.getPath()
                                 + "\" target=\"_blank\" type=\"1\" description=\"1\" certificate=\"1\" comment=\"1\" uploadDate=\"1\" fileName=\"1\">"
                                 + task.getName()
                                 + "</a></li>\n";
                     } else {
-                        htmlTree = htmlTree + "><a class=\"" + classWithId + "\" href=\""
-                                + server + task.getPath()
+                        htmlTree = htmlTree + "><a class=\"" + classWithId
+                                + "\" href=\"" + (forArchive ? "" : server) + task.getPath()
                                 + "\" target=\"_blank\""
                                 + "\" type=\"" + attachmentDocument.getType()
                                 + "\" description=\"" + attachmentDocument.getDescription()
